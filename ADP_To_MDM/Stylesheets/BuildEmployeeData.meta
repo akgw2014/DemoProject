@@ -1,0 +1,34 @@
+<com.approuter.studio.repository.model.EntryMetaData>
+  <__metaData>
+    <properties/>
+  </__metaData>
+  <__namespace>http://www.approuter.com/schemas/2003/1/xslt/</__namespace>
+  <__commentText>Get the Employee Personal Info from ADP via the .NET Web Service.
+
+Convert the response from the .NET WS to the equivalent ADP structure.
+
+This XSLT Builds the Employee Information that goes into MDM from ADP.
+It aggregates the following sets of data from ADP:
+1. Employee Personal Info
+2. Employee Work Info
+3. Employee Status Info
+4. Employee Reports To
+5. Employee Custom Fields
+
+It also refers to MDM Master data to perform lookups for Name to Id mappings for:
+1. MDM Departments
+2. MDM Legal Entities
+3. MDM Product Lines
+4. MDM Regions
+
+Once the aggregation has been done so as to create the final structure that will be used to UPSERT this Employee Data to MDM it computes the MD5 Checksum of the required fields from ADP.
+It then compares the new MD5 Checksum with the original MD5 Checksum(that was originally queried from MDM) to decide the action:
+1. Insert
+2. Update
+3. No Change
+
+The resultant XML that gets generated from this XSL contains an action which is to be used to decide what needs to be done for that row.</__commentText>
+  <__valid>true</__valid>
+  <__hidden>false</__hidden>
+  <__guid>5F418E8136B1E003543493C615A63E74</__guid>
+</com.approuter.studio.repository.model.EntryMetaData>

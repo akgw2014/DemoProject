@@ -1,0 +1,8 @@
+#Tue Apr 16 19:51:01 CDT 2013
+version=6.1.0.9
+attempt-rename-on-remote-save=false
+prjver=1.4.2
+name=ADP_To_MDM
+last-modified=2011-01-19T15\:05\:04Z
+description=Cast Iron Studio Project
+comments=Removed truncate of phone number fields - VCE

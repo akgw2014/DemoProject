@@ -1,0 +1,10 @@
+<com.approuter.studio.repository.model.EntryMetaData>
+  <__metaData>
+    <properties/>
+  </__metaData>
+  <__namespace>http://schemas.xmlsoap.org/ws/2003/03/business-process/</__namespace>
+  <__commentText>This use case runs hourly and queries the .NET WS (which is like a proxy to the ADP WS) for the Personal, Work, Status, Reports To &amp; Custom Field info. Also queries MDM for some master data to satisfy some name to id mappings. Based on new and original MD5 Checksum values decides what records need to be inserted or updated to MDM and performs the upsert operation.</__commentText>
+  <__valid>true</__valid>
+  <__hidden>false</__hidden>
+  <__guid>9ED6719502179C806C6AA0C0FD16B0B9</__guid>
+</com.approuter.studio.repository.model.EntryMetaData>

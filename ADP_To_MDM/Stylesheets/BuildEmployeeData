@@ -1,0 +1,418 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsl:stylesheet exclude-result-prefixes="exslt saxon bpws cis p0 ihmap" version="2.0"
+xmlns:bpws="http://schemas.xmlsoap.org/ws/2003/03/business-process/"
+xmlns:cis="http://www.approuter.com/schemas/2003/1/UserCallouts/"
+xmlns:exslt="http://exslt.org/common"
+xmlns:ihmap="http://www.approuter.com/xmlns/2002/Mapping"
+xmlns:p0="http://www.approuter.com/schemas/2003/1/castirontypes"
+xmlns:saxon="http://saxon.sf.net/"
+xmlns:xml="http://www.w3.org/XML/1998/namespace"
+xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+xmlns:cifn="http://www.approuter.com/schemas/2005/xpath-functions">
+	<xsl:output encoding="UTF-8" indent="yes" method="xml"/>
+	<xsl:variable name="GetEmployeeWorkInfoResponse" select="bpws:getVariableData('GetEmployeeWorkInfoResponse')"/>
+	<xsl:variable name="GetEmployeeReportsToResponse" select="bpws:getVariableData('GetEmployeeReportsToResponse')"/>
+	<xsl:variable name="GetEmployeeStatusResponse" select="bpws:getVariableData('GetEmployeeStatusResponse')"/>
+	<xsl:variable name="GetEmployeeCustomFieldResponse" select="bpws:getVariableData('GetEmployeeCustomFieldResponse')"/>
+	<xsl:variable name="GetEmployeeJobTitleResponse" select="bpws:getVariableData('GetEmployeeJobTitleResponse')"/>
+
+	<!-- Begin: MDM2AD Project Changes May 30, 2012 by Ravi-->
+	<xsl:variable name="GetEmployeeCorpGroupResponse" select="bpws:getVariableData('GetEmployeeCorpGroupResponse')"/>
+	<!-- End: MDM2AD Project Changes May 30, 2012 by Ravi-->
+
+	<xsl:variable name="MDM_Employee_MD5" select="bpws:getVariableData('MDM_Employee_MD5')"/>
+	<xsl:variable name="MDM_Departments" select="bpws:getVariableData('MDM_Departments')"/>
+	<xsl:variable name="MDM_LegalEntities" select="bpws:getVariableData('MDM_LegalEntities')"/>
+	<xsl:variable name="MDM_ProductLines" select="bpws:getVariableData('MDM_ProductLines')"/>
+	<xsl:variable name="MDM_Regions" select="bpws:getVariableData('MDM_Regions')"/>
+	<xsl:variable name="MDM_Currencies" select="bpws:getVariableData('MDM_Currencies')"/>
+
+	<!-- Begin: MDM2AD Project Changes Aug 02, 2012 by Ravi-->
+	<xsl:variable name="MDM_BusinessSites" select="bpws:getVariableData('MDM_BusinessSites')"/>
+	<!-- End: MDM2AD Project Changes Aug 02, 2012 by Ravi-->
+
+	<xsl:template match="/">
+		<!-- Need to create the output thast would be used to perform the upsert operation on the MDM Employee -->
+		<xsl:element name="rows">
+			<!-- We will use the ADP Employee Personal Response to start iterating over the different employees -->
+			<xsl:for-each select="//*:EmployeePersonalInfo">
+				<!-- Get the equivalent ADP records (Work Info, Reports To, Status, Custom Fields) for the current Employee Id -->
+				<xsl:variable name="CurrentEmployeeId">
+					<xsl:value-of select="*:EmployeeKey/*:Identifier/*:EmployeeId"/>
+				</xsl:variable>
+				<xsl:variable name="CurrentEmployeeWorkInfo" select="$GetEmployeeWorkInfoResponse/*:GetEmployeeWorkInfoResponse/*:EmployeeWorkInfo[*:EmployeeKey/*:Identifier/*:EmployeeId=$CurrentEmployeeId][1]"/>
+				<xsl:variable name="CurrentEmployeeReportsTo" select="$GetEmployeeReportsToResponse/*:GetEmployeeReportsToResponse/*:EmployeeReportsTo[*:EmployeeKey/*:Identifier/*:EmployeeId=$CurrentEmployeeId][1]"/>
+				<xsl:variable name="CurrentEmployeeJobTitle" select="$GetEmployeeJobTitleResponse/*:GetEmployeeJobTitleResponse/*:EmployeeJobTitle[*:EmployeeKey/*:Identifier/*:EmployeeId=$CurrentEmployeeId][1]"/>
+				<xsl:variable name="CurrentEmployeeStatus" select="$GetEmployeeStatusResponse/*:GetEmployeeStatusResponse/*:EmployeeStatus[*:EmployeeKey/*:Identifier/*:EmployeeId=$CurrentEmployeeId][1]"/>
+
+				<!-- Begin: MDM2AD Project Changes May 30, 2012 by Ravi-->
+				<xsl:variable name="CurrentEmployeeCorpGroup" select="$GetEmployeeCorpGroupResponse/*:GetEmployeeCorpGroupResponse/*:EmployeeCorpGroup[*:EmployeeKey/*:Identifier/*:EmployeeId=$CurrentEmployeeId][1]"/>
+				<!-- End: MDM2AD Project Changes May 30, 2012 by Ravi-->
+
+				<!-- Cross Reference the MDM Master Data tables for corresponding lookups to be used -->
+				<xsl:variable name="CurrentADPDepartment" select="$GetEmployeeCustomFieldResponse/*:GetEmployeeCustomFieldResponse/*:EmployeeCustomField[*:EmployeeKey/*:Identifier/*:EmployeeId=$CurrentEmployeeId and *:CustomFieldKey/*:CustomFieldName='Department Code/Name'][1]/*:CustomFieldValue/*:CodeValue"/>
+				<xsl:variable name="CurrentMDMDepartmentID" select="$MDM_Departments/*:rows/*:row[*:DepartmentName=$CurrentADPDepartment][1]/*:DepartmentID"/>
+				<xsl:variable name="CurrentADPLegalEntity" select="$GetEmployeeCustomFieldResponse/*:GetEmployeeCustomFieldResponse/*:EmployeeCustomField[*:EmployeeKey/*:Identifier/*:EmployeeId=$CurrentEmployeeId and *:CustomFieldKey/*:CustomFieldName='Legal Entity '][1]/*:CustomFieldValue/*:CodeValue"/>
+				<xsl:variable name="CurrentMDMLegalEntityID" select="$MDM_LegalEntities/*:rows/*:row[*:LegalEntityName=$CurrentADPLegalEntity][1]/*:LegalEntityID"/>
+				<xsl:variable name="CurrentADPProductLine" select="$GetEmployeeCustomFieldResponse/*:GetEmployeeCustomFieldResponse/*:EmployeeCustomField[*:EmployeeKey/*:Identifier/*:EmployeeId=$CurrentEmployeeId and *:CustomFieldKey/*:CustomFieldName='Product Line'][1]/*:CustomFieldValue/*:CodeValue"/>
+				<xsl:variable name="CurrentMDMProductLineID" select="$MDM_ProductLines/*:rows/*:row[*:ProductLineCode=$CurrentADPProductLine][1]/*:ProductLineID"/>
+				<xsl:variable name="CurrentADPRegion" select="$GetEmployeeCustomFieldResponse/*:GetEmployeeCustomFieldResponse/*:EmployeeCustomField[*:EmployeeKey/*:Identifier/*:EmployeeId=$CurrentEmployeeId and *:CustomFieldKey/*:CustomFieldName='Region ID'][1]/*:CustomFieldValue/*:CodeValue"/>
+				<xsl:variable name="CurrentMDMRegionID" select="$MDM_Regions/*:rows/*:row[*:RegionShortName=$CurrentADPRegion][1]/*:RegionID"/>
+				<xsl:variable name="CompensationCurrencyID">
+					<xsl:value-of select="$GetEmployeeCustomFieldResponse/*:GetEmployeeCustomFieldResponse/*:EmployeeCustomField[*:EmployeeKey/*:Identifier/*:EmployeeId=$CurrentEmployeeId and *:CustomFieldKey/*:CustomFieldName='Currency Code'][1]/*:CustomFieldValue/*:ListValue"/>
+				</xsl:variable>
+				<xsl:variable name="CurrentMDMCurrencyID" select="$MDM_Currencies/*:rows/*:row[*:CurrencyCode=$CompensationCurrencyID][1]/*:CurrencyID"/>
+
+				<!-- Begin: MDM2AD Project Changes Aug 02, 2012 by Ravi-->
+				<xsl:variable name="CurrentADPLocation" select="$CurrentEmployeeCorpGroup/*:CorpGroupKey/*:CorpGroupName"/>
+				<xsl:variable name="CurrentMDMBusinessSiteID" select="$MDM_BusinessSites/*:rows/*:row[*:BusinessSiteName=$CurrentADPLocation][1]/*:BusinessSiteID"/>
+				<!-- End: MDM2AD Project Changes Aug 02, 2012 by Ravi-->
+
+				<!-- Get the MD5 Check Sum for the current Employee Record from MDM, this will be used for later comparison against the new MD5 value to decide whether we want to update or ignore -->
+				<xsl:variable name="CurrentMDMEmployeeMD5" select="$MDM_Employee_MD5/*:rows/*:row[*:EmployeeId=$CurrentEmployeeId][1]/*:md5_checksum"/>
+				<!-- Decide whether this is going to be be an insert or updatate action -->
+				<xsl:variable name="CurrentRowExists">
+					<xsl:value-of select="exists($MDM_Employee_MD5/*:rows/*:row[*:EmployeeId=$CurrentEmployeeId][1]/*:md5_checksum)"/>
+				</xsl:variable>
+				<xsl:element name="row">
+					<xsl:element name="EmployeeID">
+						<xsl:value-of select="$CurrentEmployeeId"/>
+					</xsl:element>
+					<xsl:variable name="DateOfHire">
+						<xsl:value-of select="$CurrentEmployeeWorkInfo/*:WorkInfo/*:HireDate"/>
+					</xsl:variable>
+					<xsl:element name="DateOfHire">
+						<xsl:value-of select="$DateOfHire"/>
+					</xsl:element>
+					<xsl:variable name="LastName">
+						<xsl:value-of select="*:PersonalInfo/*:PersonName/*:LastName"/>
+					</xsl:variable>
+					<xsl:element name="LastName">
+						<xsl:value-of select="$LastName"/>
+					</xsl:element>
+					<xsl:variable name="MiddleName">
+						<xsl:value-of select="*:PersonalInfo/*:PersonName/*:MiddleName"/>
+					</xsl:variable>
+					<xsl:element name="MiddleName">
+						<xsl:value-of select="$MiddleName"/>
+					</xsl:element>
+					<xsl:variable name="PreferredLastName">
+						<xsl:value-of select="$GetEmployeeCustomFieldResponse/*:GetEmployeeCustomFieldResponse/*:EmployeeCustomField[*:EmployeeKey/*:Identifier/*:EmployeeId=$CurrentEmployeeId and *:CustomFieldKey/*:CustomFieldName='Preferred Last Name'][1]/*:CustomFieldValue/*:TextValue"/>
+					</xsl:variable>
+					<xsl:element name="PreferredLastName">
+						<xsl:value-of select="$PreferredLastName"/>
+					</xsl:element>
+					<xsl:variable name="FirstName">
+						<xsl:value-of select="*:PersonalInfo/*:PersonName/*:FirstName"/>
+					</xsl:variable>
+					<xsl:element name="FirstName">
+						<xsl:value-of select="$FirstName"/>
+					</xsl:element>
+					<xsl:variable name="PreferredFirstName">
+						<xsl:value-of select="*:PersonalInfo/*:PersonName/*:Nickname"/>
+					</xsl:variable>
+					<xsl:element name="PreferredFirstName">
+						<xsl:value-of select="$PreferredFirstName"/>
+					</xsl:element>
+					<xsl:variable name="Salutation">
+						<xsl:value-of select="*:PersonalInfo/*:PersonName/*:Salutation"/>
+					</xsl:variable>
+					<xsl:element name="Salutation">
+						<xsl:value-of select="$Salutation"/>
+					</xsl:element>
+					<xsl:variable name="OfficePhoneType">office</xsl:variable>
+					<xsl:element name="OfficePhoneType">
+						<xsl:value-of select="$OfficePhoneType"/>
+					</xsl:element>
+					<xsl:variable name="OfficePhoneIntlCode">000</xsl:variable>
+					<xsl:element name="OfficePhoneIntlCode">
+						<xsl:value-of select="$OfficePhoneIntlCode"/>
+					</xsl:element>
+					<xsl:variable name="OfficePhoneAreaCode">000</xsl:variable>
+					<xsl:element name="OfficePhoneAreaCode">
+						<xsl:value-of select="$OfficePhoneAreaCode"/>
+					</xsl:element>
+					<xsl:variable name="OfficePhone">
+						<xsl:value-of select="$CurrentEmployeeWorkInfo/*:WorkInfo/*:Phone"/>
+					</xsl:variable>
+					<xsl:element name="OfficePhone">
+						<xsl:value-of select="$OfficePhone"/>
+					</xsl:element>
+					<xsl:variable name="HomeAddress1">
+						<xsl:value-of select="*:PersonalInfo/*:PostalAddress/*:DeliveryAddress/*:AddressLine"/>
+					</xsl:variable>
+					<xsl:element name="HomeAddress1">
+						<xsl:value-of select="$HomeAddress1"/>
+					</xsl:element>
+					<xsl:variable name="HomeCity">
+						<xsl:value-of select="*:PersonalInfo/*:PostalAddress/*:Municipality"/>
+					</xsl:variable>
+					<xsl:element name="HomeCity">
+						<xsl:value-of select="$HomeCity"/>
+					</xsl:element>
+					<xsl:variable name="HomeState">
+						<xsl:value-of select="*:PersonalInfo/*:PostalAddress/*:Region"/>
+					</xsl:variable>
+					<xsl:element name="HomeState">
+						<xsl:value-of select="$HomeState"/>
+					</xsl:element>
+					<xsl:variable name="HomeZip">
+						<xsl:value-of select="*:PersonalInfo/*:PostalAddress/*:PostalCode"/>
+					</xsl:variable>
+					<xsl:element name="HomeZip">
+						<xsl:value-of select="$HomeZip"/>
+					</xsl:element>
+					<xsl:variable name="HomeCountry">
+						<xsl:value-of select="*:PersonalInfo/*:PostalAddress/*:CountryCode"/>
+					</xsl:variable>
+					<xsl:element name="HomeCountry">
+						<xsl:value-of select="$HomeCountry"/>
+					</xsl:element>
+					<xsl:variable name="MobilePhoneType">mobile</xsl:variable>
+					<xsl:element name="MobilePhoneType">
+						<xsl:value-of select="$MobilePhoneType"/>
+					</xsl:element>
+					<xsl:variable name="MobilePhoneIntlCode">000</xsl:variable>
+					<xsl:element name="MobilePhoneIntlCode">
+						<xsl:value-of select="$MobilePhoneIntlCode"/>
+					</xsl:element>
+					<xsl:variable name="MobilePhoneAreaCode">000</xsl:variable>
+					<xsl:element name="MobilePhoneAreaCode">
+						<xsl:value-of select="$MobilePhoneAreaCode"/>
+					</xsl:element>
+					<xsl:variable name="MobilePhone">
+						<xsl:value-of select="*:PersonalInfo/*:Wireless"/>
+					</xsl:variable>
+					<xsl:element name="MobilePhone">
+						<xsl:value-of select="$MobilePhone"/>
+					</xsl:element>
+					<xsl:variable name="WorkEmailName">
+						<xsl:value-of select="substring-before($CurrentEmployeeWorkInfo/*:WorkInfo/*:EmailAddress, '@')"/>
+					</xsl:variable>
+					<xsl:element name="WorkEmailName">
+						<xsl:value-of select="$WorkEmailName"/>
+					</xsl:element>
+					<xsl:variable name="WorkEmailPOP">
+						<xsl:value-of select="substring-after($CurrentEmployeeWorkInfo/*:WorkInfo/*:EmailAddress, '@')"/>
+					</xsl:variable>
+					<xsl:element name="WorkEmailPOP">
+						<xsl:value-of select="$WorkEmailPOP"/>
+					</xsl:element>
+					<xsl:element name="LegalEntityID">
+						<xsl:value-of select="$CurrentADPLegalEntity"/>
+					</xsl:element>
+					<xsl:element name="DepartmentID">
+						<xsl:value-of select="$CurrentADPDepartment"/>
+					</xsl:element>
+					<xsl:element name="RegionID">
+						<xsl:value-of select="$CurrentADPRegion"/>
+					</xsl:element>
+					<xsl:element name="ProductLineID">
+						<xsl:value-of select="$CurrentMDMProductLineID"/>
+					</xsl:element>
+					<xsl:variable name="ManagerID">
+						<xsl:value-of select="$CurrentEmployeeReportsTo/*:ManagerKey/*:Identifier/*:EmployeeId"/>
+					</xsl:variable>
+					<xsl:element name="ManagerID">
+						<xsl:value-of select="$ManagerID"/>
+					</xsl:element>
+					<xsl:variable name="JobTitle">
+						<xsl:value-of select="$CurrentEmployeeJobTitle/*:JobTitleKey/*:JobTitle"/>
+					</xsl:variable>
+					<xsl:element name="JobTitle">
+						<xsl:value-of select="$JobTitle"/>
+					</xsl:element>
+					<xsl:variable name="JobCode">
+						<xsl:value-of select="$CurrentEmployeeJobTitle/*:JobTitleKey/*:JobCode"/>
+					</xsl:variable>
+					<xsl:element name="JobCode">
+						<xsl:value-of select="$JobCode"/>
+					</xsl:element>
+					<xsl:variable name="RecordStatus">
+						<xsl:value-of select="$CurrentEmployeeStatus/*:StatusName"/>
+					</xsl:variable>
+					<xsl:element name="RecordStatus">
+						<xsl:value-of select="$RecordStatus"/>
+					</xsl:element>
+					<xsl:element name="CompensationCurrencyID">
+						<xsl:value-of select="$CurrentMDMCurrencyID"/>
+					</xsl:element>
+					<xsl:variable name="PayGroup">
+						<xsl:value-of select="*:EmployeeKey/*:Identifier/*:FileNumber/@companyCode"/>
+					</xsl:variable>
+					<xsl:element name="PayGroup">
+						<xsl:value-of select="$PayGroup"/>
+					</xsl:element>
+					<xsl:variable name="StatusClassification">
+						<xsl:value-of select="$CurrentEmployeeStatus/*:StatusClassification"/>(<xsl:value-of select="$CurrentEmployeeStatus/*:FullPartTime"/>)
+					</xsl:variable>
+					<xsl:element name="StatusClassification">
+						<xsl:value-of select="normalize-space($StatusClassification)"/>
+					</xsl:element>
+
+					<!-- Begin: New 8 fields - April 2, 2012 by Ravi-->
+					<xsl:variable name="OriginalDateOfHire">
+						<xsl:value-of select="$CurrentEmployeeWorkInfo/*:WorkInfo/*:OriginalHireDate"/>
+					</xsl:variable>
+					<xsl:element name="OriginalDateOfHire">
+						<xsl:value-of select="$OriginalDateOfHire"/>
+					</xsl:element>
+					<xsl:variable name="Class">
+						<xsl:value-of select="$CurrentEmployeeStatus/*:StatusClassification"/>
+					</xsl:variable>
+					<xsl:element name="Class">
+						<xsl:value-of select="$Class"/>
+					</xsl:element>
+					<xsl:variable name="FullPartTime">
+						<xsl:value-of select="$CurrentEmployeeStatus/*:FullPartTime"/>
+					</xsl:variable>
+					<xsl:element name="FullPartTime">
+						<xsl:value-of select="$FullPartTime"/>
+					</xsl:element>
+					<!-- Assign default value of No for CellPhoneOptIn if no value is available-->
+					<xsl:variable name="CellPhoneOptIn">
+						<xsl:choose>
+							<xsl:when test="exists($GetEmployeeCustomFieldResponse/*:GetEmployeeCustomFieldResponse/*:EmployeeCustomField[*:EmployeeKey/*:Identifier/*:EmployeeId=$CurrentEmployeeId and *:CustomFieldKey/*:CustomFieldName='Opt-in to publish cell phone number in Company Phone Directory?'][1]/*:CustomFieldValue/*:YesNoValue) = true() and boolean(normalize-space($GetEmployeeCustomFieldResponse/*:GetEmployeeCustomFieldResponse/*:EmployeeCustomField[*:EmployeeKey/*:Identifier/*:EmployeeId=$CurrentEmployeeId and *:CustomFieldKey/*:CustomFieldName='Opt-in to publish cell phone number in Company Phone Directory?'][1]/*:CustomFieldValue/*:YesNoValue)) = true()">
+								<xsl:value-of select="$GetEmployeeCustomFieldResponse/*:GetEmployeeCustomFieldResponse/*:EmployeeCustomField[*:EmployeeKey/*:Identifier/*:EmployeeId=$CurrentEmployeeId and *:CustomFieldKey/*:CustomFieldName='Opt-in to publish cell phone number in Company Phone Directory?'][1]/*:CustomFieldValue/*:YesNoValue"/>
+							</xsl:when>
+							<xsl:otherwise>No</xsl:otherwise>
+						</xsl:choose>
+					</xsl:variable>
+					<xsl:element name="CellPhoneOptIn">
+						<xsl:value-of select="$CellPhoneOptIn"/>
+					</xsl:element>
+					<xsl:variable name="PayrollSystemName">
+						<xsl:value-of select="$GetEmployeeCustomFieldResponse/*:GetEmployeeCustomFieldResponse/*:EmployeeCustomField[*:EmployeeKey/*:Identifier/*:EmployeeId=$CurrentEmployeeId and *:CustomFieldKey/*:CustomFieldName='Payroll System Name'][1]/*:CustomFieldValue/*:ListValue"/>
+					</xsl:variable>
+					<xsl:element name="PayrollSystemName">
+						<xsl:value-of select="$PayrollSystemName"/>
+					</xsl:element>
+					<xsl:variable name="JobViteReqID">
+						<xsl:value-of select="$GetEmployeeCustomFieldResponse/*:GetEmployeeCustomFieldResponse/*:EmployeeCustomField[*:EmployeeKey/*:Identifier/*:EmployeeId=$CurrentEmployeeId and *:CustomFieldKey/*:CustomFieldName='JobVite Req. ID #'][1]/*:CustomFieldValue/*:NumberValue"/>
+					</xsl:variable>
+					<xsl:element name="JobViteReqID">
+						<xsl:value-of select="$JobViteReqID"/>
+					</xsl:element>
+					<xsl:variable name="DateOfSenority">
+						<xsl:value-of select="$GetEmployeeCustomFieldResponse/*:GetEmployeeCustomFieldResponse/*:EmployeeCustomField[*:EmployeeKey/*:Identifier/*:EmployeeId=$CurrentEmployeeId and *:CustomFieldKey/*:CustomFieldName='Senority Date'][1]/*:CustomFieldValue/*:DateValue"/>
+					</xsl:variable>
+					<xsl:element name="DateOfSenority">
+						<xsl:value-of select="$DateOfSenority"/>
+					</xsl:element>
+					<xsl:variable name="ExpenseCurrencyID">
+						<xsl:value-of select="$GetEmployeeCustomFieldResponse/*:GetEmployeeCustomFieldResponse/*:EmployeeCustomField[*:EmployeeKey/*:Identifier/*:EmployeeId=$CurrentEmployeeId and *:CustomFieldKey/*:CustomFieldName='Compensation Currency Code'][1]/*:CustomFieldValue/*:ListValue"/>
+					</xsl:variable>
+					<xsl:element name="ExpenseCurrencyID">
+						<xsl:value-of select="$ExpenseCurrencyID"/>
+					</xsl:element>
+					<!-- End: New 8 fields - April 2, 2012 by Ravi-->
+
+					<!-- Begin: MDM2AD Project Changes May 30, 2012 by Ravi-->
+
+					<!-- Begin: MDM2AD Project Changes Aug 02, 2012 by Ravi-->
+					<xsl:element name="Location">
+						<xsl:value-of select="$CurrentADPLocation"/>
+					</xsl:element>
+					<xsl:element name="BusinessSiteID">
+						<xsl:value-of select="$CurrentMDMBusinessSiteID"/>
+					</xsl:element>
+				<!-- End: MDM2AD Project Changes Aug 02, 2012 by Ravi-->
+
+					<xsl:variable name="SiteIndicator">
+						<xsl:value-of select="$GetEmployeeCustomFieldResponse/*:GetEmployeeCustomFieldResponse/*:EmployeeCustomField[*:EmployeeKey/*:Identifier/*:EmployeeId=$CurrentEmployeeId and *:CustomFieldKey/*:CustomFieldName='Site Indicator'][1]/*:CustomFieldValue/*:ListValue"/>
+					</xsl:variable>
+					<xsl:element name="SiteIndicator">
+						<xsl:value-of select="$SiteIndicator"/>
+					</xsl:element>
+					<!-- Assign default value of Yes for PictureOptIn if no value is available-->
+					<xsl:variable name="PictureOptIn">
+						<xsl:choose>
+							<xsl:when test="exists($GetEmployeeCustomFieldResponse/*:GetEmployeeCustomFieldResponse/*:EmployeeCustomField[*:EmployeeKey/*:Identifier/*:EmployeeId=$CurrentEmployeeId and *:CustomFieldKey/*:CustomFieldName='Opt-in to publish picture?'][1]/*:CustomFieldValue/*:YesNoValue) = true() and boolean(normalize-space($GetEmployeeCustomFieldResponse/*:GetEmployeeCustomFieldResponse/*:EmployeeCustomField[*:EmployeeKey/*:Identifier/*:EmployeeId=$CurrentEmployeeId and *:CustomFieldKey/*:CustomFieldName='Opt-in to publish picture?'][1]/*:CustomFieldValue/*:YesNoValue)) = true()">
+								<xsl:value-of select="$GetEmployeeCustomFieldResponse/*:GetEmployeeCustomFieldResponse/*:EmployeeCustomField[*:EmployeeKey/*:Identifier/*:EmployeeId=$CurrentEmployeeId and *:CustomFieldKey/*:CustomFieldName='Opt-in to publish picture?'][1]/*:CustomFieldValue/*:YesNoValue"/>
+							</xsl:when>
+							<xsl:otherwise>Yes</xsl:otherwise>
+						</xsl:choose>
+					</xsl:variable>
+					<xsl:element name="PictureOptIn">
+						<xsl:value-of select="$PictureOptIn"/>
+					</xsl:element>
+					<!-- End: MDM2AD Project Changes May 30, 2012 by Ravi-->
+
+					<xsl:variable name="CurrentADPEmployeeMD5">
+						<xsl:value-of select="cifn:digest(concat(
+																	$CurrentEmployeeId,
+																	$DateOfHire,
+																	$LastName,
+																	$MiddleName,
+																	$PreferredLastName,
+																	$FirstName,
+																	$PreferredFirstName,
+																	$Salutation,
+																	$OfficePhoneType,
+																	$OfficePhoneIntlCode,
+																	$OfficePhoneAreaCode,
+																	$OfficePhone,
+																	$HomeAddress1,
+																	$HomeCity,
+																	$HomeState,
+																	$HomeZip,
+																	$HomeCountry,
+																	$MobilePhoneType,
+																	$MobilePhoneIntlCode,
+																	$MobilePhoneAreaCode,
+																	$MobilePhone,
+																	$WorkEmailName,
+																	$WorkEmailPOP,
+																	$CurrentADPLegalEntity,
+																	$CurrentADPDepartment,
+																	$CurrentADPRegion,
+																	$CurrentMDMProductLineID,
+																	$ManagerID,
+																	$JobTitle,
+																	$JobCode,
+																	$RecordStatus,
+																	$CurrentMDMCurrencyID,
+																	$PayGroup,
+																	$StatusClassification,
+																	$OriginalDateOfHire,
+																	$Class,
+																	$FullPartTime,
+																	$CellPhoneOptIn,
+																	$PayrollSystemName,
+																	$JobViteReqID,
+																	$DateOfSenority,
+																	$ExpenseCurrencyID,
+																	$CurrentADPLocation,
+																	$SiteIndicator,
+																	$PictureOptIn,
+																	$CurrentMDMBusinessSiteID
+																	), 'MD5')"/>
+					</xsl:variable>
+
+					<xsl:element name="md5_checksum">
+						<xsl:value-of select="$CurrentADPEmployeeMD5"/>
+					</xsl:element>
+
+					<xsl:choose>
+						<xsl:when test="$CurrentRowExists = false()">
+							<xsl:element name="Action">INSERT</xsl:element>
+						</xsl:when>
+						<xsl:otherwise>
+							<xsl:choose>
+								<xsl:when test="$CurrentADPEmployeeMD5 != $CurrentMDMEmployeeMD5">
+									<xsl:element name="Action">UPDATE</xsl:element>
+								</xsl:when>
+								<xsl:otherwise>
+									<xsl:element name="Action">NOCHANGES</xsl:element>
+								</xsl:otherwise>
+							</xsl:choose>
+						</xsl:otherwise>
+					</xsl:choose>
+
+				</xsl:element>
+			</xsl:for-each>
+		</xsl:element>
+	</xsl:template>
+</xsl:stylesheet>

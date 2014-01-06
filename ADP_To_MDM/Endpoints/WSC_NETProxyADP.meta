@@ -1,0 +1,11 @@
+<com.approuter.studio.repository.model.EntryMetaData>
+  <__metaData>
+    <properties/>
+  </__metaData>
+  <__namespace>http://www.approuter.com/schemas/2004/1/module/webservice/endpoint/</__namespace>
+  <__commentText>Proxy Web Service implemented in .NET to connect to ADP Secure Web-Services to get Employee specific information.
+Cast Iron orchestrations invoke the .NET ADP Proxy WS which in turn invokes the ADP Secure Web Services.</__commentText>
+  <__valid>true</__valid>
+  <__hidden>false</__hidden>
+  <__guid>E653A2237B6194C755C26F45DE2852E5</__guid>
+</com.approuter.studio.repository.model.EntryMetaData>

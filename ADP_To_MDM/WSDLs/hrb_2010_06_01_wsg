@@ -1,0 +1,1375 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document><main name="hrb_2010_06_01_wsg" type="http://www.approuter.com/schemas/2003/1/wsdl/"><wsdl:definitions targetNamespace="https://hrbws.iat.adp.com" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:rmp="http://schemas.xmlsoap.org/ws/2005/02/rm/policy" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy" xmlns:tns="https://hrbws.iat.adp.com" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsse="http://schemas.xmlsoap.org/ws/2002/xx/secext" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+	<wsp:Policy wsu:Id="MessagePolicy">
+		<wsp:ExactlyOne>
+			<wsp:All>
+				<sp:WssUsernameToken11/></wsp:All><wsp:All>
+				<sp:WssUsernameToken10/></wsp:All></wsp:ExactlyOne></wsp:Policy><wsdl:types>
+		<xsd:schema>
+			<xsd:import namespace="http://schemas.xmlsoap.org/ws/2002/xx/secext" schemaLocation="wsse.xsd"/><xsd:import namespace="http://www.w3.org/2000/09/xmldsig#" schemaLocation="xmldsig.xsd"/></xsd:schema><xsd:schema>
+			<xsd:simpleType name="LocalDateType">
+				<xsd:restriction base="xsd:date">
+					<xsd:minInclusive value="1900-01-01"/><xsd:pattern value="\d\d\d\d-\d\d-\d\d"/></xsd:restriction></xsd:simpleType><xsd:simpleType name="LocalTimeType">
+				<xsd:restriction base="xsd:time">
+					<xsd:minInclusive value="00:00:00"/><xsd:maxInclusive value="23:59:59"/><xsd:pattern value="\d\d:\d\d:\d\d"/></xsd:restriction></xsd:simpleType><xsd:simpleType name="CustomFieldDateType">
+				<xsd:restriction base="xsd:string">
+					<xsd:pattern value="\d{4}\-\d{2}\-\d{2}"/></xsd:restriction></xsd:simpleType><xsd:complexType name="EffectiveDatesType">
+				<xsd:sequence>
+					<xsd:element name="StartDate" type="LocalDateType"/><xsd:element minOccurs="0" name="EndDate" type="LocalDateType"/></xsd:sequence></xsd:complexType><xsd:simpleType name="FormattedStringType">
+				<xsd:restriction base="xsd:string">
+					<xsd:maxLength value="64"/></xsd:restriction></xsd:simpleType><xsd:simpleType name="UsernameType">
+				<xsd:restriction base="xsd:string">
+					<xsd:maxLength value="20"/><xsd:minLength value="1"/><xsd:pattern value="[0-9a-zA-Z_\.\-]{1,20}"/></xsd:restriction></xsd:simpleType><xsd:simpleType name="EmailType">
+				<xsd:restriction base="xsd:string">
+					<xsd:pattern value="()|(\S+@{1}.+\S+)"/></xsd:restriction></xsd:simpleType><xsd:simpleType name="PhoneNumberType">
+				<xsd:restriction base="xsd:string"/></xsd:simpleType><xsd:simpleType name="CompanyIdentifierType">
+				<xsd:restriction base="xsd:string">
+					<xsd:maxLength value="30"/></xsd:restriction></xsd:simpleType><xsd:simpleType name="YesNoValueType">
+				<xsd:restriction base="xsd:string">
+					<xsd:enumeration value=""/><xsd:enumeration value="Yes"/><xsd:enumeration value="No"/></xsd:restriction></xsd:simpleType><xsd:simpleType name="GenderType">
+				<xsd:restriction base="xsd:string">
+					<xsd:enumeration value="Male"/><xsd:enumeration value="Female"/></xsd:restriction></xsd:simpleType><xsd:simpleType name="MaritalStatusCodeType">
+				<xsd:restriction base="xsd:string">
+					<xsd:enumeration value="Single"/><xsd:enumeration value="Divorced"/><xsd:enumeration value="Separated"/><xsd:enumeration value="Married"/><xsd:enumeration value="Unmarried"/><xsd:enumeration value="Widowed"/></xsd:restriction></xsd:simpleType><xsd:simpleType name="NationalIdOwnerType">
+				<xsd:restriction base="xsd:string">
+					<xsd:enumeration value="AA"/><xsd:enumeration value="AD"/><xsd:enumeration value="AE"/><xsd:enumeration value="AF"/><xsd:enumeration value="AG"/><xsd:enumeration value="AI"/><xsd:enumeration value="AL"/><xsd:enumeration value="AM"/><xsd:enumeration value="AN"/><xsd:enumeration value="AO"/><xsd:enumeration value="AQ"/><xsd:enumeration value="AR"/><xsd:enumeration value="AS"/><xsd:enumeration value="AT"/><xsd:enumeration value="AU"/><xsd:enumeration value="AW"/><xsd:enumeration value="AZ"/><xsd:enumeration value="BA"/><xsd:enumeration value="BB"/><xsd:enumeration value="BD"/><xsd:enumeration value="BE"/><xsd:enumeration value="BF"/><xsd:enumeration value="BG"/><xsd:enumeration value="BH"/><xsd:enumeration value="BI"/><xsd:enumeration value="BJ"/><xsd:enumeration value="BM"/><xsd:enumeration value="BN"/><xsd:enumeration value="BO"/><xsd:enumeration value="BR"/><xsd:enumeration value="BS"/><xsd:enumeration value="BT"/><xsd:enumeration value="BV"/><xsd:enumeration value="BW"/><xsd:enumeration value="BY"/><xsd:enumeration value="BZ"/><xsd:enumeration value="CA"/><xsd:enumeration value="CC"/><xsd:enumeration value="CD"/><xsd:enumeration value="CF"/><xsd:enumeration value="CG"/><xsd:enumeration value="CH"/><xsd:enumeration value="CI"/><xsd:enumeration value="CK"/><xsd:enumeration value="CL"/><xsd:enumeration value="CM"/><xsd:enumeration value="CN"/><xsd:enumeration value="CO"/><xsd:enumeration value="CR"/><xsd:enumeration value="CU"/><xsd:enumeration value="CV"/><xsd:enumeration value="CX"/><xsd:enumeration value="CY"/><xsd:enumeration value="CZ"/><xsd:enumeration value="DE"/><xsd:enumeration value="DJ"/><xsd:enumeration value="DK"/><xsd:enumeration value="DM"/><xsd:enumeration value="DO"/><xsd:enumeration value="DZ"/><xsd:enumeration value="EC"/><xsd:enumeration value="EE"/><xsd:enumeration value="EG"/><xsd:enumeration value="EH"/><xsd:enumeration value="ER"/><xsd:enumeration value="ES"/><xsd:enumeration value="ET"/><xsd:enumeration value="FI"/><xsd:enumeration value="FJ"/><xsd:enumeration value="FK"/><xsd:enumeration value="FM"/><xsd:enumeration value="FO"/><xsd:enumeration value="FR"/><xsd:enumeration value="FX"/><xsd:enumeration value="GA"/><xsd:enumeration value="GB"/><xsd:enumeration value="GD"/><xsd:enumeration value="GE"/><xsd:enumeration value="GF"/><xsd:enumeration value="GH"/><xsd:enumeration value="GI"/><xsd:enumeration value="GL"/><xsd:enumeration value="GM"/><xsd:enumeration value="GN"/><xsd:enumeration value="GP"/><xsd:enumeration value="GQ"/><xsd:enumeration value="GR"/><xsd:enumeration value="GS"/><xsd:enumeration value="GT"/><xsd:enumeration value="GU"/><xsd:enumeration value="GW"/><xsd:enumeration value="GY"/><xsd:enumeration value="HK"/><xsd:enumeration value="HM"/><xsd:enumeration value="HN"/><xsd:enumeration value="HR"/><xsd:enumeration value="HT"/><xsd:enumeration value="HU"/><xsd:enumeration value="ID"/><xsd:enumeration value="IE"/><xsd:enumeration value="IL"/><xsd:enumeration value="IN"/><xsd:enumeration value="IO"/><xsd:enumeration value="IQ"/><xsd:enumeration value="IR"/><xsd:enumeration value="IS"/><xsd:enumeration value="IT"/><xsd:enumeration value="JM"/><xsd:enumeration value="JO"/><xsd:enumeration value="JP"/><xsd:enumeration value="KE"/><xsd:enumeration value="KG"/><xsd:enumeration value="KH"/><xsd:enumeration value="KI"/><xsd:enumeration value="KM"/><xsd:enumeration value="KN"/><xsd:enumeration value="KP"/><xsd:enumeration value="KR"/><xsd:enumeration value="KW"/><xsd:enumeration value="KY"/><xsd:enumeration value="KZ"/><xsd:enumeration value="LA"/><xsd:enumeration value="LB"/><xsd:enumeration value="LC"/><xsd:enumeration value="LI"/><xsd:enumeration value="LK"/><xsd:enumeration value="LR"/><xsd:enumeration value="LS"/><xsd:enumeration value="LT"/><xsd:enumeration value="LU"/><xsd:enumeration value="LV"/><xsd:enumeration value="LY"/><xsd:enumeration value="MA"/><xsd:enumeration value="MC"/><xsd:enumeration value="MD"/><xsd:enumeration value="MG"/><xsd:enumeration value="MH"/><xsd:enumeration value="MK"/><xsd:enumeration value="ML"/><xsd:enumeration value="MM"/><xsd:enumeration value="MN"/><xsd:enumeration value="MO"/><xsd:enumeration value="MP"/><xsd:enumeration value="MQ"/><xsd:enumeration value="MR"/><xsd:enumeration value="MS"/><xsd:enumeration value="MT"/><xsd:enumeration value="MU"/><xsd:enumeration value="MV"/><xsd:enumeration value="MW"/><xsd:enumeration value="MX"/><xsd:enumeration value="MY"/><xsd:enumeration value="MZ"/><xsd:enumeration value="NA"/><xsd:enumeration value="NC"/><xsd:enumeration value="NE"/><xsd:enumeration value="NF"/><xsd:enumeration value="NG"/><xsd:enumeration value="NI"/><xsd:enumeration value="NL"/><xsd:enumeration value="NO"/><xsd:enumeration value="NP"/><xsd:enumeration value="NR"/><xsd:enumeration value="NU"/><xsd:enumeration value="NZ"/><xsd:enumeration value="OM"/><xsd:enumeration value="PA"/><xsd:enumeration value="PE"/><xsd:enumeration value="PF"/><xsd:enumeration value="PG"/><xsd:enumeration value="PH"/><xsd:enumeration value="PK"/><xsd:enumeration value="PL"/><xsd:enumeration value="PM"/><xsd:enumeration value="PN"/><xsd:enumeration value="PR"/><xsd:enumeration value="PS"/><xsd:enumeration value="PT"/><xsd:enumeration value="PW"/><xsd:enumeration value="PY"/><xsd:enumeration value="QA"/><xsd:enumeration value="RE"/><xsd:enumeration value="RO"/><xsd:enumeration value="RU"/><xsd:enumeration value="RW"/><xsd:enumeration value="SA"/><xsd:enumeration value="SB"/><xsd:enumeration value="SC"/><xsd:enumeration value="SD"/><xsd:enumeration value="SE"/><xsd:enumeration value="SG"/><xsd:enumeration value="SH"/><xsd:enumeration value="SI"/><xsd:enumeration value="SJ"/><xsd:enumeration value="SK"/><xsd:enumeration value="SL"/><xsd:enumeration value="SM"/><xsd:enumeration value="SN"/><xsd:enumeration value="SO"/><xsd:enumeration value="SR"/><xsd:enumeration value="SS"/><xsd:enumeration value="ST"/><xsd:enumeration value="SV"/><xsd:enumeration value="SY"/><xsd:enumeration value="SZ"/><xsd:enumeration value="TC"/><xsd:enumeration value="TD"/><xsd:enumeration value="TF"/><xsd:enumeration value="TG"/><xsd:enumeration value="TH"/><xsd:enumeration value="TJ"/><xsd:enumeration value="TK"/><xsd:enumeration value="TL"/><xsd:enumeration value="TM"/><xsd:enumeration value="TN"/><xsd:enumeration value="TO"/><xsd:enumeration value="TR"/><xsd:enumeration value="TT"/><xsd:enumeration value="TV"/><xsd:enumeration value="TW"/><xsd:enumeration value="TZ"/><xsd:enumeration value="UA"/><xsd:enumeration value="UG"/><xsd:enumeration value="UM"/><xsd:enumeration value="US"/><xsd:enumeration value="UY"/><xsd:enumeration value="UZ"/><xsd:enumeration value="VA"/><xsd:enumeration value="VC"/><xsd:enumeration value="VE"/><xsd:enumeration value="VG"/><xsd:enumeration value="VI"/><xsd:enumeration value="VN"/><xsd:enumeration value="VU"/><xsd:enumeration value="WF"/><xsd:enumeration value="WS"/><xsd:enumeration value="YE"/><xsd:enumeration value="YT"/><xsd:enumeration value="YU"/><xsd:enumeration value="ZA"/><xsd:enumeration value="ZM"/><xsd:enumeration value="ZW"/></xsd:restriction></xsd:simpleType><xsd:complexType name="MaritalStatusType">
+				<xsd:sequence>
+					<xsd:element name="MaritalStatusCode" type="MaritalStatusCodeType"/><xsd:element minOccurs="0" name="EffectiveDate" type="LocalDateType"/></xsd:sequence></xsd:complexType><xsd:complexType name="NationalIdType">
+				<xsd:simpleContent>
+					<xsd:extension base="FormattedStringType">
+						<xsd:attribute name="idOwner" type="NationalIdOwnerType" use="required"/></xsd:extension></xsd:simpleContent></xsd:complexType><xsd:complexType name="FileNumberType">
+				<xsd:simpleContent>
+					<xsd:extension base="FormattedStringType">
+						<xsd:attribute name="companyCode" type="FormattedStringType" use="required"/><xsd:attribute name="regionCode" type="FormattedStringType" use="optional"/></xsd:extension></xsd:simpleContent></xsd:complexType><xsd:complexType name="PostalAddressType">
+				<xsd:sequence>
+					<xsd:element name="CountryCode" type="NationalIdOwnerType"/><xsd:element minOccurs="0" name="PostalCode" type="FormattedStringType"/><xsd:element minOccurs="0" name="Region" type="FormattedStringType"/><xsd:element minOccurs="0" name="Municipality" type="FormattedStringType"/><xsd:element minOccurs="0" name="DeliveryAddress">
+						<xsd:complexType>
+							<xsd:sequence>
+								<xsd:element maxOccurs="3" minOccurs="0" name="AddressLine" type="FormattedStringType"/></xsd:sequence></xsd:complexType></xsd:element></xsd:sequence></xsd:complexType><xsd:simpleType name="SalutationType">
+				<xsd:restriction base="xsd:string">
+					<xsd:enumeration value=""/><xsd:enumeration value="Mr."/><xsd:enumeration value="Mrs."/><xsd:enumeration value="Ms."/><xsd:enumeration value="Miss"/><xsd:enumeration value="Dr."/><xsd:enumeration value="Hon."/><xsd:enumeration value="Msgr."/><xsd:enumeration value="Rabbi"/><xsd:enumeration value="Rev."/></xsd:restriction></xsd:simpleType><xsd:simpleType name="GenerationalSuffixType">
+				<xsd:restriction base="xsd:string">
+					<xsd:enumeration value=""/><xsd:enumeration value="I"/><xsd:enumeration value="II"/><xsd:enumeration value="III"/><xsd:enumeration value="IV"/><xsd:enumeration value="V"/><xsd:enumeration value="Sr."/><xsd:enumeration value="Jr."/><xsd:enumeration value="2nd"/><xsd:enumeration value="3rd"/><xsd:enumeration value="4th"/><xsd:enumeration value="5th"/></xsd:restriction></xsd:simpleType><xsd:simpleType name="QualificationSuffixType">
+				<xsd:restriction base="xsd:string">
+					<xsd:enumeration value="MD"/><xsd:enumeration value="PhD"/><xsd:enumeration value="Esq."/><xsd:enumeration value="DDS"/><xsd:enumeration value="JD"/><xsd:enumeration value="PA"/><xsd:enumeration value="DO"/><xsd:enumeration value="DPM"/><xsd:enumeration value="RN"/><xsd:enumeration value="NP"/><xsd:enumeration value="CFA"/><xsd:enumeration value="CFP"/><xsd:enumeration value="CPA"/><xsd:enumeration value="DMD"/><xsd:enumeration value="DVM"/><xsd:enumeration value="PharmD"/></xsd:restriction></xsd:simpleType><xsd:complexType name="PersonNameType">
+				<xsd:sequence>
+					<xsd:element minOccurs="0" name="Salutation" type="SalutationType"/><xsd:element name="FirstName" type="FormattedStringType"/><xsd:element minOccurs="0" name="PayrollFirstName" type="FormattedStringType"/><xsd:element minOccurs="0" name="MiddleName" type="FormattedStringType"/><xsd:element name="LastName" type="FormattedStringType"/><xsd:element minOccurs="0" name="PayrollLastName" type="FormattedStringType"/><xsd:element minOccurs="0" name="GenerationalSuffix" type="GenerationalSuffixType"/><xsd:element minOccurs="0" name="QualificationSuffix" type="QualificationSuffixType"/><xsd:element minOccurs="0" name="Nickname" type="FormattedStringType"/></xsd:sequence></xsd:complexType><xsd:complexType name="DependentNameType">
+				<xsd:sequence>
+					<xsd:element name="FirstName" type="FormattedStringType"/><xsd:element minOccurs="0" name="MiddleName" type="FormattedStringType"/><xsd:element name="LastName" type="FormattedStringType"/><xsd:element minOccurs="0" name="GenerationalSuffix" type="GenerationalSuffixType"/><xsd:element minOccurs="0" name="QualificationSuffix" type="QualificationSuffixType"/></xsd:sequence></xsd:complexType><xsd:complexType name="EmployeeKeyType">
+				<xsd:sequence>
+					<xsd:element name="Identifier">
+						<xsd:complexType>
+							<xsd:sequence>
+								<xsd:element minOccurs="0" name="NationalId" type="NationalIdType"/><xsd:element minOccurs="0" name="EmployeeId" type="FormattedStringType"/><xsd:element minOccurs="0" name="FileNumber" type="FileNumberType"/></xsd:sequence></xsd:complexType></xsd:element><xsd:element name="CompanyIdentifier" type="CompanyIdentifierType"/></xsd:sequence></xsd:complexType><xsd:complexType name="EmployeeReportsToType">
+				<xsd:sequence>
+					<xsd:element name="EmployeeKey" type="EmployeeKeyType"/><xsd:element name="ManagerKey" type="EmployeeKeyType"/><xsd:element name="EffectiveInfo" type="EffectiveDatesType"/></xsd:sequence></xsd:complexType><xsd:complexType name="EmployeePersonalInfoType">
+				<xsd:sequence>
+					<xsd:element name="EmployeeKey" type="EmployeeKeyType"/><xsd:element name="PersonalInfo" type="PersonalInfoType"/></xsd:sequence></xsd:complexType><xsd:complexType name="PersonalInfoType">
+				<xsd:sequence>
+					<xsd:element name="PersonName" type="PersonNameType"/><xsd:element name="Gender" type="GenderType"/><xsd:element name="BirthDate" type="LocalDateType"/><xsd:element minOccurs="0" name="PostalAddress" type="PostalAddressType"/><xsd:element minOccurs="0" name="EmailAddress" type="EmailType"/><xsd:element minOccurs="0" name="Phone" type="PhoneNumberType"/><xsd:element minOccurs="0" name="Fax" type="PhoneNumberType"/><xsd:element minOccurs="0" name="Wireless" type="PhoneNumberType"/><xsd:element minOccurs="0" name="Pager" type="PhoneNumberType"/><xsd:element minOccurs="0" name="MaritalStatus" type="MaritalStatusType"/><xsd:element minOccurs="0" name="TobaccoUser" type="YesNoValueType"/><xsd:element minOccurs="0" name="Medicare" type="YesNoValueType"/><xsd:element minOccurs="0" name="Medicaid" type="YesNoValueType"/><xsd:element minOccurs="0" name="Disabled" type="YesNoValueType"/><xsd:element minOccurs="0" name="Veteran" type="YesNoValueType"/><xsd:element minOccurs="0" name="DisabledVeteran" type="YesNoValueType"/><xsd:element minOccurs="0" name="VietnamVeteran" type="YesNoValueType"/><xsd:element minOccurs="0" name="EEOClassification" type="EEOClassificationType"/></xsd:sequence></xsd:complexType><xsd:complexType name="EmployeeWorkInfoType">
+				<xsd:sequence>
+					<xsd:element name="EmployeeKey" type="EmployeeKeyType"/><xsd:element name="WorkInfo" type="WorkInfoType"/></xsd:sequence></xsd:complexType><xsd:complexType name="WorkInfoType">
+				<xsd:sequence>
+					<xsd:element minOccurs="0" name="CompanyCode" type="FormattedStringType"/><xsd:element minOccurs="0" name="RegionCode" type="FormattedStringType"/><xsd:element minOccurs="0" name="FileNumber" type="FormattedStringType"/><xsd:element minOccurs="0" name="EmployeeId" type="FormattedStringType"/><xsd:element minOccurs="0" name="EmailAddress" type="EmailType"/><xsd:element minOccurs="0" name="Phone" type="PhoneNumberType"/><xsd:element minOccurs="0" name="Fax" type="PhoneNumberType"/><xsd:element minOccurs="0" name="Wireless" type="PhoneNumberType"/><xsd:element minOccurs="0" name="Pager" type="PhoneNumberType"/><xsd:element minOccurs="0" name="OriginalHireDate" type="LocalDateType"/><xsd:element minOccurs="0" name="HireDate" type="LocalDateType"/></xsd:sequence></xsd:complexType><xsd:complexType name="EEOClassificationType">
+				<xsd:sequence>
+					<xsd:element minOccurs="0" name="IdentificationMethod">
+						<xsd:simpleType>
+							<xsd:restriction base="xsd:string">
+								<xsd:enumeration value="Visual"/><xsd:enumeration value="Self"/></xsd:restriction></xsd:simpleType></xsd:element><xsd:element minOccurs="1" name="Ethnicity">
+						<xsd:simpleType>
+							<xsd:restriction base="xsd:string">
+								<xsd:enumeration value="Hispanic or Latino"/><xsd:enumeration value="Not Hispanic or Latino"/></xsd:restriction></xsd:simpleType></xsd:element><xsd:element maxOccurs="6" minOccurs="0" name="Race">
+						<xsd:simpleType>
+							<xsd:restriction base="xsd:string">
+								<xsd:enumeration value="American Indian or Alaska Native"/><xsd:enumeration value="Asian"/><xsd:enumeration value="Black or African American"/><xsd:enumeration value="Native Hawaiian or Other Pacific Islander"/><xsd:enumeration value="White"/><xsd:enumeration value="Two or More"/></xsd:restriction></xsd:simpleType></xsd:element></xsd:sequence></xsd:complexType><xsd:complexType name="RequestingUserType">
+				<xsd:sequence>
+					<xsd:element name="CompanyIdentifier" type="CompanyIdentifierType"/><xsd:element name="Username" type="UsernameType"/><xsd:element minOccurs="0" name="Role">
+						<xsd:simpleType>
+							<xsd:restriction base="xsd:string">
+								<xsd:enumeration value="Partner"/><xsd:enumeration value="Employer"/><xsd:enumeration value="Manager"/><xsd:enumeration value="Employee"/></xsd:restriction></xsd:simpleType></xsd:element></xsd:sequence></xsd:complexType><xsd:complexType name="CompanyListFilterType">
+				<xsd:sequence>
+					<xsd:element maxOccurs="unbounded" name="CompanyIdentifier" type="CompanyIdentifierType"/></xsd:sequence></xsd:complexType><xsd:complexType name="TimePeriodFilterType">
+				<xsd:sequence>
+					<xsd:element name="StartDate" type="LocalDateType"/><xsd:element minOccurs="0" name="EndDate" type="LocalDateType"/></xsd:sequence></xsd:complexType><xsd:simpleType name="EffectiveOnFilterType">
+				<xsd:restriction base="LocalDateType"/></xsd:simpleType><xsd:complexType name="EmployeeKeyListFilterType">
+				<xsd:sequence>
+					<xsd:element maxOccurs="unbounded" name="EmployeeKey" type="EmployeeKeyType"/></xsd:sequence></xsd:complexType><xsd:complexType name="EmployeeLastNameKeyType">
+				<xsd:sequence>
+					<xsd:element name="LastName" type="FormattedStringType"/><xsd:element name="CompanyIdentifier" type="CompanyIdentifierType"/></xsd:sequence></xsd:complexType><xsd:complexType name="EmployeeLastNameFilterType">
+				<xsd:sequence>
+					<xsd:element maxOccurs="unbounded" name="LastNameKey" type="EmployeeLastNameKeyType"/></xsd:sequence></xsd:complexType><xsd:complexType name="WorkEventType">
+				<xsd:sequence>
+					<xsd:element name="ProfileName" type="FormattedStringType"/><xsd:element name="ActivationDate" type="LocalDateType"/><xsd:element name="FollowPlanWaitingRules" type="YesNoValueType"/><xsd:element minOccurs="0" name="CoverageEffectiveDate" type="LocalDateType"/><xsd:element name="NotificationMessage" type="xsd:string"/></xsd:sequence></xsd:complexType><xsd:complexType name="EmployeeWorkEventType">
+				<xsd:sequence>
+					<xsd:element name="EmployeeKey" type="EmployeeKeyType"/><xsd:element name="WorkEvent" type="WorkEventType"/></xsd:sequence></xsd:complexType><xsd:element name="ActivateEmployeeWorkEventRequest">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element minOccurs="0" name="RequestingUser" type="RequestingUserType"/><xsd:element name="EmployeeWorkEvents">
+							<xsd:complexType>
+								<xsd:sequence>
+									<xsd:element maxOccurs="unbounded" name="EmployeeWorkEvent" type="EmployeeWorkEventType"/></xsd:sequence></xsd:complexType></xsd:element></xsd:sequence></xsd:complexType></xsd:element><xsd:complexType name="DispositionType">
+				<xsd:sequence>
+					<xsd:element name="Successful" type="xsd:boolean"/><xsd:element maxOccurs="unbounded" minOccurs="0" name="Exception" type="FormattedStringType"/></xsd:sequence></xsd:complexType><xsd:element name="ActivateEmployeeWorkEventResponse">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element maxOccurs="unbounded" name="EmployeeWorkEventStatus">
+							<xsd:complexType>
+								<xsd:sequence>
+									<xsd:element name="EmployeeKey" type="EmployeeKeyType"/><xsd:element name="EmployeeWorkEventDisposition" type="DispositionType"/></xsd:sequence></xsd:complexType></xsd:element></xsd:sequence></xsd:complexType></xsd:element><xsd:simpleType name="AuxiliaryFieldType">
+				<xsd:restriction base="xsd:string">
+					<xsd:maxLength value="255"/></xsd:restriction></xsd:simpleType><xsd:simpleType name="CorpGroupTypeType">
+				<xsd:restriction base="xsd:string">
+					<xsd:enumeration value="Class"/><xsd:enumeration value="Department"/><xsd:enumeration value="Division"/><xsd:enumeration value="Location"/><xsd:enumeration value="Union"/></xsd:restriction></xsd:simpleType><xsd:complexType name="CorpGroupKeyType">
+				<xsd:sequence>
+					<xsd:element name="CorpGroupType" type="CorpGroupTypeType"/><xsd:element name="CorpGroupName" type="FormattedStringType"/><xsd:element name="CompanyIdentifier" type="CompanyIdentifierType"/></xsd:sequence></xsd:complexType><xsd:complexType name="PayGroupKeyType">
+				<xsd:sequence>
+					<xsd:element name="PayGroupName" type="FormattedStringType"/><xsd:element name="CompanyIdentifier" type="CompanyIdentifierType"/></xsd:sequence></xsd:complexType><xsd:complexType name="AddPayGroupRelationshipType">
+				<xsd:sequence>
+					<xsd:element name="TaxEntity" type="FormattedStringType"/><xsd:element minOccurs="0" name="PayCalendar" type="FormattedStringType"/></xsd:sequence></xsd:complexType><xsd:complexType name="ChangePayGroupRelationshipType">
+				<xsd:sequence>
+					<xsd:element name="EffectiveDate" type="LocalDateType"/><xsd:element minOccurs="0" name="TaxEntity" type="FormattedStringType"/><xsd:element minOccurs="0" name="PayCalendar" type="FormattedStringType"/></xsd:sequence></xsd:complexType><xsd:complexType name="CorpGroupType">
+				<xsd:sequence>
+					<xsd:element name="CorpGroupKey" type="CorpGroupKeyType"/><xsd:element name="EffectiveInfo" type="EffectiveDatesType"/><xsd:element minOccurs="0" name="CorpGroupCode" type="FormattedStringType"/><xsd:element minOccurs="0" name="Contact" type="FormattedStringType"/><xsd:element minOccurs="0" name="Address" type="PostalAddressType"/><xsd:element minOccurs="0" name="EmailAddress" type="EmailType"/><xsd:element minOccurs="0" name="Phone" type="PhoneNumberType"/><xsd:element minOccurs="0" name="Fax" type="PhoneNumberType"/><xsd:element maxOccurs="5" minOccurs="0" name="Auxiliary">
+						<xsd:complexType>
+							<xsd:simpleContent>
+								<xsd:extension base="AuxiliaryFieldType">
+									<xsd:attribute name="position" use="required">
+										<xsd:simpleType>
+											<xsd:restriction base="xsd:int">
+												<xsd:maxInclusive value="5"/><xsd:minInclusive value="1"/></xsd:restriction></xsd:simpleType></xsd:attribute></xsd:extension></xsd:simpleContent></xsd:complexType></xsd:element></xsd:sequence></xsd:complexType><xsd:complexType name="AddPayGroupType">
+				<xsd:sequence>
+					<xsd:element name="PayGroupKey" type="PayGroupKeyType"/><xsd:element name="EffectiveInfo" type="EffectiveDatesType"/><xsd:element minOccurs="0" name="PayGroupCode" type="FormattedStringType"/><xsd:element minOccurs="0" name="Contact" type="FormattedStringType"/><xsd:element minOccurs="0" name="Address" type="PostalAddressType"/><xsd:element minOccurs="0" name="EmailAddress" type="EmailType"/><xsd:element minOccurs="0" name="Phone" type="PhoneNumberType"/><xsd:element minOccurs="0" name="Fax" type="PhoneNumberType"/><xsd:element maxOccurs="5" minOccurs="0" name="Auxiliary">
+						<xsd:complexType>
+							<xsd:simpleContent>
+								<xsd:extension base="AuxiliaryFieldType">
+									<xsd:attribute name="position">
+										<xsd:simpleType>
+											<xsd:restriction base="xsd:int">
+												<xsd:maxInclusive value="5"/><xsd:minInclusive value="1"/></xsd:restriction></xsd:simpleType></xsd:attribute></xsd:extension></xsd:simpleContent></xsd:complexType></xsd:element><xsd:element name="PayGroupRelationship" type="AddPayGroupRelationshipType"/></xsd:sequence></xsd:complexType><xsd:complexType name="ChangePayGroupType">
+				<xsd:sequence>
+					<xsd:element name="PayGroupKey" type="PayGroupKeyType"/><xsd:element name="EffectiveInfo" type="EffectiveDatesType"/><xsd:element minOccurs="0" name="PayGroupName" type="FormattedStringType"/><xsd:element minOccurs="0" name="PayGroupCode" type="FormattedStringType"/><xsd:element minOccurs="0" name="Contact" type="FormattedStringType"/><xsd:element minOccurs="0" name="Address" type="PostalAddressType"/><xsd:element minOccurs="0" name="EmailAddress" type="EmailType"/><xsd:element minOccurs="0" name="Phone" type="PhoneNumberType"/><xsd:element minOccurs="0" name="Fax" type="PhoneNumberType"/><xsd:element maxOccurs="5" minOccurs="0" name="Auxiliary">
+						<xsd:complexType>
+							<xsd:simpleContent>
+								<xsd:extension base="AuxiliaryFieldType">
+									<xsd:attribute name="position">
+										<xsd:simpleType>
+											<xsd:restriction base="xsd:int">
+												<xsd:maxInclusive value="5"/><xsd:minInclusive value="1"/></xsd:restriction></xsd:simpleType></xsd:attribute></xsd:extension></xsd:simpleContent></xsd:complexType></xsd:element><xsd:element minOccurs="0" name="PayGroupRelationship" type="ChangePayGroupRelationshipType"/></xsd:sequence></xsd:complexType><xsd:complexType name="EmployeeCorpGroupType">
+				<xsd:sequence>
+					<xsd:element name="EmployeeKey" type="EmployeeKeyType"/><xsd:element name="CorpGroupKey" type="CorpGroupKeyType"/><xsd:element name="EffectiveInfo" type="EffectiveDatesType"/><xsd:element minOccurs="0" name="WorkEvent" type="WorkEventType"/></xsd:sequence></xsd:complexType><xsd:complexType name="EmployeePayGroupType">
+				<xsd:sequence>
+					<xsd:element name="EmployeeKey" type="EmployeeKeyType"/><xsd:element name="PayGroupKey" type="PayGroupKeyType"/><xsd:element name="EffectiveInfo" type="EffectiveDatesType"/></xsd:sequence></xsd:complexType><xsd:complexType name="TerminateCorpGroupType">
+				<xsd:sequence>
+					<xsd:element name="TerminateCorpGroupKey" type="CorpGroupKeyType"/><xsd:element name="TerminationDate" type="LocalDateType"/><xsd:element minOccurs="0" name="TerminationReason" type="FormattedStringType"/><xsd:element minOccurs="0" name="LastDayOfCoverage" type="LocalDateType"/><xsd:element name="TransferToCorpGroupKey" type="CorpGroupKeyType"/></xsd:sequence></xsd:complexType><xsd:complexType name="TerminatePayGroupType">
+				<xsd:sequence>
+					<xsd:element name="TerminatePayGroupKey" type="PayGroupKeyType"/><xsd:element name="TerminationDate" type="LocalDateType"/><xsd:element name="TransferToPayGroupKey" type="PayGroupKeyType"/></xsd:sequence></xsd:complexType><xsd:complexType name="PayGroupKeyListFilterType">
+				<xsd:sequence>
+					<xsd:element maxOccurs="unbounded" name="PayGroupKey" type="PayGroupKeyType"/></xsd:sequence></xsd:complexType><xsd:complexType name="CorpGroupKeyListFilterType">
+				<xsd:sequence>
+					<xsd:element maxOccurs="unbounded" name="CorpGroupKey" type="CorpGroupKeyType"/></xsd:sequence></xsd:complexType><xsd:complexType name="CorpGroupTypesFilterType">
+				<xsd:sequence>
+					<xsd:element maxOccurs="5" name="CorpGroupType" type="CorpGroupTypeType"/></xsd:sequence></xsd:complexType><xsd:element name="AddCorpGroupRequest">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element minOccurs="0" name="RequestingUser" type="RequestingUserType"/><xsd:element name="CorpGroups">
+							<xsd:complexType>
+								<xsd:sequence>
+									<xsd:element maxOccurs="unbounded" name="CorpGroup" type="CorpGroupType"/></xsd:sequence></xsd:complexType></xsd:element></xsd:sequence></xsd:complexType></xsd:element><xsd:element name="AddCorpGroupResponse">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element maxOccurs="unbounded" name="CorpGroupStatus">
+							<xsd:complexType>
+								<xsd:sequence>
+									<xsd:element name="CorpGroupKey" type="CorpGroupKeyType"/><xsd:element name="CorpGroupDisposition" type="DispositionType"/></xsd:sequence></xsd:complexType></xsd:element></xsd:sequence></xsd:complexType></xsd:element><xsd:complexType name="CustomFieldKeyType">
+				<xsd:sequence>
+					<xsd:element name="CustomFieldName" type="FormattedStringType"/><xsd:element name="CustomFieldRelation">
+						<xsd:simpleType>
+							<xsd:restriction base="xsd:string">
+								<xsd:enumeration value="Employee"/><xsd:enumeration value="Dependent"/></xsd:restriction></xsd:simpleType></xsd:element><xsd:element name="CompanyIdentifier" type="CompanyIdentifierType"/></xsd:sequence></xsd:complexType><xsd:simpleType name="CustomFieldRelationType">
+				<xsd:restriction base="xsd:string"/></xsd:simpleType><xsd:simpleType name="CustomFieldPositionType">
+				<xsd:restriction base="xsd:string"/></xsd:simpleType><xsd:simpleType name="CustomFieldESSPositionType">
+				<xsd:restriction base="xsd:string"/></xsd:simpleType><xsd:simpleType name="CustomFieldDataTypeType">
+				<xsd:restriction base="xsd:string">
+					<xsd:enumeration value="Text"/><xsd:enumeration value="Money"/><xsd:enumeration value="Date"/><xsd:enumeration value="Drop List"/><xsd:enumeration value="Number"/><xsd:enumeration value="Yes or No"/><xsd:enumeration value="Phone Number"/><xsd:enumeration value="Percent"/><xsd:enumeration value="Multi-Select Menu"/><xsd:enumeration value="Coded Menu"/></xsd:restriction></xsd:simpleType><xsd:complexType name="CustomFieldValueType">
+				<xsd:sequence>
+					<xsd:element name="Value" type="FormattedStringType"/><xsd:element minOccurs="0" name="Code" type="FormattedStringType"/></xsd:sequence></xsd:complexType><xsd:complexType name="CustomFieldType">
+				<xsd:sequence>
+					<xsd:element name="CustomFieldKey" type="CustomFieldKeyType"/><xsd:element name="CustomFieldDataType" type="CustomFieldDataTypeType"/><xsd:element minOccurs="0" name="CustomFieldPosition" type="CustomFieldPositionType"/><xsd:element minOccurs="0" name="CustomFieldESSPosition" type="CustomFieldESSPositionType"/><xsd:element minOccurs="0" name="CustomFieldOptions">
+						<xsd:complexType>
+							<xsd:sequence>
+								<xsd:element maxOccurs="unbounded" name="CustomFieldOption" type="CustomFieldValueType"/></xsd:sequence></xsd:complexType></xsd:element></xsd:sequence></xsd:complexType><xsd:complexType name="CustomFieldValidatedValueType">
+				<xsd:sequence>
+					<xsd:element minOccurs="0" name="TextValue" type="FormattedStringType"/><xsd:element minOccurs="0" name="MoneyValue" type="CustomFieldDecimalType"/><xsd:element minOccurs="0" name="DateValue" type="CustomFieldDateType"/><xsd:element minOccurs="0" name="ListValue" type="FormattedStringType"/><xsd:element minOccurs="0" name="NumberValue" type="CustomFieldIntegerType"/><xsd:element minOccurs="0" name="YesNoValue" type="YesNoValueType"/><xsd:element minOccurs="0" name="PhoneNumberValue" type="PhoneNumberType"/><xsd:element minOccurs="0" name="PercentValue" type="CustomFieldDecimalType"/><xsd:element minOccurs="0" name="MultiSelectValues" type="MultiSelectValuesType"/><xsd:element minOccurs="0" name="CodeValue" type="FormattedStringType"/></xsd:sequence></xsd:complexType><xsd:complexType name="MultiSelectValuesType">
+				<xsd:sequence>
+					<xsd:element maxOccurs="unbounded" name="MultiSelectValue" type="FormattedStringType"/></xsd:sequence></xsd:complexType><xsd:complexType name="EmployeeCustomFieldType">
+				<xsd:sequence>
+					<xsd:element name="EmployeeKey" type="EmployeeKeyType"/><xsd:element name="CustomFieldKey" type="CustomFieldKeyType"/><xsd:element name="CustomFieldValue" type="CustomFieldValidatedValueType"/></xsd:sequence></xsd:complexType><xsd:simpleType name="CustomFieldIntegerType">
+				<xsd:restriction base="xsd:string">
+					<xsd:pattern value="\d+"/></xsd:restriction></xsd:simpleType><xsd:simpleType name="CustomFieldDecimalType">
+				<xsd:restriction base="xsd:string">
+					<xsd:pattern value="\d+(\.\d{1,4})?"/></xsd:restriction></xsd:simpleType><xsd:complexType name="CustomFieldKeyListFilterType">
+				<xsd:sequence>
+					<xsd:element maxOccurs="unbounded" name="CustomFieldKey" type="CustomFieldKeyType"/></xsd:sequence></xsd:complexType><xsd:element name="AddCustomFieldRequest">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element minOccurs="0" name="RequestingUser" type="RequestingUserType"/><xsd:element name="CustomFields">
+							<xsd:complexType>
+								<xsd:sequence>
+									<xsd:element maxOccurs="unbounded" name="CustomField" type="CustomFieldType"/></xsd:sequence></xsd:complexType></xsd:element></xsd:sequence></xsd:complexType></xsd:element><xsd:element name="AddCustomFieldResponse">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element maxOccurs="unbounded" name="CustomFieldStatus">
+							<xsd:complexType>
+								<xsd:sequence>
+									<xsd:element name="CustomFieldKey" type="CustomFieldKeyType"/><xsd:element name="CustomFieldDisposition" type="DispositionType"/></xsd:sequence></xsd:complexType></xsd:element></xsd:sequence></xsd:complexType></xsd:element><xsd:complexType name="EmployeeEarningsType">
+				<xsd:sequence>
+					<xsd:element name="EmployeeKey" type="EmployeeKeyType"/><xsd:element name="Earnings" type="EarningsType"/></xsd:sequence></xsd:complexType><xsd:complexType name="EarningsAmountType">
+				<xsd:sequence>
+					<xsd:element name="Amount" type="xsd:double"/><xsd:element name="PayUnit" type="PayUnitType"/></xsd:sequence></xsd:complexType><xsd:simpleType name="PayUnitType">
+				<xsd:restriction base="xsd:string">
+					<xsd:enumeration value="Year"/><xsd:enumeration value="Quarter"/><xsd:enumeration value="Month"/><xsd:enumeration value="Half Month"/><xsd:enumeration value="Two Weeks"/><xsd:enumeration value="Week"/><xsd:enumeration value="Hour"/></xsd:restriction></xsd:simpleType><xsd:simpleType name="EarningsTypeType">
+				<xsd:restriction base="xsd:string">
+					<xsd:enumeration value="Base Salary"/><xsd:enumeration value="Bonus"/><xsd:enumeration value="Commission"/><xsd:enumeration value="Draw Level"/><xsd:enumeration value="Other Compensation"/><xsd:enumeration value="Prior Year W2/K1"/></xsd:restriction></xsd:simpleType><xsd:complexType name="EarningsType">
+				<xsd:sequence>
+					<xsd:element name="EarningsType" type="EarningsTypeType"/><xsd:element name="EarningsAmount" type="EarningsAmountType"/><xsd:element minOccurs="0" name="WeeklyHours" type="xsd:double"/><xsd:element name="EffectiveInfo" type="EffectiveDatesType"/><xsd:element minOccurs="0" name="Reason" type="xsd:string"/></xsd:sequence></xsd:complexType><xsd:element name="AddEmployeeEarningsRequest">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element minOccurs="0" name="RequestingUser" type="RequestingUserType"/><xsd:element name="EmployeeEarningsEpochs">
+							<xsd:complexType>
+								<xsd:sequence>
+									<xsd:element maxOccurs="unbounded" name="EmployeeEarnings" type="EmployeeEarningsType"/></xsd:sequence></xsd:complexType></xsd:element></xsd:sequence></xsd:complexType></xsd:element><xsd:element name="AddEmployeeEarningsResponse">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element maxOccurs="unbounded" name="EmployeeEarningsStatus">
+							<xsd:complexType>
+								<xsd:sequence>
+									<xsd:element name="EmployeeKey" type="EmployeeKeyType"/><xsd:element name="EarningsType" type="EarningsTypeType"/><xsd:element name="EmployeeEarningsDisposition" type="DispositionType"/></xsd:sequence></xsd:complexType></xsd:element></xsd:sequence></xsd:complexType></xsd:element><xsd:complexType name="SalaryStructureKeyType">
+				<xsd:sequence>
+					<xsd:element name="SalaryStructureName" type="FormattedStringType"/><xsd:element name="CompanyIdentifier" type="CompanyIdentifierType"/></xsd:sequence></xsd:complexType><xsd:complexType name="SalaryGradeKeyType">
+				<xsd:sequence>
+					<xsd:element name="SalaryStructureName" type="FormattedStringType"/><xsd:element name="SalaryGradeName" type="FormattedStringType"/><xsd:element name="CompanyIdentifier" type="CompanyIdentifierType"/></xsd:sequence></xsd:complexType><xsd:complexType name="SalaryGradeType">
+				<xsd:sequence>
+					<xsd:element name="SalaryGradeKey" type="SalaryGradeKeyType"/><xsd:element name="GradeMinimum">
+						<xsd:simpleType>
+							<xsd:restriction base="xsd:double">
+								<xsd:maxInclusive value="9999999.99"/><xsd:minInclusive value="0"/></xsd:restriction></xsd:simpleType></xsd:element><xsd:element minOccurs="0" name="GradeMidpoint">
+						<xsd:simpleType>
+							<xsd:restriction base="xsd:double">
+								<xsd:maxInclusive value="9999999.99"/><xsd:minInclusive value="0"/></xsd:restriction></xsd:simpleType></xsd:element><xsd:element name="GradeMaximum">
+						<xsd:simpleType>
+							<xsd:restriction base="xsd:double">
+								<xsd:maxInclusive value="9999999.99"/><xsd:minInclusive value="0"/></xsd:restriction></xsd:simpleType></xsd:element></xsd:sequence></xsd:complexType><xsd:complexType name="SalaryStructureType">
+				<xsd:sequence>
+					<xsd:element name="SalaryStructureKey" type="SalaryStructureKeyType"/><xsd:element name="EffectiveInfo" type="EffectiveDatesType"/><xsd:element name="MidRangeType">
+						<xsd:simpleType>
+							<xsd:restriction base="xsd:string">
+								<xsd:enumeration value="Normal"/><xsd:enumeration value="AutoCalculate"/><xsd:enumeration value="Broadband"/></xsd:restriction></xsd:simpleType></xsd:element><xsd:element name="SalaryStructurePayUnit">
+						<xsd:simpleType>
+							<xsd:restriction base="xsd:string">
+								<xsd:enumeration value="Annual"/><xsd:enumeration value="Hourly"/></xsd:restriction></xsd:simpleType></xsd:element><xsd:element name="SalaryGrades">
+						<xsd:complexType>
+							<xsd:sequence>
+								<xsd:element maxOccurs="unbounded" name="SalaryGrade" type="SalaryGradeType"/></xsd:sequence></xsd:complexType></xsd:element></xsd:sequence></xsd:complexType><xsd:complexType name="EmployeeJobTitleType">
+				<xsd:sequence>
+					<xsd:element name="EmployeeKey" type="EmployeeKeyType"/><xsd:element name="JobTitleKey" type="JobTitleKeyType"/><xsd:element name="EffectiveInfo" type="EffectiveDatesType"/></xsd:sequence></xsd:complexType><xsd:complexType name="JobTitleKeyType">
+				<xsd:sequence>
+					<xsd:element name="JobTitle" type="FormattedStringType"/><xsd:element minOccurs="0" name="JobCode" type="FormattedStringType"/><xsd:element name="CompanyIdentifier" type="CompanyIdentifierType"/></xsd:sequence></xsd:complexType><xsd:complexType name="JobTitleType">
+				<xsd:sequence>
+					<xsd:element name="JobTitleKey" type="JobTitleKeyType"/><xsd:element name="EffectiveInfo" type="EffectiveDatesType"/><xsd:element minOccurs="0" name="JobFunction" type="xsd:string"/><xsd:element minOccurs="0" name="JobDescription" type="xsd:string"/><xsd:element minOccurs="0" name="FLSACode">
+						<xsd:simpleType>
+							<xsd:restriction base="xsd:string">
+								<xsd:enumeration value="Exempt"/><xsd:enumeration value="Non-exempt"/></xsd:restriction></xsd:simpleType></xsd:element><xsd:element minOccurs="0" name="EEOClassification">
+						<xsd:simpleType>
+							<xsd:restriction base="xsd:string">
+								<xsd:enumeration value="Executive/Senior Level Officials/Managers"/><xsd:enumeration value="First/Mid Level Officials/Managers"/><xsd:enumeration value="Professionals"/><xsd:enumeration value="Technicians"/><xsd:enumeration value="Sales Workers"/><xsd:enumeration value="Administrative Support Workers"/><xsd:enumeration value="Craft Workers"/><xsd:enumeration value="Operatives"/><xsd:enumeration value="Laborers and Helpers"/><xsd:enumeration value="Service Workers"/><xsd:enumeration value="Not Applicable"/><xsd:enumeration value="Officials/Managers"/></xsd:restriction></xsd:simpleType></xsd:element><xsd:element minOccurs="0" name="ManagementPosition" type="YesNoValueType"/><xsd:element minOccurs="0" name="SalaryGradeKey" type="SalaryGradeKeyType"/><xsd:element minOccurs="0" name="JobSpecificCompetencies">
+						<xsd:complexType>
+							<xsd:sequence>
+								<xsd:element maxOccurs="unbounded" name="JobSpecificCompetency" type="JobSpecificCompetencyType"/></xsd:sequence></xsd:complexType></xsd:element></xsd:sequence></xsd:complexType><xsd:simpleType name="CompetencyType">
+				<xsd:restriction base="xsd:string">
+					<xsd:enumeration value="All Companies"/><xsd:enumeration value="Specific Companies"/></xsd:restriction></xsd:simpleType><xsd:complexType name="CompetencyKeyType">
+				<xsd:sequence>
+					<xsd:element name="CompetencyTitle" type="FormattedStringType"/><xsd:element name="CompanyIdentifier" type="CompanyIdentifierType"/></xsd:sequence></xsd:complexType><xsd:complexType name="JobCompetencyType">
+				<xsd:sequence>
+					<xsd:element name="CompetencyKey" type="CompetencyKeyType"/><xsd:element name="CompetencyDescription" type="xsd:string"/><xsd:element name="CompetencyType" type="CompetencyType"/></xsd:sequence></xsd:complexType><xsd:complexType name="JobSpecificCompetencyType">
+				<xsd:sequence>
+					<xsd:element name="JobCompetencyKey" type="CompetencyKeyType"/><xsd:element name="Weight">
+						<xsd:simpleType>
+							<xsd:restriction base="xsd:integer">
+								<xsd:minExclusive value="0"/><xsd:maxInclusive value="100"/></xsd:restriction></xsd:simpleType></xsd:element></xsd:sequence></xsd:complexType><xsd:complexType name="JobTitleKeyListFilterType">
+				<xsd:sequence>
+					<xsd:element maxOccurs="unbounded" name="JobTitleKey" type="JobTitleKeyType"/></xsd:sequence></xsd:complexType><xsd:element name="AddEmployeeJobTitleRequest">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element minOccurs="0" name="RequestingUser" type="RequestingUserType"/><xsd:element name="EmployeeJobTitles">
+							<xsd:complexType>
+								<xsd:sequence>
+									<xsd:element maxOccurs="unbounded" name="EmployeeJobTitle" type="EmployeeJobTitleType"/></xsd:sequence></xsd:complexType></xsd:element></xsd:sequence></xsd:complexType></xsd:element><xsd:element name="AddEmployeeJobTitleResponse">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element maxOccurs="unbounded" name="EmployeeJobTitleStatus">
+							<xsd:complexType>
+								<xsd:sequence>
+									<xsd:element name="EmployeeKey" type="EmployeeKeyType"/><xsd:element name="JobTitleKey" type="JobTitleKeyType"/><xsd:element name="EmployeeJobTitleDisposition" type="DispositionType"/></xsd:sequence></xsd:complexType></xsd:element></xsd:sequence></xsd:complexType></xsd:element><xsd:element name="AddEmployeeReportsToRequest">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element minOccurs="0" name="RequestingUser" type="RequestingUserType"/><xsd:element name="EmployeeReportsTos">
+							<xsd:complexType>
+								<xsd:sequence>
+									<xsd:element maxOccurs="unbounded" name="EmployeeReportsTo" type="EmployeeReportsToType"/></xsd:sequence></xsd:complexType></xsd:element></xsd:sequence></xsd:complexType></xsd:element><xsd:element name="AddEmployeeReportsToResponse">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element maxOccurs="unbounded" name="EmployeeReportsToStatus">
+							<xsd:complexType>
+								<xsd:sequence>
+									<xsd:element name="EmployeeKey" type="EmployeeKeyType"/><xsd:element name="EmployeeReportsToDisposition" type="DispositionType"/></xsd:sequence></xsd:complexType></xsd:element></xsd:sequence></xsd:complexType></xsd:element><xsd:element name="AddJobCompetencyRequest">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element minOccurs="0" name="RequestingUser" type="RequestingUserType"/><xsd:element name="JobCompetencies">
+							<xsd:complexType>
+								<xsd:sequence>
+									<xsd:element maxOccurs="unbounded" name="JobCompetency" type="JobCompetencyType"/></xsd:sequence></xsd:complexType></xsd:element></xsd:sequence></xsd:complexType></xsd:element><xsd:element name="AddJobCompetencyResponse">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element maxOccurs="unbounded" name="JobCompetencyStatus">
+							<xsd:complexType>
+								<xsd:sequence>
+									<xsd:element name="JobCompetencyKey" type="CompetencyKeyType"/><xsd:element name="JobCompetencyDisposition" type="DispositionType"/></xsd:sequence></xsd:complexType></xsd:element></xsd:sequence></xsd:complexType></xsd:element><xsd:element name="AddJobTitleRequest">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element minOccurs="0" name="RequestingUser" type="RequestingUserType"/><xsd:element name="JobTitles">
+							<xsd:complexType>
+								<xsd:sequence>
+									<xsd:element maxOccurs="unbounded" name="JobTitle" type="JobTitleType"/></xsd:sequence></xsd:complexType></xsd:element></xsd:sequence></xsd:complexType></xsd:element><xsd:element name="AddJobTitleResponse">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element maxOccurs="unbounded" name="JobTitleStatus">
+							<xsd:complexType>
+								<xsd:sequence>
+									<xsd:element name="JobTitleKey" type="JobTitleKeyType"/><xsd:element name="JobTitleDisposition" type="DispositionType"/></xsd:sequence></xsd:complexType></xsd:element></xsd:sequence></xsd:complexType></xsd:element><xsd:simpleType name="LeaveUnitType">
+				<xsd:restriction base="xsd:string">
+					<xsd:enumeration value="Hours"/><xsd:enumeration value="Days"/></xsd:restriction></xsd:simpleType><xsd:complexType name="LeaveAmountType">
+				<xsd:simpleContent>
+					<xsd:extension base="xsd:double">
+						<xsd:attribute name="unit" type="LeaveUnitType" use="required"/></xsd:extension></xsd:simpleContent></xsd:complexType><xsd:complexType name="LeaveActivityEffectiveDatesType">
+				<xsd:sequence>
+					<xsd:element name="StartDate" type="LocalDateType"/><xsd:element name="EndDate" type="LocalDateType"/></xsd:sequence></xsd:complexType><xsd:complexType name="LeaveActivityKeyType">
+				<xsd:sequence>
+					<xsd:element name="Policy" type="FormattedStringType"/><xsd:element name="Transaction" type="FormattedStringType"/><xsd:element name="EffectiveInfo" type="LeaveActivityEffectiveDatesType"/></xsd:sequence></xsd:complexType><xsd:complexType name="AddLeaveActivityType">
+				<xsd:sequence>
+					<xsd:element name="EmployeeKey" type="EmployeeKeyType"/><xsd:element name="Policy" type="FormattedStringType"/><xsd:element name="Transaction" type="FormattedStringType"/><xsd:element name="EffectiveInfo" type="LeaveActivityEffectiveDatesType"/><xsd:element minOccurs="0" name="StartTime" type="LocalTimeType"/><xsd:element name="AmountTaken" type="xsd:double"/></xsd:sequence></xsd:complexType><xsd:complexType name="ChangeLeaveActivityType">
+				<xsd:sequence>
+					<xsd:element name="EmployeeKey" type="EmployeeKeyType"/><xsd:element name="LeaveActivityKey" type="LeaveActivityKeyType"/><xsd:element name="Policy" type="FormattedStringType"/><xsd:element name="Transaction" type="FormattedStringType"/><xsd:element name="EffectiveInfo" type="LeaveActivityEffectiveDatesType"/><xsd:element minOccurs="0" name="StartTime" type="LocalTimeType"/><xsd:element name="AmountTaken" type="xsd:double"/><xsd:element name="Reason" type="FormattedStringType"/></xsd:sequence></xsd:complexType><xsd:complexType name="CancelLeaveActivityType">
+				<xsd:sequence>
+					<xsd:element name="EmployeeKey" type="EmployeeKeyType"/><xsd:element name="LeaveActivityKey" type="LeaveActivityKeyType"/><xsd:element name="Reason" type="FormattedStringType"/></xsd:sequence></xsd:complexType><xsd:complexType name="GetLeaveActivityType">
+				<xsd:sequence>
+					<xsd:element name="EmployeeKey" type="EmployeeKeyType"/><xsd:element name="LeaveActivityKey" type="LeaveActivityKeyType"/><xsd:element name="EnteredDate" type="LocalDateType"/><xsd:element minOccurs="0" name="StartTime" type="LocalTimeType"/><xsd:element name="AmountTaken" type="LeaveAmountType"/></xsd:sequence></xsd:complexType><xsd:complexType name="LeaveBalanceType">
+				<xsd:sequence>
+					<xsd:element name="EmployeeKey" type="EmployeeKeyType"/><xsd:element name="Policy" type="FormattedStringType"/><xsd:element name="AmountEarned" type="LeaveAmountType"/><xsd:element name="AmountTaken" type="LeaveAmountType"/><xsd:element name="AmountRemaining" type="LeaveAmountType"/></xsd:sequence></xsd:complexType><xsd:complexType name="LeavePolicyFilterType">
+				<xsd:sequence>
+					<xsd:element maxOccurs="unbounded" name="Policy" type="FormattedStringType"/></xsd:sequence></xsd:complexType><xsd:element name="AddLeaveActivityRequest">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element minOccurs="0" name="RequestingUser" type="RequestingUserType"/><xsd:element name="LeaveActivities">
+							<xsd:complexType>
+								<xsd:sequence>
+									<xsd:element maxOccurs="unbounded" name="LeaveActivity" type="AddLeaveActivityType"/></xsd:sequence></xsd:complexType></xsd:element></xsd:sequence></xsd:complexType></xsd:element><xsd:element name="AddLeaveActivityResponse">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element maxOccurs="unbounded" name="LeaveActivityStatus">
+							<xsd:complexType>
+								<xsd:sequence>
+									<xsd:element name="EmployeeKey" type="EmployeeKeyType"/><xsd:element name="LeaveActivityKey" type="LeaveActivityKeyType"/><xsd:element name="LeaveActivityDisposition" type="DispositionType"/></xsd:sequence></xsd:complexType></xsd:element></xsd:sequence></xsd:complexType></xsd:element><xsd:element name="AddPayGroupRequest">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element minOccurs="0" name="RequestingUser" type="RequestingUserType"/><xsd:element name="PayGroups">
+							<xsd:complexType>
+								<xsd:sequence>
+									<xsd:element maxOccurs="unbounded" name="PayGroup" type="AddPayGroupType"/></xsd:sequence></xsd:complexType></xsd:element></xsd:sequence></xsd:complexType></xsd:element><xsd:element name="AddPayGroupResponse">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element maxOccurs="unbounded" name="PayGroupStatus">
+							<xsd:complexType>
+								<xsd:sequence>
+									<xsd:element name="PayGroupKey" type="PayGroupKeyType"/><xsd:element name="PayGroupDisposition" type="DispositionType"/></xsd:sequence></xsd:complexType></xsd:element></xsd:sequence></xsd:complexType></xsd:element><xsd:element name="AddSalaryStructureRequest">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element minOccurs="0" name="RequestingUser" type="RequestingUserType"/><xsd:element name="SalaryStructures">
+							<xsd:complexType>
+								<xsd:sequence>
+									<xsd:element maxOccurs="unbounded" name="SalaryStructure" type="SalaryStructureType"/></xsd:sequence></xsd:complexType></xsd:element></xsd:sequence></xsd:complexType></xsd:element><xsd:element name="AddSalaryStructureResponse">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element maxOccurs="unbounded" name="SalaryStructureStatus">
+							<xsd:complexType>
+								<xsd:sequence>
+									<xsd:element name="SalaryStructureKey" type="SalaryStructureKeyType"/><xsd:element name="SalaryStructureDisposition" type="DispositionType"/></xsd:sequence></xsd:complexType></xsd:element></xsd:sequence></xsd:complexType></xsd:element><xsd:complexType name="UserKeyType">
+				<xsd:sequence>
+					<xsd:element name="Username" type="UsernameType"/><xsd:element name="CompanyIdentifier" type="CompanyIdentifierType"/></xsd:sequence></xsd:complexType><xsd:simpleType name="PasswordType">
+				<xsd:restriction base="xsd:string">
+					<xsd:maxLength value="16"/><xsd:minLength value="8"/><xsd:pattern value="(.*[0-9].*[a-zA-Z].*)|(.*[a-zA-Z].*[0-9].*)"/></xsd:restriction></xsd:simpleType><xsd:complexType name="UserType">
+				<xsd:sequence>
+					<xsd:element name="UserKey" type="UserKeyType"/><xsd:element minOccurs="0" name="Password" type="PasswordType"/><xsd:element name="EmployeeKey" type="EmployeeKeyType"/><xsd:element name="AdministrativeUserKey" type="UserKeyType"/><xsd:element name="EnableDataUpdateWizard" type="YesNoValueType"/></xsd:sequence></xsd:complexType><xsd:element name="AddUserRequest">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element minOccurs="0" name="RequestingUser" type="RequestingUserType"/><xsd:element name="Users">
+							<xsd:complexType>
+								<xsd:sequence>
+									<xsd:element maxOccurs="unbounded" name="User" type="UserType"/></xsd:sequence></xsd:complexType></xsd:element></xsd:sequence></xsd:complexType></xsd:element><xsd:element name="AddUserResponse">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element maxOccurs="unbounded" name="UserStatus">
+							<xsd:complexType>
+								<xsd:sequence>
+									<xsd:element name="UserKey" type="UserKeyType"/><xsd:element name="UserDisposition" type="DispositionType"/></xsd:sequence></xsd:complexType></xsd:element></xsd:sequence></xsd:complexType></xsd:element><xsd:element name="ChangeCorpGroupRequest">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element minOccurs="0" name="RequestingUser" type="RequestingUserType"/><xsd:element name="CorpGroups">
+							<xsd:complexType>
+								<xsd:sequence>
+									<xsd:element maxOccurs="unbounded" name="CorpGroup" type="CorpGroupType"/></xsd:sequence></xsd:complexType></xsd:element></xsd:sequence></xsd:complexType></xsd:element><xsd:element name="ChangeCorpGroupResponse">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element maxOccurs="unbounded" name="CorpGroupStatus">
+							<xsd:complexType>
+								<xsd:sequence>
+									<xsd:element name="CorpGroupKey" type="CorpGroupKeyType"/><xsd:element name="CorpGroupDisposition" type="DispositionType"/></xsd:sequence></xsd:complexType></xsd:element></xsd:sequence></xsd:complexType></xsd:element><xsd:element name="ChangeEmployeeCorpGroupRequest">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element minOccurs="0" name="RequestingUser" type="RequestingUserType"/><xsd:element name="EmployeeCorpGroups">
+							<xsd:complexType>
+								<xsd:sequence>
+									<xsd:element maxOccurs="unbounded" name="EmployeeCorpGroup" type="EmployeeCorpGroupType"/></xsd:sequence></xsd:complexType></xsd:element></xsd:sequence></xsd:complexType></xsd:element><xsd:element name="ChangeEmployeeCorpGroupResponse">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element maxOccurs="unbounded" name="EmployeeCorpGroupStatus">
+							<xsd:complexType>
+								<xsd:sequence>
+									<xsd:element name="EmployeeKey" type="EmployeeKeyType"/><xsd:element name="CorpGroupKey" type="CorpGroupKeyType"/><xsd:element name="EmployeeCorpGroupDisposition" type="DispositionType"/></xsd:sequence></xsd:complexType></xsd:element></xsd:sequence></xsd:complexType></xsd:element><xsd:element name="ChangeEmployeeCustomFieldRequest">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element minOccurs="0" name="RequestingUser" type="RequestingUserType"/><xsd:element name="EmployeeCustomFields">
+							<xsd:complexType>
+								<xsd:sequence>
+									<xsd:element maxOccurs="unbounded" name="EmployeeCustomField" type="EmployeeCustomFieldType"/></xsd:sequence></xsd:complexType></xsd:element></xsd:sequence></xsd:complexType></xsd:element><xsd:element name="ChangeEmployeeCustomFieldResponse">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element maxOccurs="unbounded" name="EmployeeCustomFieldStatus">
+							<xsd:complexType>
+								<xsd:sequence>
+									<xsd:element name="EmployeeKey" type="EmployeeKeyType"/><xsd:element name="CustomFieldKey" type="CustomFieldKeyType"/><xsd:element name="EmployeeCustomFieldDisposition" type="DispositionType"/></xsd:sequence></xsd:complexType></xsd:element></xsd:sequence></xsd:complexType></xsd:element><xsd:element name="ChangeEmployeeEarningsRequest">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element minOccurs="0" name="RequestingUser" type="RequestingUserType"/><xsd:element name="EmployeeEarningsEpochs">
+							<xsd:complexType>
+								<xsd:sequence>
+									<xsd:element maxOccurs="unbounded" name="EmployeeEarnings" type="EmployeeEarningsType"/></xsd:sequence></xsd:complexType></xsd:element></xsd:sequence></xsd:complexType></xsd:element><xsd:element name="ChangeEmployeeEarningsResponse">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element maxOccurs="unbounded" name="EmployeeEarningsStatus">
+							<xsd:complexType>
+								<xsd:sequence>
+									<xsd:element name="EmployeeKey" type="EmployeeKeyType"/><xsd:element name="EarningsType" type="EarningsTypeType"/><xsd:element name="EmployeeEarningsDisposition" type="DispositionType"/></xsd:sequence></xsd:complexType></xsd:element></xsd:sequence></xsd:complexType></xsd:element><xsd:element name="ChangeEmployeeJobTitleRequest">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element minOccurs="0" name="RequestingUser" type="RequestingUserType"/><xsd:element name="EmployeeJobTitles">
+							<xsd:complexType>
+								<xsd:sequence>
+									<xsd:element maxOccurs="unbounded" name="EmployeeJobTitle" type="EmployeeJobTitleType"/></xsd:sequence></xsd:complexType></xsd:element></xsd:sequence></xsd:complexType></xsd:element><xsd:element name="ChangeEmployeeJobTitleResponse">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element maxOccurs="unbounded" name="EmployeeJobTitleStatus">
+							<xsd:complexType>
+								<xsd:sequence>
+									<xsd:element name="EmployeeKey" type="EmployeeKeyType"/><xsd:element name="JobTitleKey" type="JobTitleKeyType"/><xsd:element name="EmployeeJobTitleDisposition" type="DispositionType"/></xsd:sequence></xsd:complexType></xsd:element></xsd:sequence></xsd:complexType></xsd:element><xsd:element name="ChangeEmployeePayGroupRequest">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element minOccurs="0" name="RequestingUser" type="RequestingUserType"/><xsd:element name="EmployeePayGroups">
+							<xsd:complexType>
+								<xsd:sequence>
+									<xsd:element maxOccurs="unbounded" name="EmployeePayGroup" type="EmployeePayGroupType"/></xsd:sequence></xsd:complexType></xsd:element></xsd:sequence></xsd:complexType></xsd:element><xsd:element name="ChangeEmployeePayGroupResponse">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element maxOccurs="unbounded" name="EmployeePayGroupStatus">
+							<xsd:complexType>
+								<xsd:sequence>
+									<xsd:element name="EmployeeKey" type="EmployeeKeyType"/><xsd:element name="PayGroupKey" type="PayGroupKeyType"/><xsd:element name="EmployeePayGroupDisposition" type="DispositionType"/></xsd:sequence></xsd:complexType></xsd:element></xsd:sequence></xsd:complexType></xsd:element><xsd:element name="ChangeEmployeePersonalInfoRequest">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element minOccurs="0" name="RequestingUser" type="RequestingUserType"/><xsd:element name="EmployeePersonalInfos">
+							<xsd:complexType>
+								<xsd:sequence>
+									<xsd:element maxOccurs="unbounded" name="EmployeePersonalInfo" type="EmployeePersonalInfoType"/></xsd:sequence></xsd:complexType></xsd:element></xsd:sequence></xsd:complexType></xsd:element><xsd:element name="ChangeEmployeePersonalInfoResponse">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element maxOccurs="unbounded" name="EmployeePersonalInfoStatus">
+							<xsd:complexType>
+								<xsd:sequence>
+									<xsd:element name="EmployeeKey" type="EmployeeKeyType"/><xsd:element name="EmployeePersonalInfoDisposition" type="DispositionType"/></xsd:sequence></xsd:complexType></xsd:element></xsd:sequence></xsd:complexType></xsd:element><xsd:element name="ChangeEmployeeReportsToRequest">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element minOccurs="0" name="RequestingUser" type="RequestingUserType"/><xsd:element name="EmployeeReportsTos">
+							<xsd:complexType>
+								<xsd:sequence>
+									<xsd:element maxOccurs="unbounded" name="EmployeeReportsTo" type="EmployeeReportsToType"/></xsd:sequence></xsd:complexType></xsd:element></xsd:sequence></xsd:complexType></xsd:element><xsd:element name="ChangeEmployeeReportsToResponse">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element maxOccurs="unbounded" name="EmployeeReportsToStatus">
+							<xsd:complexType>
+								<xsd:sequence>
+									<xsd:element name="EmployeeKey" type="EmployeeKeyType"/><xsd:element name="EmployeeReportsToDisposition" type="DispositionType"/></xsd:sequence></xsd:complexType></xsd:element></xsd:sequence></xsd:complexType></xsd:element><xsd:simpleType name="FullPartTimeType">
+				<xsd:restriction base="xsd:string">
+					<xsd:enumeration value="Full-time"/><xsd:enumeration value="Part-time"/><xsd:enumeration value="Unknown"/><xsd:enumeration value="Neither"/></xsd:restriction></xsd:simpleType><xsd:simpleType name="StatusCodeType">
+				<xsd:restriction base="xsd:string">
+					<xsd:enumeration value="Active"/><xsd:enumeration value="On Leave"/><xsd:enumeration value="Retired"/><xsd:enumeration value="Terminated"/></xsd:restriction></xsd:simpleType><xsd:simpleType name="StatusClassificationType">
+				<xsd:restriction base="xsd:string"/></xsd:simpleType><xsd:simpleType name="LeavePlansActionType">
+				<xsd:restriction base="xsd:string">
+					<xsd:enumeration value="Unassign"/><xsd:enumeration value="Stop Accrual"/><xsd:enumeration value="Ignore"/></xsd:restriction></xsd:simpleType><xsd:complexType name="EmployeeStatusType">
+				<xsd:sequence>
+					<xsd:element name="EmployeeKey" type="EmployeeKeyType"/><xsd:element name="StatusName" type="StatusCodeType"/><xsd:element name="StatusClassification" type="StatusClassificationType"/><xsd:element name="FullPartTime" type="FullPartTimeType"/><xsd:element minOccurs="0" name="Reason" type="FormattedStringType"/><xsd:element name="EffectiveInfo" type="EffectiveDatesType"/></xsd:sequence></xsd:complexType><xsd:complexType name="COBRAEventType">
+				<xsd:sequence>
+					<xsd:element name="EventName">
+						<xsd:simpleType>
+							<xsd:restriction base="xsd:string">
+								<xsd:enumeration value="Termination"/><xsd:enumeration value="Death"/><xsd:enumeration value="Divorce"/><xsd:enumeration value="Layoff"/><xsd:enumeration value="Retirement"/><xsd:enumeration value="Strike"/><xsd:enumeration value="Company Bankruptcy"/><xsd:enumeration value="Reduction in Hours"/><xsd:enumeration value="Loss of Dependent Status"/><xsd:enumeration value="Medicare Entitlement"/><xsd:enumeration value="Social Security Disability"/><xsd:enumeration value="Separation"/><xsd:enumeration value="On Leave"/></xsd:restriction></xsd:simpleType></xsd:element><xsd:element name="NotificationDate" type="LocalDateType"/></xsd:sequence></xsd:complexType><xsd:complexType name="TerminatingEmployeeType">
+				<xsd:sequence>
+					<xsd:element name="EmployeeKey" type="EmployeeKeyType"/><xsd:element name="ActionDate">
+						<xsd:complexType>
+							<xsd:sequence>
+								<xsd:element minOccurs="0" name="LastDayWorked" type="LocalDateType"/><xsd:element minOccurs="0" name="EffectiveDate" type="LocalDateType"/></xsd:sequence></xsd:complexType></xsd:element><xsd:element name="Reason" type="FormattedStringType"/><xsd:element name="StatusClassification" type="StatusClassificationType"/><xsd:element name="FullPartTime" type="FullPartTimeType"/><xsd:element name="SuspendUserAccounts" type="YesNoValueType"/><xsd:element name="TerminateBenefits" type="YesNoValueType"/><xsd:element name="LeavePlansAction" type="LeavePlansActionType"/><xsd:element minOccurs="0" name="COBRAEvent" type="COBRAEventType"/><xsd:element name="ARRAEligible" type="YesNoValueType"/></xsd:sequence></xsd:complexType><xsd:complexType name="ClassificationChangingEmployeeType">
+				<xsd:sequence>
+					<xsd:element name="EmployeeKey" type="EmployeeKeyType"/><xsd:element name="ActionDate" type="LocalDateType"/><xsd:element name="Reason" type="FormattedStringType"/><xsd:element name="StatusClassification" type="StatusClassificationType"/><xsd:element name="FullPartTime" type="FullPartTimeType"/><xsd:element name="SuspendUserAccounts" type="YesNoValueType"/><xsd:element name="TerminateBenefits" type="YesNoValueType"/><xsd:element name="LeavePlansAction" type="LeavePlansActionType"/><xsd:element minOccurs="0" name="COBRAEvent" type="COBRAEventType"/></xsd:sequence></xsd:complexType><xsd:complexType name="RehiringEmployeeType">
+				<xsd:sequence>
+					<xsd:element name="EmployeeKey" type="EmployeeKeyType"/><xsd:element name="RehireDate" type="LocalDateType"/><xsd:element name="Reason" type="FormattedStringType"/><xsd:element name="StatusClassification" type="StatusClassificationType"/><xsd:element name="FullPartTime" type="FullPartTimeType"/></xsd:sequence></xsd:complexType><xsd:complexType name="ReturningEmployeeType">
+				<xsd:sequence>
+					<xsd:element name="EmployeeKey" type="EmployeeKeyType"/><xsd:element name="ReturnDate" type="LocalDateType"/><xsd:element name="Reason" type="FormattedStringType"/><xsd:element name="StatusClassification" type="StatusClassificationType"/><xsd:element name="FullPartTime" type="FullPartTimeType"/></xsd:sequence></xsd:complexType><xsd:complexType name="HiringEmployeeType">
+				<xsd:sequence>
+					<xsd:element name="EmployeeKey" type="EmployeeKeyType"/><xsd:element name="HireDate" type="LocalDateType"/><xsd:element name="Reason" type="FormattedStringType"/><xsd:element name="StatusClassification" type="StatusClassificationType"/><xsd:element name="FullPartTime" type="FullPartTimeType"/><xsd:element name="PersonalInfo" type="PersonalInfoType"/><xsd:element name="WorkInfo" type="WorkInfoType"/><xsd:element name="CorpGroups">
+						<xsd:complexType>
+							<xsd:sequence>
+								<xsd:element name="Division" type="CorpGroupKeyType"/><xsd:element name="Location" type="CorpGroupKeyType"/><xsd:element name="Class" type="CorpGroupKeyType"/><xsd:element name="Department" type="CorpGroupKeyType"/><xsd:element name="Union" type="CorpGroupKeyType"/></xsd:sequence></xsd:complexType></xsd:element><xsd:element name="PayGroup" type="PayGroupKeyType"/></xsd:sequence></xsd:complexType><xsd:element name="ChangeEmployeeStatusClassificationRequest">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element minOccurs="0" name="RequestingUser" type="RequestingUserType"/><xsd:element name="Employees">
+							<xsd:complexType>
+								<xsd:sequence>
+									<xsd:element maxOccurs="unbounded" name="Employee" type="ClassificationChangingEmployeeType"/></xsd:sequence></xsd:complexType></xsd:element></xsd:sequence></xsd:complexType></xsd:element><xsd:element name="ChangeEmployeeStatusClassificationResponse">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element maxOccurs="unbounded" name="EmployeeStatus">
+							<xsd:complexType>
+								<xsd:sequence>
+									<xsd:element name="EmployeeKey" type="EmployeeKeyType"/><xsd:element name="EmployeeDisposition" type="DispositionType"/></xsd:sequence></xsd:complexType></xsd:element></xsd:sequence></xsd:complexType></xsd:element><xsd:element name="ChangeEmployeeWorkInfoRequest">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element minOccurs="0" name="RequestingUser" type="RequestingUserType"/><xsd:element name="EmployeeWorkInfos">
+							<xsd:complexType>
+								<xsd:sequence>
+									<xsd:element maxOccurs="unbounded" name="EmployeeWorkInfo" type="EmployeeWorkInfoType"/></xsd:sequence></xsd:complexType></xsd:element></xsd:sequence></xsd:complexType></xsd:element><xsd:element name="ChangeEmployeeWorkInfoResponse">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element maxOccurs="unbounded" name="EmployeeWorkInfoStatus">
+							<xsd:complexType>
+								<xsd:sequence>
+									<xsd:element name="EmployeeKey" type="EmployeeKeyType"/><xsd:element name="EmployeeWorkInfoDisposition" type="DispositionType"/></xsd:sequence></xsd:complexType></xsd:element></xsd:sequence></xsd:complexType></xsd:element><xsd:element name="ChangeJobCompetencyRequest">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element minOccurs="0" name="RequestingUser" type="RequestingUserType"/><xsd:element name="JobCompetencies">
+							<xsd:complexType>
+								<xsd:sequence>
+									<xsd:element maxOccurs="unbounded" name="JobCompetency" type="JobCompetencyType"/></xsd:sequence></xsd:complexType></xsd:element></xsd:sequence></xsd:complexType></xsd:element><xsd:element name="ChangeJobCompetencyResponse">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element maxOccurs="unbounded" name="JobCompetencyStatus">
+							<xsd:complexType>
+								<xsd:sequence>
+									<xsd:element name="JobCompetencyKey" type="CompetencyKeyType"/><xsd:element name="JobCompetencyDisposition" type="DispositionType"/></xsd:sequence></xsd:complexType></xsd:element></xsd:sequence></xsd:complexType></xsd:element><xsd:element name="ChangeJobTitleRequest">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element minOccurs="0" name="RequestingUser" type="RequestingUserType"/><xsd:element name="JobTitles">
+							<xsd:complexType>
+								<xsd:sequence>
+									<xsd:element maxOccurs="unbounded" name="JobTitle" type="JobTitleType"/></xsd:sequence></xsd:complexType></xsd:element></xsd:sequence></xsd:complexType></xsd:element><xsd:element name="ChangeJobTitleResponse">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element maxOccurs="unbounded" name="JobTitleStatus">
+							<xsd:complexType>
+								<xsd:sequence>
+									<xsd:element name="JobTitleKey" type="JobTitleKeyType"/><xsd:element name="JobTitleDisposition" type="DispositionType"/></xsd:sequence></xsd:complexType></xsd:element></xsd:sequence></xsd:complexType></xsd:element><xsd:element name="ChangeLeaveActivityRequest">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element minOccurs="0" name="RequestingUser" type="RequestingUserType"/><xsd:element name="LeaveActivities">
+							<xsd:complexType>
+								<xsd:sequence>
+									<xsd:element maxOccurs="unbounded" name="LeaveActivity" type="ChangeLeaveActivityType"/></xsd:sequence></xsd:complexType></xsd:element></xsd:sequence></xsd:complexType></xsd:element><xsd:element name="ChangeLeaveActivityResponse">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element maxOccurs="unbounded" name="LeaveActivityStatus">
+							<xsd:complexType>
+								<xsd:sequence>
+									<xsd:element name="EmployeeKey" type="EmployeeKeyType"/><xsd:element name="LeaveActivityKey" type="LeaveActivityKeyType"/><xsd:element name="LeaveActivityDisposition" type="DispositionType"/></xsd:sequence></xsd:complexType></xsd:element></xsd:sequence></xsd:complexType></xsd:element><xsd:element name="ChangePayGroupRequest">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element minOccurs="0" name="RequestingUser" type="RequestingUserType"/><xsd:element name="PayGroups">
+							<xsd:complexType>
+								<xsd:sequence>
+									<xsd:element maxOccurs="unbounded" name="PayGroup" type="ChangePayGroupType"/></xsd:sequence></xsd:complexType></xsd:element></xsd:sequence></xsd:complexType></xsd:element><xsd:element name="ChangePayGroupResponse">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element maxOccurs="unbounded" name="PayGroupStatus">
+							<xsd:complexType>
+								<xsd:sequence>
+									<xsd:element name="PayGroupKey" type="PayGroupKeyType"/><xsd:element name="PayGroupDisposition" type="DispositionType"/></xsd:sequence></xsd:complexType></xsd:element></xsd:sequence></xsd:complexType></xsd:element><xsd:element name="ChangeSalaryStructureRequest">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element minOccurs="0" name="RequestingUser" type="RequestingUserType"/><xsd:element name="SalaryStructures">
+							<xsd:complexType>
+								<xsd:sequence>
+									<xsd:element maxOccurs="unbounded" name="SalaryStructure" type="SalaryStructureType"/></xsd:sequence></xsd:complexType></xsd:element></xsd:sequence></xsd:complexType></xsd:element><xsd:element name="ChangeSalaryStructureResponse">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element maxOccurs="unbounded" name="SalaryStructureStatus">
+							<xsd:complexType>
+								<xsd:sequence>
+									<xsd:element name="SalaryStructureKey" type="SalaryStructureKeyType"/><xsd:element name="SalaryStructureDisposition" type="DispositionType"/></xsd:sequence></xsd:complexType></xsd:element></xsd:sequence></xsd:complexType></xsd:element><xsd:element name="ChangeUserRequest">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element minOccurs="0" name="RequestingUser" type="RequestingUserType"/><xsd:element name="Users">
+							<xsd:complexType>
+								<xsd:sequence>
+									<xsd:element maxOccurs="unbounded" name="User" type="UserType"/></xsd:sequence></xsd:complexType></xsd:element></xsd:sequence></xsd:complexType></xsd:element><xsd:element name="ChangeUserResponse">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element maxOccurs="unbounded" name="UserStatus">
+							<xsd:complexType>
+								<xsd:sequence>
+									<xsd:element name="UserKey" type="UserKeyType"/><xsd:element name="UserDisposition" type="DispositionType"/></xsd:sequence></xsd:complexType></xsd:element></xsd:sequence></xsd:complexType></xsd:element><xsd:element name="DeleteLeaveActivityRequest">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element minOccurs="0" name="RequestingUser" type="RequestingUserType"/><xsd:element name="LeaveActivities">
+							<xsd:complexType>
+								<xsd:sequence>
+									<xsd:element maxOccurs="unbounded" name="LeaveActivity" type="CancelLeaveActivityType"/></xsd:sequence></xsd:complexType></xsd:element></xsd:sequence></xsd:complexType></xsd:element><xsd:element name="DeleteLeaveActivityResponse">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element maxOccurs="unbounded" name="LeaveActivityStatus">
+							<xsd:complexType>
+								<xsd:sequence>
+									<xsd:element name="EmployeeKey" type="EmployeeKeyType"/><xsd:element name="LeaveActivityKey" type="LeaveActivityKeyType"/><xsd:element name="LeaveActivityDisposition" type="DispositionType"/></xsd:sequence></xsd:complexType></xsd:element></xsd:sequence></xsd:complexType></xsd:element><xsd:element name="GetCorpGroupRequest">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element minOccurs="0" name="RequestingUser" type="RequestingUserType"/><xsd:element name="EffectiveOn" type="EffectiveOnFilterType"/><xsd:element name="Filter">
+							<xsd:complexType>
+								<xsd:sequence>
+									<xsd:element minOccurs="0" name="Keys" type="CorpGroupKeyListFilterType"/><xsd:element minOccurs="0" name="Combination">
+										<xsd:complexType>
+											<xsd:sequence>
+												<xsd:element name="Companies" type="CompanyListFilterType"/><xsd:element minOccurs="0" name="Types" type="CorpGroupTypesFilterType"/></xsd:sequence></xsd:complexType></xsd:element></xsd:sequence></xsd:complexType></xsd:element></xsd:sequence></xsd:complexType></xsd:element><xsd:element name="GetCorpGroupResponse">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element maxOccurs="unbounded" minOccurs="0" name="CorpGroup" type="CorpGroupType"/></xsd:sequence></xsd:complexType></xsd:element><xsd:element name="GetCustomFieldRequest">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element minOccurs="0" name="RequestingUser" type="RequestingUserType"/><xsd:element name="Filter">
+							<xsd:complexType>
+								<xsd:sequence>
+									<xsd:element minOccurs="0" name="Keys" type="CustomFieldKeyListFilterType"/><xsd:element minOccurs="0" name="Companies" type="CompanyListFilterType"/></xsd:sequence></xsd:complexType></xsd:element></xsd:sequence></xsd:complexType></xsd:element><xsd:element name="GetCustomFieldResponse">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element maxOccurs="unbounded" minOccurs="0" name="CustomField" type="CustomFieldType"/></xsd:sequence></xsd:complexType></xsd:element><xsd:simpleType name="RequiredYesNoValueType">
+				<xsd:restriction base="xsd:string">
+					<xsd:enumeration value="Yes"/><xsd:enumeration value="No"/></xsd:restriction></xsd:simpleType><xsd:simpleType name="DependentRelationship">
+				<xsd:restriction base="xsd:string">
+					<xsd:enumeration value="Spouse"/><xsd:enumeration value="Domestic Partner"/><xsd:enumeration value="Child"/></xsd:restriction></xsd:simpleType><xsd:complexType name="DependentKeyType">
+				<xsd:sequence>
+					<xsd:element name="FirstName" type="FormattedStringType"/><xsd:element name="LastName" type="FormattedStringType"/><xsd:element name="Gender" type="GenderType"/><xsd:element name="BirthDate" type="LocalDateType"/></xsd:sequence></xsd:complexType><xsd:complexType name="DependentPersonalInfo">
+				<xsd:sequence>
+					<xsd:element minOccurs="0" name="NationalId" type="NationalIdType"/><xsd:element name="PersonName" type="DependentNameType"/><xsd:element name="Gender" type="GenderType"/><xsd:element name="BirthDate" type="LocalDateType"/><xsd:element minOccurs="0" name="UseEmployeeAddress" type="RequiredYesNoValueType"/><xsd:element minOccurs="0" name="PostalAddress" type="PostalAddressType"/><xsd:element minOccurs="0" name="Phone" type="PhoneNumberType"/><xsd:element minOccurs="0" name="Student" type="YesNoValueType"/><xsd:element minOccurs="0" name="TobaccoUser" type="YesNoValueType"/><xsd:element minOccurs="0" name="Medicare" type="YesNoValueType"/><xsd:element minOccurs="0" name="Medicaid" type="YesNoValueType"/><xsd:element minOccurs="0" name="Disabled" type="YesNoValueType"/></xsd:sequence></xsd:complexType><xsd:complexType name="DependentBenefitEligibilityPeriodType">
+				<xsd:sequence>
+					<xsd:element minOccurs="0" name="StartDate" type="LocalDateType"/><xsd:element minOccurs="0" name="EndDate" type="LocalDateType"/></xsd:sequence></xsd:complexType><xsd:complexType name="AddDependentType">
+				<xsd:sequence>
+					<xsd:element name="EmployeeKey" type="EmployeeKeyType"/><xsd:element name="Relationship" type="DependentRelationship"/><xsd:element name="PersonalInfo" type="DependentPersonalInfo"/><xsd:sequence>
+						<xsd:element minOccurs="0" name="MaritalStatusEffectiveDate" type="LocalDateType"/><xsd:element minOccurs="0" name="EligibilityPeriod" type="DependentBenefitEligibilityPeriodType"/></xsd:sequence></xsd:sequence></xsd:complexType><xsd:complexType name="ChangeDependentType">
+				<xsd:sequence>
+					<xsd:element name="EmployeeKey" type="EmployeeKeyType"/><xsd:element name="DependentKey" type="DependentKeyType"/><xsd:element name="Relationship" type="DependentRelationship"/><xsd:element name="PersonalInfo" type="DependentPersonalInfo"/><xsd:element minOccurs="0" name="EligibilityPeriod" type="DependentBenefitEligibilityPeriodType"/></xsd:sequence></xsd:complexType><xsd:complexType name="GetDependentType">
+				<xsd:sequence>
+					<xsd:element name="EmployeeKey" type="EmployeeKeyType"/><xsd:element name="Relationship" type="DependentRelationship"/><xsd:element name="PersonalInfo" type="DependentPersonalInfo"/><xsd:element minOccurs="0" name="MaritalStatusEffectiveDate" type="LocalDateType"/><xsd:element minOccurs="0" name="EligibilityPeriod" type="DependentBenefitEligibilityPeriodType"/></xsd:sequence></xsd:complexType><xsd:complexType name="DependentNameFilterType">
+				<xsd:sequence>
+					<xsd:element name="FirstName" type="FormattedStringType"/><xsd:element name="LastName" type="FormattedStringType"/></xsd:sequence></xsd:complexType><xsd:complexType name="DependentNameListFilterType">
+				<xsd:sequence>
+					<xsd:element maxOccurs="unbounded" name="Dependent" type="DependentNameFilterType"/></xsd:sequence></xsd:complexType><xsd:element name="GetDependentRequest">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element minOccurs="0" name="RequestingUser" type="RequestingUserType"/><xsd:element name="Filter">
+							<xsd:complexType>
+								<xsd:sequence>
+									<xsd:sequence>
+										<xsd:element minOccurs="0" name="Employees" type="EmployeeKeyListFilterType"/><xsd:element minOccurs="0" name="Companies" type="CompanyListFilterType"/><xsd:element minOccurs="0" name="EmployeeLastNames" type="EmployeeLastNameFilterType"/></xsd:sequence><xsd:element minOccurs="0" name="Dependents" type="DependentNameListFilterType"/></xsd:sequence></xsd:complexType></xsd:element></xsd:sequence></xsd:complexType></xsd:element><xsd:element name="GetDependentResponse">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element maxOccurs="unbounded" minOccurs="0" name="Dependent" type="GetDependentType"/></xsd:sequence></xsd:complexType></xsd:element><xsd:element name="GetEmployeeCorpGroupRequest">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element minOccurs="0" name="RequestingUser" type="RequestingUserType"/><xsd:element name="EffectiveOn" type="EffectiveOnFilterType"/><xsd:element name="Filter">
+							<xsd:complexType>
+								<xsd:sequence>
+									<xsd:element minOccurs="0" name="Employees" type="EmployeeKeyListFilterType"/><xsd:element minOccurs="0" name="Companies" type="CompanyListFilterType"/><xsd:element minOccurs="0" name="LastNames" type="EmployeeLastNameFilterType"/><xsd:element minOccurs="0" name="Types" type="CorpGroupTypesFilterType"/></xsd:sequence></xsd:complexType></xsd:element></xsd:sequence></xsd:complexType></xsd:element><xsd:element name="GetEmployeeCorpGroupResponse">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element maxOccurs="unbounded" minOccurs="0" name="EmployeeCorpGroup" type="EmployeeCorpGroupType"/></xsd:sequence></xsd:complexType></xsd:element><xsd:element name="GetEmployeeCustomFieldRequest">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element minOccurs="0" name="RequestingUser" type="RequestingUserType"/><xsd:element name="Filter">
+							<xsd:complexType>
+								<xsd:sequence>
+									<xsd:sequence>
+										<xsd:element minOccurs="0" name="Employees" type="EmployeeKeyListFilterType"/><xsd:element minOccurs="0" name="Companies" type="CompanyListFilterType"/><xsd:element minOccurs="0" name="LastNames" type="EmployeeLastNameFilterType"/></xsd:sequence><xsd:element minOccurs="0" name="Fields" type="CustomFieldKeyListFilterType"/></xsd:sequence></xsd:complexType></xsd:element></xsd:sequence></xsd:complexType></xsd:element><xsd:element name="GetEmployeeCustomFieldResponse">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element maxOccurs="unbounded" minOccurs="0" name="EmployeeCustomField" type="EmployeeCustomFieldType"/></xsd:sequence></xsd:complexType></xsd:element><xsd:complexType name="EarningsTypesFilterType">
+				<xsd:sequence>
+					<xsd:element maxOccurs="6" name="EarningsType" type="EarningsTypeType"/></xsd:sequence></xsd:complexType><xsd:element name="GetEmployeeEarningsRequest">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element minOccurs="0" name="RequestingUser" type="RequestingUserType"/><xsd:element name="EffectiveOn" type="EffectiveOnFilterType"/><xsd:element name="Filter">
+							<xsd:complexType>
+								<xsd:sequence>
+									<xsd:element minOccurs="0" name="Employees" type="EmployeeKeyListFilterType"/><xsd:element minOccurs="0" name="Companies" type="CompanyListFilterType"/><xsd:element minOccurs="0" name="LastNames" type="EmployeeLastNameFilterType"/><xsd:element minOccurs="0" name="Types" type="EarningsTypesFilterType"/></xsd:sequence></xsd:complexType></xsd:element></xsd:sequence></xsd:complexType></xsd:element><xsd:element name="GetEmployeeEarningsResponse">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element maxOccurs="unbounded" minOccurs="0" name="EmployeeEarnings" type="EmployeeEarningsType"/></xsd:sequence></xsd:complexType></xsd:element><xsd:element name="GetEmployeeJobTitleRequest">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element minOccurs="0" name="RequestingUser" type="RequestingUserType"/><xsd:element name="EffectiveOn" type="EffectiveOnFilterType"/><xsd:element name="Filter">
+							<xsd:complexType>
+								<xsd:sequence>
+									<xsd:element minOccurs="0" name="Employees" type="EmployeeKeyListFilterType"/><xsd:element minOccurs="0" name="Companies" type="CompanyListFilterType"/><xsd:element minOccurs="0" name="LastNames" type="EmployeeLastNameFilterType"/></xsd:sequence></xsd:complexType></xsd:element></xsd:sequence></xsd:complexType></xsd:element><xsd:element name="GetEmployeeJobTitleResponse">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element maxOccurs="unbounded" minOccurs="0" name="EmployeeJobTitle" type="EmployeeJobTitleType"/></xsd:sequence></xsd:complexType></xsd:element><xsd:element name="GetEmployeePayGroupRequest">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element minOccurs="0" name="RequestingUser" type="RequestingUserType"/><xsd:element name="EffectiveOn" type="EffectiveOnFilterType"/><xsd:element name="Filter">
+							<xsd:complexType>
+								<xsd:sequence>
+									<xsd:element minOccurs="0" name="Employees" type="EmployeeKeyListFilterType"/><xsd:element minOccurs="0" name="Companies" type="CompanyListFilterType"/><xsd:element minOccurs="0" name="LastNames" type="EmployeeLastNameFilterType"/></xsd:sequence></xsd:complexType></xsd:element></xsd:sequence></xsd:complexType></xsd:element><xsd:element name="GetEmployeePayGroupResponse">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element maxOccurs="unbounded" minOccurs="0" name="EmployeePayGroup" type="EmployeePayGroupType"/></xsd:sequence></xsd:complexType></xsd:element><xsd:element name="GetEmployeePersonalInfoRequest">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element minOccurs="0" name="RequestingUser" type="RequestingUserType"/><xsd:element name="Filter">
+							<xsd:complexType>
+								<xsd:sequence>
+									<xsd:element minOccurs="0" name="Employees" type="EmployeeKeyListFilterType"/><xsd:element minOccurs="0" name="Companies" type="CompanyListFilterType"/><xsd:element minOccurs="0" name="LastNames" type="EmployeeLastNameFilterType"/></xsd:sequence></xsd:complexType></xsd:element></xsd:sequence></xsd:complexType></xsd:element><xsd:element name="GetEmployeePersonalInfoResponse">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element maxOccurs="unbounded" minOccurs="0" name="EmployeePersonalInfo" type="EmployeePersonalInfoType"/></xsd:sequence></xsd:complexType></xsd:element><xsd:element name="GetEmployeeReportsToRequest">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element minOccurs="0" name="RequestingUser" type="RequestingUserType"/><xsd:element name="EffectiveOn" type="EffectiveOnFilterType"/><xsd:element name="Filter">
+							<xsd:complexType>
+								<xsd:sequence>
+									<xsd:element minOccurs="0" name="Employees" type="EmployeeKeyListFilterType"/><xsd:element minOccurs="0" name="Managers" type="EmployeeKeyListFilterType"/><xsd:element minOccurs="0" name="Companies" type="CompanyListFilterType"/><xsd:element minOccurs="0" name="LastNames" type="EmployeeLastNameFilterType"/></xsd:sequence></xsd:complexType></xsd:element></xsd:sequence></xsd:complexType></xsd:element><xsd:element name="GetEmployeeReportsToResponse">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element maxOccurs="unbounded" minOccurs="0" name="EmployeeReportsTo" type="EmployeeReportsToType"/></xsd:sequence></xsd:complexType></xsd:element><xsd:complexType name="StatusCodeListFilterType">
+				<xsd:sequence>
+					<xsd:element maxOccurs="4" name="StatusCode" type="StatusCodeType"/></xsd:sequence></xsd:complexType><xsd:element name="GetEmployeeStatusRequest">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element minOccurs="0" name="RequestingUser" type="RequestingUserType"/><xsd:element name="EffectiveOn" type="EffectiveOnFilterType"/><xsd:element name="Filter">
+							<xsd:complexType>
+								<xsd:sequence>
+									<xsd:element minOccurs="0" name="Employees" type="EmployeeKeyListFilterType"/><xsd:element minOccurs="0" name="Companies" type="CompanyListFilterType"/><xsd:element minOccurs="0" name="LastNames" type="EmployeeLastNameFilterType"/><xsd:element minOccurs="0" name="Statuses" type="StatusCodeListFilterType"/></xsd:sequence></xsd:complexType></xsd:element></xsd:sequence></xsd:complexType></xsd:element><xsd:element name="GetEmployeeStatusResponse">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element maxOccurs="unbounded" minOccurs="0" name="EmployeeStatus" type="EmployeeStatusType"/></xsd:sequence></xsd:complexType></xsd:element><xsd:element name="GetEmployeeWorkInfoRequest">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element minOccurs="0" name="RequestingUser" type="RequestingUserType"/><xsd:element name="Filter">
+							<xsd:complexType>
+								<xsd:sequence>
+									<xsd:element minOccurs="0" name="Employees" type="EmployeeKeyListFilterType"/><xsd:element minOccurs="0" name="Companies" type="CompanyListFilterType"/><xsd:element minOccurs="0" name="LastNames" type="EmployeeLastNameFilterType"/></xsd:sequence></xsd:complexType></xsd:element></xsd:sequence></xsd:complexType></xsd:element><xsd:element name="GetEmployeeWorkInfoResponse">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element maxOccurs="unbounded" minOccurs="0" name="EmployeeWorkInfo" type="EmployeeWorkInfoType"/></xsd:sequence></xsd:complexType></xsd:element><xsd:element name="GetJobCompetencyRequest">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element minOccurs="0" name="RequestingUser" type="RequestingUserType"/><xsd:element name="Filter">
+							<xsd:complexType>
+								<xsd:sequence>
+									<xsd:element minOccurs="0" name="Keys" type="JobTitleKeyListFilterType"/><xsd:element minOccurs="0" name="Companies" type="CompanyListFilterType"/></xsd:sequence></xsd:complexType></xsd:element></xsd:sequence></xsd:complexType></xsd:element><xsd:element name="GetJobCompetencyResponse">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element maxOccurs="unbounded" minOccurs="0" name="JobCompetency" type="JobCompetencyType"/></xsd:sequence></xsd:complexType></xsd:element><xsd:element name="GetJobTitleRequest">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element minOccurs="0" name="RequestingUser" type="RequestingUserType"/><xsd:element name="EffectiveOn" type="EffectiveOnFilterType"/><xsd:element minOccurs="0" name="Filter">
+							<xsd:complexType>
+								<xsd:sequence>
+									<xsd:element minOccurs="0" name="Keys" type="JobTitleKeyListFilterType"/><xsd:element minOccurs="0" name="Companies" type="CompanyListFilterType"/></xsd:sequence></xsd:complexType></xsd:element></xsd:sequence></xsd:complexType></xsd:element><xsd:element name="GetJobTitleResponse">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element maxOccurs="unbounded" minOccurs="0" name="JobTitle" type="JobTitleType"/></xsd:sequence></xsd:complexType></xsd:element><xsd:element name="GetLeaveActivityRequest">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element minOccurs="0" name="RequestingUser" type="RequestingUserType"/><xsd:element name="EffectiveInfo" type="LeaveActivityEffectiveDatesType"/><xsd:element name="Filter">
+							<xsd:complexType>
+								<xsd:sequence>
+									<xsd:element minOccurs="0" name="Employees" type="EmployeeKeyListFilterType"/><xsd:element minOccurs="0" name="Companies" type="CompanyListFilterType"/><xsd:element minOccurs="0" name="LastNames" type="EmployeeLastNameFilterType"/><xsd:element minOccurs="0" name="Policies" type="LeavePolicyFilterType"/></xsd:sequence></xsd:complexType></xsd:element></xsd:sequence></xsd:complexType></xsd:element><xsd:element name="GetLeaveActivityResponse">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element maxOccurs="unbounded" minOccurs="0" name="LeaveActivity" type="GetLeaveActivityType"/></xsd:sequence></xsd:complexType></xsd:element><xsd:element name="GetLeaveBalanceRequest">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element minOccurs="0" name="RequestingUser" type="RequestingUserType"/><xsd:element name="EffectiveOn" type="EffectiveOnFilterType"/><xsd:element name="Filter">
+							<xsd:complexType>
+								<xsd:sequence>
+									<xsd:element minOccurs="0" name="Employees" type="EmployeeKeyListFilterType"/><xsd:element minOccurs="0" name="Companies" type="CompanyListFilterType"/><xsd:element minOccurs="0" name="LastNames" type="EmployeeLastNameFilterType"/><xsd:element minOccurs="0" name="Policies" type="LeavePolicyFilterType"/></xsd:sequence></xsd:complexType></xsd:element></xsd:sequence></xsd:complexType></xsd:element><xsd:element name="GetLeaveBalanceResponse">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element maxOccurs="unbounded" minOccurs="0" name="LeaveBalance" type="LeaveBalanceType"/></xsd:sequence></xsd:complexType></xsd:element><xsd:element name="GetPayGroupRequest">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element minOccurs="0" name="RequestingUser" type="RequestingUserType"/><xsd:element name="EffectiveOn" type="EffectiveOnFilterType"/><xsd:element name="Filter">
+							<xsd:complexType>
+								<xsd:sequence>
+									<xsd:element minOccurs="0" name="Keys" type="PayGroupKeyListFilterType"/><xsd:element minOccurs="0" name="Companies" type="CompanyListFilterType"/></xsd:sequence></xsd:complexType></xsd:element></xsd:sequence></xsd:complexType></xsd:element><xsd:element name="GetPayGroupResponse">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element maxOccurs="unbounded" minOccurs="0" name="PayGroup" type="AddPayGroupType"/></xsd:sequence></xsd:complexType></xsd:element><xsd:simpleType name="ReasonCategoryType">
+				<xsd:restriction base="xsd:string">
+					<xsd:enumeration value="Leave"/><xsd:enumeration value="Performance"/><xsd:enumeration value="Status"/><xsd:enumeration value="Job"/><xsd:enumeration value="Benefits"/><xsd:enumeration value="Talent"/><xsd:enumeration value="Corp Group"/></xsd:restriction></xsd:simpleType><xsd:simpleType name="ReasonActionType">
+				<xsd:restriction base="xsd:string">
+					<xsd:enumeration value="Edit Compensation"/><xsd:enumeration value="Delete Compensation"/><xsd:enumeration value="Edit Leave Record"/><xsd:enumeration value="Delete Leave Record"/><xsd:enumeration value="Stop / Restart Accrual"/><xsd:enumeration value="Delete Review"/><xsd:enumeration value="Edit Review"/><xsd:enumeration value="Perform Review"/><xsd:enumeration value="Schedule Review"/><xsd:enumeration value="Change Classification"/><xsd:enumeration value="Hire"/><xsd:enumeration value="Place On Leave"/><xsd:enumeration value="Rehire"/><xsd:enumeration value="Retire"/><xsd:enumeration value="Return From Leave"/><xsd:enumeration value="Terminate"/><xsd:enumeration value="Demote"/><xsd:enumeration value="Other Job Change"/><xsd:enumeration value="Promote"/><xsd:enumeration value="Edit Enrollment"/><xsd:enumeration value="Update Talent"/><xsd:enumeration value="Corp Group Change"/></xsd:restriction></xsd:simpleType><xsd:simpleType name="ReasonHipaaType">
+				<xsd:restriction base="xsd:string">
+					<xsd:enumeration value="(COBRA)"/><xsd:enumeration value="(COBRA) Premium Paid"/><xsd:enumeration value="Active"/><xsd:enumeration value="Adoption"/><xsd:enumeration value="Benefit Selection"/><xsd:enumeration value="Birth"/><xsd:enumeration value="Change in Identifying Data Elements"/><xsd:enumeration value="Change of Location"/><xsd:enumeration value="Death"/><xsd:enumeration value="Declined Coverage"/><xsd:enumeration value="Disability"/><xsd:enumeration value="Divorce"/><xsd:enumeration value="Fired"/><xsd:enumeration value="Initial Enrollment"/><xsd:enumeration value="Lay Off with Benefits"/><xsd:enumeration value="Lay Off without Benefits"/><xsd:enumeration value="Leave of Absence with Benefits"/><xsd:enumeration value="Leave of Absence without Benefits"/><xsd:enumeration value="Legal Separation"/><xsd:enumeration value="Marriage"/><xsd:enumeration value="No Reason Given"/><xsd:enumeration value="Notification Only"/><xsd:enumeration value="Personnel Data"/><xsd:enumeration value="Plan Change"/><xsd:enumeration value="Pre-Enrollment"/><xsd:enumeration value="Primary Care Provider (PCP) Change"/><xsd:enumeration value="Quit"/><xsd:enumeration value="Re-Enrollment"/><xsd:enumeration value="Retirement"/><xsd:enumeration value="Strike"/><xsd:enumeration value="Surviving Spouse"/><xsd:enumeration value="Suspended"/><xsd:enumeration value="Termination of Benefits"/><xsd:enumeration value="Termination of Employment"/><xsd:enumeration value="Transfer"/><xsd:enumeration value="Voluntary Withdrawal"/></xsd:restriction></xsd:simpleType><xsd:complexType name="ReasonType">
+				<xsd:sequence>
+					<xsd:element name="Name" type="FormattedStringType"/><xsd:element name="Action" type="ReasonActionType"/><xsd:element minOccurs="0" name="HIPAA" type="ReasonHipaaType"/><xsd:element minOccurs="0" name="Code" type="FormattedStringType"/></xsd:sequence></xsd:complexType><xsd:complexType name="ReasonActionListFilterType">
+				<xsd:sequence>
+					<xsd:element maxOccurs="unbounded" name="Action" type="ReasonActionType"/></xsd:sequence></xsd:complexType><xsd:element name="GetReasonRequest">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element minOccurs="0" name="RequestingUser" type="RequestingUserType"/><xsd:element name="Filter">
+							<xsd:complexType>
+								<xsd:sequence>
+									<xsd:element minOccurs="0" name="Actions" type="ReasonActionListFilterType"/><xsd:element name="Companies" type="CompanyListFilterType"/></xsd:sequence></xsd:complexType></xsd:element></xsd:sequence></xsd:complexType></xsd:element><xsd:element name="GetReasonResponse">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element maxOccurs="unbounded" minOccurs="0" name="Reason" type="ReasonType"/></xsd:sequence></xsd:complexType></xsd:element><xsd:complexType name="SalaryStructureKeyListFilterType">
+				<xsd:sequence>
+					<xsd:element maxOccurs="unbounded" name="SalaryStructureKey" type="SalaryStructureKeyType"/></xsd:sequence></xsd:complexType><xsd:element name="GetSalaryStructureRequest">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element minOccurs="0" name="RequestingUser" type="RequestingUserType"/><xsd:element name="EffectiveOn" type="EffectiveOnFilterType"/><xsd:element name="Filter">
+							<xsd:complexType>
+								<xsd:sequence>
+									<xsd:element minOccurs="0" name="Keys" type="SalaryStructureKeyListFilterType"/><xsd:element minOccurs="0" name="Companies" type="CompanyListFilterType"/></xsd:sequence></xsd:complexType></xsd:element></xsd:sequence></xsd:complexType></xsd:element><xsd:element name="GetSalaryStructureResponse">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element maxOccurs="unbounded" minOccurs="0" name="SalaryStructure" type="SalaryStructureType"/></xsd:sequence></xsd:complexType></xsd:element><xsd:element name="GetUserRequest">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element minOccurs="0" name="RequestingUser" type="RequestingUserType"/><xsd:element name="Filter">
+							<xsd:complexType>
+								<xsd:sequence>
+									<xsd:element minOccurs="0" name="Employees" type="EmployeeKeyListFilterType"/><xsd:element minOccurs="0" name="Companies" type="CompanyListFilterType"/></xsd:sequence></xsd:complexType></xsd:element></xsd:sequence></xsd:complexType></xsd:element><xsd:element name="GetUserResponse">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element maxOccurs="unbounded" minOccurs="0" name="User" type="UserType"/></xsd:sequence></xsd:complexType></xsd:element><xsd:element name="HireEmployeeRequest">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element minOccurs="0" name="RequestingUser" type="RequestingUserType"/><xsd:element name="Employees">
+							<xsd:complexType>
+								<xsd:sequence>
+									<xsd:element maxOccurs="unbounded" name="Employee" type="HiringEmployeeType"/></xsd:sequence></xsd:complexType></xsd:element></xsd:sequence></xsd:complexType></xsd:element><xsd:element name="HireEmployeeResponse">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element maxOccurs="unbounded" name="EmployeeStatus">
+							<xsd:complexType>
+								<xsd:sequence>
+									<xsd:element name="EmployeeKey" type="EmployeeKeyType"/><xsd:element name="EmployeeDisposition" type="DispositionType"/></xsd:sequence></xsd:complexType></xsd:element></xsd:sequence></xsd:complexType></xsd:element><xsd:element name="PlaceOnLeaveEmployeeRequest">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element minOccurs="0" name="RequestingUser" type="RequestingUserType"/><xsd:element name="Employees">
+							<xsd:complexType>
+								<xsd:sequence>
+									<xsd:element maxOccurs="unbounded" name="Employee" type="TerminatingEmployeeType"/></xsd:sequence></xsd:complexType></xsd:element></xsd:sequence></xsd:complexType></xsd:element><xsd:element name="PlaceOnLeaveEmployeeResponse">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element maxOccurs="unbounded" name="EmployeeStatus">
+							<xsd:complexType>
+								<xsd:sequence>
+									<xsd:element name="EmployeeKey" type="EmployeeKeyType"/><xsd:element name="EmployeeDisposition" type="DispositionType"/></xsd:sequence></xsd:complexType></xsd:element></xsd:sequence></xsd:complexType></xsd:element><xsd:element name="RehireEmployeeRequest">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element minOccurs="0" name="RequestingUser" type="RequestingUserType"/><xsd:element name="Employees">
+							<xsd:complexType>
+								<xsd:sequence>
+									<xsd:element maxOccurs="unbounded" name="Employee" type="RehiringEmployeeType"/></xsd:sequence></xsd:complexType></xsd:element></xsd:sequence></xsd:complexType></xsd:element><xsd:element name="RehireEmployeeResponse">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element maxOccurs="unbounded" name="EmployeeStatus">
+							<xsd:complexType>
+								<xsd:sequence>
+									<xsd:element name="EmployeeKey" type="EmployeeKeyType"/><xsd:element name="EmployeeDisposition" type="DispositionType"/></xsd:sequence></xsd:complexType></xsd:element></xsd:sequence></xsd:complexType></xsd:element><xsd:element name="RetireEmployeeRequest">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element minOccurs="0" name="RequestingUser" type="RequestingUserType"/><xsd:element name="Employees">
+							<xsd:complexType>
+								<xsd:sequence>
+									<xsd:element maxOccurs="unbounded" name="Employee" type="TerminatingEmployeeType"/></xsd:sequence></xsd:complexType></xsd:element></xsd:sequence></xsd:complexType></xsd:element><xsd:element name="RetireEmployeeResponse">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element maxOccurs="unbounded" name="EmployeeStatus">
+							<xsd:complexType>
+								<xsd:sequence>
+									<xsd:element name="EmployeeKey" type="EmployeeKeyType"/><xsd:element name="EmployeeDisposition" type="DispositionType"/></xsd:sequence></xsd:complexType></xsd:element></xsd:sequence></xsd:complexType></xsd:element><xsd:element name="ReturnFromLeaveEmployeeRequest">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element minOccurs="0" name="RequestingUser" type="RequestingUserType"/><xsd:element name="Employees">
+							<xsd:complexType>
+								<xsd:sequence>
+									<xsd:element maxOccurs="unbounded" name="Employee" type="ReturningEmployeeType"/></xsd:sequence></xsd:complexType></xsd:element></xsd:sequence></xsd:complexType></xsd:element><xsd:element name="ReturnFromLeaveEmployeeResponse">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element maxOccurs="unbounded" name="EmployeeStatus">
+							<xsd:complexType>
+								<xsd:sequence>
+									<xsd:element name="EmployeeKey" type="EmployeeKeyType"/><xsd:element name="EmployeeDisposition" type="DispositionType"/></xsd:sequence></xsd:complexType></xsd:element></xsd:sequence></xsd:complexType></xsd:element><xsd:element name="SuspendUserRequest">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element minOccurs="0" name="RequestingUser" type="RequestingUserType"/><xsd:element name="Users">
+							<xsd:complexType>
+								<xsd:sequence>
+									<xsd:element maxOccurs="unbounded" name="UserKey" type="UserKeyType"/></xsd:sequence></xsd:complexType></xsd:element></xsd:sequence></xsd:complexType></xsd:element><xsd:element name="SuspendUserResponse">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element maxOccurs="unbounded" name="UserStatus">
+							<xsd:complexType>
+								<xsd:sequence>
+									<xsd:element name="UserKey" type="UserKeyType"/><xsd:element name="UserDisposition" type="DispositionType"/></xsd:sequence></xsd:complexType></xsd:element></xsd:sequence></xsd:complexType></xsd:element><xsd:element name="TerminateCorpGroupRequest">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element minOccurs="0" name="RequestingUser" type="RequestingUserType"/><xsd:element name="CorpGroups">
+							<xsd:complexType>
+								<xsd:sequence>
+									<xsd:element maxOccurs="unbounded" name="CorpGroup" type="TerminateCorpGroupType"/></xsd:sequence></xsd:complexType></xsd:element></xsd:sequence></xsd:complexType></xsd:element><xsd:element name="TerminateCorpGroupResponse">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element maxOccurs="unbounded" name="CorpGroupStatus">
+							<xsd:complexType>
+								<xsd:sequence>
+									<xsd:element name="CorpGroupKey" type="CorpGroupKeyType"/><xsd:element name="CorpGroupDisposition" type="DispositionType"/></xsd:sequence></xsd:complexType></xsd:element></xsd:sequence></xsd:complexType></xsd:element><xsd:element name="TerminateEmployeeRequest">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element minOccurs="0" name="RequestingUser" type="RequestingUserType"/><xsd:element name="Employees">
+							<xsd:complexType>
+								<xsd:sequence>
+									<xsd:element maxOccurs="unbounded" name="Employee" type="TerminatingEmployeeType"/></xsd:sequence></xsd:complexType></xsd:element></xsd:sequence></xsd:complexType></xsd:element><xsd:element name="TerminateEmployeeResponse">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element maxOccurs="unbounded" name="EmployeeStatus">
+							<xsd:complexType>
+								<xsd:sequence>
+									<xsd:element name="EmployeeKey" type="EmployeeKeyType"/><xsd:element name="EmployeeDisposition" type="DispositionType"/></xsd:sequence></xsd:complexType></xsd:element></xsd:sequence></xsd:complexType></xsd:element><xsd:element name="TerminatePayGroupRequest">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element minOccurs="0" name="RequestingUser" type="RequestingUserType"/><xsd:element name="PayGroups">
+							<xsd:complexType>
+								<xsd:sequence>
+									<xsd:element maxOccurs="unbounded" name="PayGroup" type="TerminatePayGroupType"/></xsd:sequence></xsd:complexType></xsd:element></xsd:sequence></xsd:complexType></xsd:element><xsd:element name="TerminatePayGroupResponse">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element maxOccurs="unbounded" name="PayGroupStatus">
+							<xsd:complexType>
+								<xsd:sequence>
+									<xsd:element name="PayGroupKey" type="PayGroupKeyType"/><xsd:element name="PayGroupDisposition" type="DispositionType"/></xsd:sequence></xsd:complexType></xsd:element></xsd:sequence></xsd:complexType></xsd:element></xsd:schema></wsdl:types><wsdl:message name="ActivateEmployeeWorkEventRequestMessage">
+		<wsdl:part element="ActivateEmployeeWorkEventRequest" name="ActivateEmployeeWorkEventRequestPart"/></wsdl:message><wsdl:message name="ActivateEmployeeWorkEventResponseMessage">
+		<wsdl:part element="ActivateEmployeeWorkEventResponse" name="ActivateEmployeeWorkEventResponsePart"/></wsdl:message><wsdl:message name="AddCorpGroupRequestMessage">
+		<wsdl:part element="AddCorpGroupRequest" name="AddCorpGroupRequestPart"/></wsdl:message><wsdl:message name="AddCorpGroupResponseMessage">
+		<wsdl:part element="AddCorpGroupResponse" name="AddCorpGroupResponsePart"/></wsdl:message><wsdl:message name="AddCustomFieldRequestMessage">
+		<wsdl:part element="AddCustomFieldRequest" name="AddCustomFieldRequestPart"/></wsdl:message><wsdl:message name="AddCustomFieldResponseMessage">
+		<wsdl:part element="AddCustomFieldResponse" name="AddCustomFieldResponsePart"/></wsdl:message><wsdl:message name="AddEmployeeEarningsRequestMessage">
+		<wsdl:part element="AddEmployeeEarningsRequest" name="AddEmployeeEarningsRequestPart"/></wsdl:message><wsdl:message name="AddEmployeeEarningsResponseMessage">
+		<wsdl:part element="AddEmployeeEarningsResponse" name="AddEmployeeEarningsResponsePart"/></wsdl:message><wsdl:message name="AddEmployeeJobTitleRequestMessage">
+		<wsdl:part element="AddEmployeeJobTitleRequest" name="AddEmployeeJobTitleRequestPart"/></wsdl:message><wsdl:message name="AddEmployeeJobTitleResponseMessage">
+		<wsdl:part element="AddEmployeeJobTitleResponse" name="AddEmployeeJobTitleResponsePart"/></wsdl:message><wsdl:message name="AddEmployeeReportsToRequestMessage">
+		<wsdl:part element="AddEmployeeReportsToRequest" name="AddEmployeeReportsToRequestPart"/></wsdl:message><wsdl:message name="AddEmployeeReportsToResponseMessage">
+		<wsdl:part element="AddEmployeeReportsToResponse" name="AddEmployeeReportsToResponsePart"/></wsdl:message><wsdl:message name="AddJobCompetencyRequestMessage">
+		<wsdl:part element="AddJobCompetencyRequest" name="AddJobCompetencyRequestPart"/></wsdl:message><wsdl:message name="AddJobCompetencyResponseMessage">
+		<wsdl:part element="AddJobCompetencyResponse" name="AddJobCompetencyResponsePart"/></wsdl:message><wsdl:message name="AddJobTitleRequestMessage">
+		<wsdl:part element="AddJobTitleRequest" name="AddJobTitleRequestPart"/></wsdl:message><wsdl:message name="AddJobTitleResponseMessage">
+		<wsdl:part element="AddJobTitleResponse" name="AddJobTitleResponsePart"/></wsdl:message><wsdl:message name="AddLeaveActivityRequestMessage">
+		<wsdl:part element="AddLeaveActivityRequest" name="AddLeaveActivityRequestPart"/></wsdl:message><wsdl:message name="AddLeaveActivityResponseMessage">
+		<wsdl:part element="AddLeaveActivityResponse" name="AddLeaveActivityResponsePart"/></wsdl:message><wsdl:message name="AddPayGroupRequestMessage">
+		<wsdl:part element="AddPayGroupRequest" name="AddPayGroupRequestPart"/></wsdl:message><wsdl:message name="AddPayGroupResponseMessage">
+		<wsdl:part element="AddPayGroupResponse" name="AddPayGroupResponsePart"/></wsdl:message><wsdl:message name="AddSalaryStructureRequestMessage">
+		<wsdl:part element="AddSalaryStructureRequest" name="AddSalaryStructureRequestPart"/></wsdl:message><wsdl:message name="AddSalaryStructureResponseMessage">
+		<wsdl:part element="AddSalaryStructureResponse" name="AddSalaryStructureResponsePart"/></wsdl:message><wsdl:message name="AddUserRequestMessage">
+		<wsdl:part element="AddUserRequest" name="AddUserRequestPart"/></wsdl:message><wsdl:message name="AddUserResponseMessage">
+		<wsdl:part element="AddUserResponse" name="AddUserResponsePart"/></wsdl:message><wsdl:message name="ChangeCorpGroupRequestMessage">
+		<wsdl:part element="ChangeCorpGroupRequest" name="ChangeCorpGroupRequestPart"/></wsdl:message><wsdl:message name="ChangeCorpGroupResponseMessage">
+		<wsdl:part element="ChangeCorpGroupResponse" name="ChangeCorpGroupResponsePart"/></wsdl:message><wsdl:message name="ChangeEmployeeCorpGroupRequestMessage">
+		<wsdl:part element="ChangeEmployeeCorpGroupRequest" name="ChangeEmployeeCorpGroupRequestPart"/></wsdl:message><wsdl:message name="ChangeEmployeeCorpGroupResponseMessage">
+		<wsdl:part element="ChangeEmployeeCorpGroupResponse" name="ChangeEmployeeCorpGroupResponsePart"/></wsdl:message><wsdl:message name="ChangeEmployeeCustomFieldRequestMessage">
+		<wsdl:part element="ChangeEmployeeCustomFieldRequest" name="ChangeEmployeeCustomFieldRequestPart"/></wsdl:message><wsdl:message name="ChangeEmployeeCustomFieldResponseMessage">
+		<wsdl:part element="ChangeEmployeeCustomFieldResponse" name="ChangeEmployeeCustomFieldResponsePart"/></wsdl:message><wsdl:message name="ChangeEmployeeEarningsRequestMessage">
+		<wsdl:part element="ChangeEmployeeEarningsRequest" name="ChangeEmployeeEarningsRequestPart"/></wsdl:message><wsdl:message name="ChangeEmployeeEarningsResponseMessage">
+		<wsdl:part element="ChangeEmployeeEarningsResponse" name="ChangeEmployeeEarningsResponsePart"/></wsdl:message><wsdl:message name="ChangeEmployeeJobTitleRequestMessage">
+		<wsdl:part element="ChangeEmployeeJobTitleRequest" name="ChangeEmployeeJobTitleRequestPart"/></wsdl:message><wsdl:message name="ChangeEmployeeJobTitleResponseMessage">
+		<wsdl:part element="ChangeEmployeeJobTitleResponse" name="ChangeEmployeeJobTitleResponsePart"/></wsdl:message><wsdl:message name="ChangeEmployeePayGroupRequestMessage">
+		<wsdl:part element="ChangeEmployeePayGroupRequest" name="ChangeEmployeePayGroupRequestPart"/></wsdl:message><wsdl:message name="ChangeEmployeePayGroupResponseMessage">
+		<wsdl:part element="ChangeEmployeePayGroupResponse" name="ChangeEmployeePayGroupResponsePart"/></wsdl:message><wsdl:message name="ChangeEmployeePersonalInfoRequestMessage">
+		<wsdl:part element="ChangeEmployeePersonalInfoRequest" name="ChangeEmployeePersonalInfoRequestPart"/></wsdl:message><wsdl:message name="ChangeEmployeePersonalInfoResponseMessage">
+		<wsdl:part element="ChangeEmployeePersonalInfoResponse" name="ChangeEmployeePersonalInfoResponsePart"/></wsdl:message><wsdl:message name="ChangeEmployeeReportsToRequestMessage">
+		<wsdl:part element="ChangeEmployeeReportsToRequest" name="ChangeEmployeeReportsToRequestPart"/></wsdl:message><wsdl:message name="ChangeEmployeeReportsToResponseMessage">
+		<wsdl:part element="ChangeEmployeeReportsToResponse" name="ChangeEmployeeReportsToResponsePart"/></wsdl:message><wsdl:message name="ChangeEmployeeStatusClassificationRequestMessage">
+		<wsdl:part element="ChangeEmployeeStatusClassificationRequest" name="ChangeEmployeeStatusClassificationRequestPart"/></wsdl:message><wsdl:message name="ChangeEmployeeStatusClassificationResponseMessage">
+		<wsdl:part element="ChangeEmployeeStatusClassificationResponse" name="ChangeEmployeeStatusClassificationResponsePart"/></wsdl:message><wsdl:message name="ChangeEmployeeWorkInfoRequestMessage">
+		<wsdl:part element="ChangeEmployeeWorkInfoRequest" name="ChangeEmployeeWorkInfoRequestPart"/></wsdl:message><wsdl:message name="ChangeEmployeeWorkInfoResponseMessage">
+		<wsdl:part element="ChangeEmployeeWorkInfoResponse" name="ChangeEmployeeWorkInfoResponsePart"/></wsdl:message><wsdl:message name="ChangeJobCompetencyRequestMessage">
+		<wsdl:part element="ChangeJobCompetencyRequest" name="ChangeJobCompetencyRequestPart"/></wsdl:message><wsdl:message name="ChangeJobCompetencyResponseMessage">
+		<wsdl:part element="ChangeJobCompetencyResponse" name="ChangeJobCompetencyResponsePart"/></wsdl:message><wsdl:message name="ChangeJobTitleRequestMessage">
+		<wsdl:part element="ChangeJobTitleRequest" name="ChangeJobTitleRequestPart"/></wsdl:message><wsdl:message name="ChangeJobTitleResponseMessage">
+		<wsdl:part element="ChangeJobTitleResponse" name="ChangeJobTitleResponsePart"/></wsdl:message><wsdl:message name="ChangeLeaveActivityRequestMessage">
+		<wsdl:part element="ChangeLeaveActivityRequest" name="ChangeLeaveActivityRequestPart"/></wsdl:message><wsdl:message name="ChangeLeaveActivityResponseMessage">
+		<wsdl:part element="ChangeLeaveActivityResponse" name="ChangeLeaveActivityResponsePart"/></wsdl:message><wsdl:message name="ChangePayGroupRequestMessage">
+		<wsdl:part element="ChangePayGroupRequest" name="ChangePayGroupRequestPart"/></wsdl:message><wsdl:message name="ChangePayGroupResponseMessage">
+		<wsdl:part element="ChangePayGroupResponse" name="ChangePayGroupResponsePart"/></wsdl:message><wsdl:message name="ChangeSalaryStructureRequestMessage">
+		<wsdl:part element="ChangeSalaryStructureRequest" name="ChangeSalaryStructureRequestPart"/></wsdl:message><wsdl:message name="ChangeSalaryStructureResponseMessage">
+		<wsdl:part element="ChangeSalaryStructureResponse" name="ChangeSalaryStructureResponsePart"/></wsdl:message><wsdl:message name="ChangeUserRequestMessage">
+		<wsdl:part element="ChangeUserRequest" name="ChangeUserRequestPart"/></wsdl:message><wsdl:message name="ChangeUserResponseMessage">
+		<wsdl:part element="ChangeUserResponse" name="ChangeUserResponsePart"/></wsdl:message><wsdl:message name="DeleteLeaveActivityRequestMessage">
+		<wsdl:part element="DeleteLeaveActivityRequest" name="DeleteLeaveActivityRequestPart"/></wsdl:message><wsdl:message name="DeleteLeaveActivityResponseMessage">
+		<wsdl:part element="DeleteLeaveActivityResponse" name="DeleteLeaveActivityResponsePart"/></wsdl:message><wsdl:message name="GetCorpGroupRequestMessage">
+		<wsdl:part element="GetCorpGroupRequest" name="GetCorpGroupRequestPart"/></wsdl:message><wsdl:message name="GetCorpGroupResponseMessage">
+		<wsdl:part element="GetCorpGroupResponse" name="GetCorpGroupResponsePart"/></wsdl:message><wsdl:message name="GetCustomFieldRequestMessage">
+		<wsdl:part element="GetCustomFieldRequest" name="GetCustomFieldRequestPart"/></wsdl:message><wsdl:message name="GetCustomFieldResponseMessage">
+		<wsdl:part element="GetCustomFieldResponse" name="GetCustomFieldResponsePart"/></wsdl:message><wsdl:message name="GetDependentRequestMessage">
+		<wsdl:part element="GetDependentRequest" name="GetDependentRequestPart"/></wsdl:message><wsdl:message name="GetDependentResponseMessage">
+		<wsdl:part element="GetDependentResponse" name="GetDependentResponsePart"/></wsdl:message><wsdl:message name="GetEmployeeCorpGroupRequestMessage">
+		<wsdl:part element="GetEmployeeCorpGroupRequest" name="GetEmployeeCorpGroupRequestPart"/></wsdl:message><wsdl:message name="GetEmployeeCorpGroupResponseMessage">
+		<wsdl:part element="GetEmployeeCorpGroupResponse" name="GetEmployeeCorpGroupResponsePart"/></wsdl:message><wsdl:message name="GetEmployeeCustomFieldRequestMessage">
+		<wsdl:part element="GetEmployeeCustomFieldRequest" name="GetEmployeeCustomFieldRequestPart"/></wsdl:message><wsdl:message name="GetEmployeeCustomFieldResponseMessage">
+		<wsdl:part element="GetEmployeeCustomFieldResponse" name="GetEmployeeCustomFieldResponsePart"/></wsdl:message><wsdl:message name="GetEmployeeEarningsRequestMessage">
+		<wsdl:part element="GetEmployeeEarningsRequest" name="GetEmployeeEarningsRequestPart"/></wsdl:message><wsdl:message name="GetEmployeeEarningsResponseMessage">
+		<wsdl:part element="GetEmployeeEarningsResponse" name="GetEmployeeEarningsResponsePart"/></wsdl:message><wsdl:message name="GetEmployeeJobTitleRequestMessage">
+		<wsdl:part element="GetEmployeeJobTitleRequest" name="GetEmployeeJobTitleRequestPart"/></wsdl:message><wsdl:message name="GetEmployeeJobTitleResponseMessage">
+		<wsdl:part element="GetEmployeeJobTitleResponse" name="GetEmployeeJobTitleResponsePart"/></wsdl:message><wsdl:message name="GetEmployeePayGroupRequestMessage">
+		<wsdl:part element="GetEmployeePayGroupRequest" name="GetEmployeePayGroupRequestPart"/></wsdl:message><wsdl:message name="GetEmployeePayGroupResponseMessage">
+		<wsdl:part element="GetEmployeePayGroupResponse" name="GetEmployeePayGroupResponsePart"/></wsdl:message><wsdl:message name="GetEmployeePersonalInfoRequestMessage">
+		<wsdl:part element="GetEmployeePersonalInfoRequest" name="GetEmployeePersonalInfoRequestPart"/></wsdl:message><wsdl:message name="GetEmployeePersonalInfoResponseMessage">
+		<wsdl:part element="GetEmployeePersonalInfoResponse" name="GetEmployeePersonalInfoResponsePart"/></wsdl:message><wsdl:message name="GetEmployeeReportsToRequestMessage">
+		<wsdl:part element="GetEmployeeReportsToRequest" name="GetEmployeeReportsToRequestPart"/></wsdl:message><wsdl:message name="GetEmployeeReportsToResponseMessage">
+		<wsdl:part element="GetEmployeeReportsToResponse" name="GetEmployeeReportsToResponsePart"/></wsdl:message><wsdl:message name="GetEmployeeStatusRequestMessage">
+		<wsdl:part element="GetEmployeeStatusRequest" name="GetEmployeeStatusRequestPart"/></wsdl:message><wsdl:message name="GetEmployeeStatusResponseMessage">
+		<wsdl:part element="GetEmployeeStatusResponse" name="GetEmployeeStatusResponsePart"/></wsdl:message><wsdl:message name="GetEmployeeWorkInfoRequestMessage">
+		<wsdl:part element="GetEmployeeWorkInfoRequest" name="GetEmployeeWorkInfoRequestPart"/></wsdl:message><wsdl:message name="GetEmployeeWorkInfoResponseMessage">
+		<wsdl:part element="GetEmployeeWorkInfoResponse" name="GetEmployeeWorkInfoResponsePart"/></wsdl:message><wsdl:message name="GetJobCompetencyRequestMessage">
+		<wsdl:part element="GetJobCompetencyRequest" name="GetJobCompetencyRequestPart"/></wsdl:message><wsdl:message name="GetJobCompetencyResponseMessage">
+		<wsdl:part element="GetJobCompetencyResponse" name="GetJobCompetencyResponsePart"/></wsdl:message><wsdl:message name="GetJobTitleRequestMessage">
+		<wsdl:part element="GetJobTitleRequest" name="GetJobTitleRequestPart"/></wsdl:message><wsdl:message name="GetJobTitleResponseMessage">
+		<wsdl:part element="GetJobTitleResponse" name="GetJobTitleResponsePart"/></wsdl:message><wsdl:message name="GetLeaveActivityRequestMessage">
+		<wsdl:part element="GetLeaveActivityRequest" name="GetLeaveActivityRequestPart"/></wsdl:message><wsdl:message name="GetLeaveActivityResponseMessage">
+		<wsdl:part element="GetLeaveActivityResponse" name="GetLeaveActivityResponsePart"/></wsdl:message><wsdl:message name="GetLeaveBalanceRequestMessage">
+		<wsdl:part element="GetLeaveBalanceRequest" name="GetLeaveBalanceRequestPart"/></wsdl:message><wsdl:message name="GetLeaveBalanceResponseMessage">
+		<wsdl:part element="GetLeaveBalanceResponse" name="GetLeaveBalanceResponsePart"/></wsdl:message><wsdl:message name="GetPayGroupRequestMessage">
+		<wsdl:part element="GetPayGroupRequest" name="GetPayGroupRequestPart"/></wsdl:message><wsdl:message name="GetPayGroupResponseMessage">
+		<wsdl:part element="GetPayGroupResponse" name="GetPayGroupResponsePart"/></wsdl:message><wsdl:message name="GetReasonRequestMessage">
+		<wsdl:part element="GetReasonRequest" name="GetReasonRequestPart"/></wsdl:message><wsdl:message name="GetReasonResponseMessage">
+		<wsdl:part element="GetReasonResponse" name="GetReasonResponsePart"/></wsdl:message><wsdl:message name="GetSalaryStructureRequestMessage">
+		<wsdl:part element="GetSalaryStructureRequest" name="GetSalaryStructureRequestPart"/></wsdl:message><wsdl:message name="GetSalaryStructureResponseMessage">
+		<wsdl:part element="GetSalaryStructureResponse" name="GetSalaryStructureResponsePart"/></wsdl:message><wsdl:message name="GetUserRequestMessage">
+		<wsdl:part element="GetUserRequest" name="GetUserRequestPart"/></wsdl:message><wsdl:message name="GetUserResponseMessage">
+		<wsdl:part element="GetUserResponse" name="GetUserResponsePart"/></wsdl:message><wsdl:message name="HireEmployeeRequestMessage">
+		<wsdl:part element="HireEmployeeRequest" name="HireEmployeeRequestPart"/></wsdl:message><wsdl:message name="HireEmployeeResponseMessage">
+		<wsdl:part element="HireEmployeeResponse" name="HireEmployeeResponsePart"/></wsdl:message><wsdl:message name="PlaceOnLeaveEmployeeRequestMessage">
+		<wsdl:part element="PlaceOnLeaveEmployeeRequest" name="PlaceOnLeaveEmployeeRequestPart"/></wsdl:message><wsdl:message name="PlaceOnLeaveEmployeeResponseMessage">
+		<wsdl:part element="PlaceOnLeaveEmployeeResponse" name="PlaceOnLeaveEmployeeResponsePart"/></wsdl:message><wsdl:message name="RehireEmployeeRequestMessage">
+		<wsdl:part element="RehireEmployeeRequest" name="RehireEmployeeRequestPart"/></wsdl:message><wsdl:message name="RehireEmployeeResponseMessage">
+		<wsdl:part element="RehireEmployeeResponse" name="RehireEmployeeResponsePart"/></wsdl:message><wsdl:message name="RetireEmployeeRequestMessage">
+		<wsdl:part element="RetireEmployeeRequest" name="RetireEmployeeRequestPart"/></wsdl:message><wsdl:message name="RetireEmployeeResponseMessage">
+		<wsdl:part element="RetireEmployeeResponse" name="RetireEmployeeResponsePart"/></wsdl:message><wsdl:message name="ReturnFromLeaveEmployeeRequestMessage">
+		<wsdl:part element="ReturnFromLeaveEmployeeRequest" name="ReturnFromLeaveEmployeeRequestPart"/></wsdl:message><wsdl:message name="ReturnFromLeaveEmployeeResponseMessage">
+		<wsdl:part element="ReturnFromLeaveEmployeeResponse" name="ReturnFromLeaveEmployeeResponsePart"/></wsdl:message><wsdl:message name="SuspendUserRequestMessage">
+		<wsdl:part element="SuspendUserRequest" name="SuspendUserRequestPart"/></wsdl:message><wsdl:message name="SuspendUserResponseMessage">
+		<wsdl:part element="SuspendUserResponse" name="SuspendUserResponsePart"/></wsdl:message><wsdl:message name="TerminateCorpGroupRequestMessage">
+		<wsdl:part element="TerminateCorpGroupRequest" name="TerminateCorpGroupRequestPart"/></wsdl:message><wsdl:message name="TerminateCorpGroupResponseMessage">
+		<wsdl:part element="TerminateCorpGroupResponse" name="TerminateCorpGroupResponsePart"/></wsdl:message><wsdl:message name="TerminateEmployeeRequestMessage">
+		<wsdl:part element="TerminateEmployeeRequest" name="TerminateEmployeeRequestPart"/></wsdl:message><wsdl:message name="TerminateEmployeeResponseMessage">
+		<wsdl:part element="TerminateEmployeeResponse" name="TerminateEmployeeResponsePart"/></wsdl:message><wsdl:message name="TerminatePayGroupRequestMessage">
+		<wsdl:part element="TerminatePayGroupRequest" name="TerminatePayGroupRequestPart"/></wsdl:message><wsdl:message name="TerminatePayGroupResponseMessage">
+		<wsdl:part element="TerminatePayGroupResponse" name="TerminatePayGroupResponsePart"/></wsdl:message><wsdl:message name="SecurityHeader">
+		<wsdl:part element="wsse:Security" name="security"/></wsdl:message><wsdl:message name="SignatureHeader">
+		<wsdl:part element="dsig:Signature" name="signature"/></wsdl:message><wsdl:portType name="HrbPortType">
+		<wsdl:operation name="ActivateEmployeeWorkEvent">
+			<wsdl:input message="tns:ActivateEmployeeWorkEventRequestMessage"/><wsdl:output message="tns:ActivateEmployeeWorkEventResponseMessage"/></wsdl:operation><wsdl:operation name="AddCorpGroup">
+			<wsdl:input message="tns:AddCorpGroupRequestMessage"/><wsdl:output message="tns:AddCorpGroupResponseMessage"/></wsdl:operation><wsdl:operation name="AddCustomField">
+			<wsdl:input message="tns:AddCustomFieldRequestMessage"/><wsdl:output message="tns:AddCustomFieldResponseMessage"/></wsdl:operation><wsdl:operation name="AddEmployeeEarnings">
+			<wsdl:input message="tns:AddEmployeeEarningsRequestMessage"/><wsdl:output message="tns:AddEmployeeEarningsResponseMessage"/></wsdl:operation><wsdl:operation name="AddEmployeeJobTitle">
+			<wsdl:input message="tns:AddEmployeeJobTitleRequestMessage"/><wsdl:output message="tns:AddEmployeeJobTitleResponseMessage"/></wsdl:operation><wsdl:operation name="AddEmployeeReportsTo">
+			<wsdl:input message="tns:AddEmployeeReportsToRequestMessage"/><wsdl:output message="tns:AddEmployeeReportsToResponseMessage"/></wsdl:operation><wsdl:operation name="AddJobCompetency">
+			<wsdl:input message="tns:AddJobCompetencyRequestMessage"/><wsdl:output message="tns:AddJobCompetencyResponseMessage"/></wsdl:operation><wsdl:operation name="AddJobTitle">
+			<wsdl:input message="tns:AddJobTitleRequestMessage"/><wsdl:output message="tns:AddJobTitleResponseMessage"/></wsdl:operation><wsdl:operation name="AddLeaveActivity">
+			<wsdl:input message="tns:AddLeaveActivityRequestMessage"/><wsdl:output message="tns:AddLeaveActivityResponseMessage"/></wsdl:operation><wsdl:operation name="AddPayGroup">
+			<wsdl:input message="tns:AddPayGroupRequestMessage"/><wsdl:output message="tns:AddPayGroupResponseMessage"/></wsdl:operation><wsdl:operation name="AddSalaryStructure">
+			<wsdl:input message="tns:AddSalaryStructureRequestMessage"/><wsdl:output message="tns:AddSalaryStructureResponseMessage"/></wsdl:operation><wsdl:operation name="AddUser">
+			<wsdl:input message="tns:AddUserRequestMessage"/><wsdl:output message="tns:AddUserResponseMessage"/></wsdl:operation><wsdl:operation name="ChangeCorpGroup">
+			<wsdl:input message="tns:ChangeCorpGroupRequestMessage"/><wsdl:output message="tns:ChangeCorpGroupResponseMessage"/></wsdl:operation><wsdl:operation name="ChangeEmployeeCorpGroup">
+			<wsdl:input message="tns:ChangeEmployeeCorpGroupRequestMessage"/><wsdl:output message="tns:ChangeEmployeeCorpGroupResponseMessage"/></wsdl:operation><wsdl:operation name="ChangeEmployeeCustomField">
+			<wsdl:input message="tns:ChangeEmployeeCustomFieldRequestMessage"/><wsdl:output message="tns:ChangeEmployeeCustomFieldResponseMessage"/></wsdl:operation><wsdl:operation name="ChangeEmployeeEarnings">
+			<wsdl:input message="tns:ChangeEmployeeEarningsRequestMessage"/><wsdl:output message="tns:ChangeEmployeeEarningsResponseMessage"/></wsdl:operation><wsdl:operation name="ChangeEmployeeJobTitle">
+			<wsdl:input message="tns:ChangeEmployeeJobTitleRequestMessage"/><wsdl:output message="tns:ChangeEmployeeJobTitleResponseMessage"/></wsdl:operation><wsdl:operation name="ChangeEmployeePayGroup">
+			<wsdl:input message="tns:ChangeEmployeePayGroupRequestMessage"/><wsdl:output message="tns:ChangeEmployeePayGroupResponseMessage"/></wsdl:operation><wsdl:operation name="ChangeEmployeePersonalInfo">
+			<wsdl:input message="tns:ChangeEmployeePersonalInfoRequestMessage"/><wsdl:output message="tns:ChangeEmployeePersonalInfoResponseMessage"/></wsdl:operation><wsdl:operation name="ChangeEmployeeReportsTo">
+			<wsdl:input message="tns:ChangeEmployeeReportsToRequestMessage"/><wsdl:output message="tns:ChangeEmployeeReportsToResponseMessage"/></wsdl:operation><wsdl:operation name="ChangeEmployeeStatusClassification">
+			<wsdl:input message="tns:ChangeEmployeeStatusClassificationRequestMessage"/><wsdl:output message="tns:ChangeEmployeeStatusClassificationResponseMessage"/></wsdl:operation><wsdl:operation name="ChangeEmployeeWorkInfo">
+			<wsdl:input message="tns:ChangeEmployeeWorkInfoRequestMessage"/><wsdl:output message="tns:ChangeEmployeeWorkInfoResponseMessage"/></wsdl:operation><wsdl:operation name="ChangeJobCompetency">
+			<wsdl:input message="tns:ChangeJobCompetencyRequestMessage"/><wsdl:output message="tns:ChangeJobCompetencyResponseMessage"/></wsdl:operation><wsdl:operation name="ChangeJobTitle">
+			<wsdl:input message="tns:ChangeJobTitleRequestMessage"/><wsdl:output message="tns:ChangeJobTitleResponseMessage"/></wsdl:operation><wsdl:operation name="ChangeLeaveActivity">
+			<wsdl:input message="tns:ChangeLeaveActivityRequestMessage"/><wsdl:output message="tns:ChangeLeaveActivityResponseMessage"/></wsdl:operation><wsdl:operation name="ChangePayGroup">
+			<wsdl:input message="tns:ChangePayGroupRequestMessage"/><wsdl:output message="tns:ChangePayGroupResponseMessage"/></wsdl:operation><wsdl:operation name="ChangeSalaryStructure">
+			<wsdl:input message="tns:ChangeSalaryStructureRequestMessage"/><wsdl:output message="tns:ChangeSalaryStructureResponseMessage"/></wsdl:operation><wsdl:operation name="ChangeUser">
+			<wsdl:input message="tns:ChangeUserRequestMessage"/><wsdl:output message="tns:ChangeUserResponseMessage"/></wsdl:operation><wsdl:operation name="DeleteLeaveActivity">
+			<wsdl:input message="tns:DeleteLeaveActivityRequestMessage"/><wsdl:output message="tns:DeleteLeaveActivityResponseMessage"/></wsdl:operation><wsdl:operation name="GetCorpGroup">
+			<wsdl:input message="tns:GetCorpGroupRequestMessage"/><wsdl:output message="tns:GetCorpGroupResponseMessage"/></wsdl:operation><wsdl:operation name="GetCustomField">
+			<wsdl:input message="tns:GetCustomFieldRequestMessage"/><wsdl:output message="tns:GetCustomFieldResponseMessage"/></wsdl:operation><wsdl:operation name="GetDependent">
+			<wsdl:input message="tns:GetDependentRequestMessage"/><wsdl:output message="tns:GetDependentResponseMessage"/></wsdl:operation><wsdl:operation name="GetEmployeeCorpGroup">
+			<wsdl:input message="tns:GetEmployeeCorpGroupRequestMessage"/><wsdl:output message="tns:GetEmployeeCorpGroupResponseMessage"/></wsdl:operation><wsdl:operation name="GetEmployeeCustomField">
+			<wsdl:input message="tns:GetEmployeeCustomFieldRequestMessage"/><wsdl:output message="tns:GetEmployeeCustomFieldResponseMessage"/></wsdl:operation><wsdl:operation name="GetEmployeeEarnings">
+			<wsdl:input message="tns:GetEmployeeEarningsRequestMessage"/><wsdl:output message="tns:GetEmployeeEarningsResponseMessage"/></wsdl:operation><wsdl:operation name="GetEmployeeJobTitle">
+			<wsdl:input message="tns:GetEmployeeJobTitleRequestMessage"/><wsdl:output message="tns:GetEmployeeJobTitleResponseMessage"/></wsdl:operation><wsdl:operation name="GetEmployeePayGroup">
+			<wsdl:input message="tns:GetEmployeePayGroupRequestMessage"/><wsdl:output message="tns:GetEmployeePayGroupResponseMessage"/></wsdl:operation><wsdl:operation name="GetEmployeePersonalInfo">
+			<wsdl:input message="tns:GetEmployeePersonalInfoRequestMessage"/><wsdl:output message="tns:GetEmployeePersonalInfoResponseMessage"/></wsdl:operation><wsdl:operation name="GetEmployeeReportsTo">
+			<wsdl:input message="tns:GetEmployeeReportsToRequestMessage"/><wsdl:output message="tns:GetEmployeeReportsToResponseMessage"/></wsdl:operation><wsdl:operation name="GetEmployeeStatus">
+			<wsdl:input message="tns:GetEmployeeStatusRequestMessage"/><wsdl:output message="tns:GetEmployeeStatusResponseMessage"/></wsdl:operation><wsdl:operation name="GetEmployeeWorkInfo">
+			<wsdl:input message="tns:GetEmployeeWorkInfoRequestMessage"/><wsdl:output message="tns:GetEmployeeWorkInfoResponseMessage"/></wsdl:operation><wsdl:operation name="GetJobCompetency">
+			<wsdl:input message="tns:GetJobCompetencyRequestMessage"/><wsdl:output message="tns:GetJobCompetencyResponseMessage"/></wsdl:operation><wsdl:operation name="GetJobTitle">
+			<wsdl:input message="tns:GetJobTitleRequestMessage"/><wsdl:output message="tns:GetJobTitleResponseMessage"/></wsdl:operation><wsdl:operation name="GetLeaveActivity">
+			<wsdl:input message="tns:GetLeaveActivityRequestMessage"/><wsdl:output message="tns:GetLeaveActivityResponseMessage"/></wsdl:operation><wsdl:operation name="GetLeaveBalance">
+			<wsdl:input message="tns:GetLeaveBalanceRequestMessage"/><wsdl:output message="tns:GetLeaveBalanceResponseMessage"/></wsdl:operation><wsdl:operation name="GetPayGroup">
+			<wsdl:input message="tns:GetPayGroupRequestMessage"/><wsdl:output message="tns:GetPayGroupResponseMessage"/></wsdl:operation><wsdl:operation name="GetReason">
+			<wsdl:input message="tns:GetReasonRequestMessage"/><wsdl:output message="tns:GetReasonResponseMessage"/></wsdl:operation><wsdl:operation name="GetSalaryStructure">
+			<wsdl:input message="tns:GetSalaryStructureRequestMessage"/><wsdl:output message="tns:GetSalaryStructureResponseMessage"/></wsdl:operation><wsdl:operation name="GetUser">
+			<wsdl:input message="tns:GetUserRequestMessage"/><wsdl:output message="tns:GetUserResponseMessage"/></wsdl:operation><wsdl:operation name="HireEmployee">
+			<wsdl:input message="tns:HireEmployeeRequestMessage"/><wsdl:output message="tns:HireEmployeeResponseMessage"/></wsdl:operation><wsdl:operation name="PlaceOnLeaveEmployee">
+			<wsdl:input message="tns:PlaceOnLeaveEmployeeRequestMessage"/><wsdl:output message="tns:PlaceOnLeaveEmployeeResponseMessage"/></wsdl:operation><wsdl:operation name="RehireEmployee">
+			<wsdl:input message="tns:RehireEmployeeRequestMessage"/><wsdl:output message="tns:RehireEmployeeResponseMessage"/></wsdl:operation><wsdl:operation name="RetireEmployee">
+			<wsdl:input message="tns:RetireEmployeeRequestMessage"/><wsdl:output message="tns:RetireEmployeeResponseMessage"/></wsdl:operation><wsdl:operation name="ReturnFromLeaveEmployee">
+			<wsdl:input message="tns:ReturnFromLeaveEmployeeRequestMessage"/><wsdl:output message="tns:ReturnFromLeaveEmployeeResponseMessage"/></wsdl:operation><wsdl:operation name="SuspendUser">
+			<wsdl:input message="tns:SuspendUserRequestMessage"/><wsdl:output message="tns:SuspendUserResponseMessage"/></wsdl:operation><wsdl:operation name="TerminateCorpGroup">
+			<wsdl:input message="tns:TerminateCorpGroupRequestMessage"/><wsdl:output message="tns:TerminateCorpGroupResponseMessage"/></wsdl:operation><wsdl:operation name="TerminateEmployee">
+			<wsdl:input message="tns:TerminateEmployeeRequestMessage"/><wsdl:output message="tns:TerminateEmployeeResponseMessage"/></wsdl:operation><wsdl:operation name="TerminatePayGroup">
+			<wsdl:input message="tns:TerminatePayGroupRequestMessage"/><wsdl:output message="tns:TerminatePayGroupResponseMessage"/></wsdl:operation></wsdl:portType><wsdl:binding name="HrbBinding" type="tns:HrbPortType">
+		<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/><wsp:PolicyReference URI="#MessagePolicy"/><wsdl:operation name="ActivateEmployeeWorkEvent">
+			<soap:operation soapAction="/2010_01_01/ActivateEmployeeWorkEvent" style="document"/><wsdl:input>
+				<soap:header message="tns:SecurityHeader" part="security" use="literal"/><soap:header message="tns:SignatureHeader" part="signature" use="literal"/><soap:body parts="ActivateEmployeeWorkEventRequestPart" use="literal"/></wsdl:input><wsdl:output>
+				<soap:body parts="ActivateEmployeeWorkEventResponsePart" use="literal"/></wsdl:output></wsdl:operation><wsdl:operation name="AddCorpGroup">
+			<soap:operation soapAction="/2010_06_01/AddCorpGroup" style="document"/><wsdl:input>
+				<soap:header message="tns:SecurityHeader" part="security" use="literal"/><soap:header message="tns:SignatureHeader" part="signature" use="literal"/><soap:body parts="AddCorpGroupRequestPart" use="literal"/></wsdl:input><wsdl:output>
+				<soap:body parts="AddCorpGroupResponsePart" use="literal"/></wsdl:output></wsdl:operation><wsdl:operation name="AddCustomField">
+			<soap:operation soapAction="/2010_01_01/AddCustomField" style="document"/><wsdl:input>
+				<soap:header message="tns:SecurityHeader" part="security" use="literal"/><soap:header message="tns:SignatureHeader" part="signature" use="literal"/><soap:body parts="AddCustomFieldRequestPart" use="literal"/></wsdl:input><wsdl:output>
+				<soap:body parts="AddCustomFieldResponsePart" use="literal"/></wsdl:output></wsdl:operation><wsdl:operation name="AddEmployeeEarnings">
+			<soap:operation soapAction="/2010_01_01/AddEmployeeEarnings" style="document"/><wsdl:input>
+				<soap:header message="tns:SecurityHeader" part="security" use="literal"/><soap:header message="tns:SignatureHeader" part="signature" use="literal"/><soap:body parts="AddEmployeeEarningsRequestPart" use="literal"/></wsdl:input><wsdl:output>
+				<soap:body parts="AddEmployeeEarningsResponsePart" use="literal"/></wsdl:output></wsdl:operation><wsdl:operation name="AddEmployeeJobTitle">
+			<soap:operation soapAction="/2010_01_01/AddEmployeeJobTitle" style="document"/><wsdl:input>
+				<soap:header message="tns:SecurityHeader" part="security" use="literal"/><soap:header message="tns:SignatureHeader" part="signature" use="literal"/><soap:body parts="AddEmployeeJobTitleRequestPart" use="literal"/></wsdl:input><wsdl:output>
+				<soap:body parts="AddEmployeeJobTitleResponsePart" use="literal"/></wsdl:output></wsdl:operation><wsdl:operation name="AddEmployeeReportsTo">
+			<soap:operation soapAction="/2010_01_01/AddEmployeeReportsTo" style="document"/><wsdl:input>
+				<soap:header message="tns:SecurityHeader" part="security" use="literal"/><soap:header message="tns:SignatureHeader" part="signature" use="literal"/><soap:body parts="AddEmployeeReportsToRequestPart" use="literal"/></wsdl:input><wsdl:output>
+				<soap:body parts="AddEmployeeReportsToResponsePart" use="literal"/></wsdl:output></wsdl:operation><wsdl:operation name="AddJobCompetency">
+			<soap:operation soapAction="/2010_01_01/AddJobCompetency" style="document"/><wsdl:input>
+				<soap:header message="tns:SecurityHeader" part="security" use="literal"/><soap:header message="tns:SignatureHeader" part="signature" use="literal"/><soap:body parts="AddJobCompetencyRequestPart" use="literal"/></wsdl:input><wsdl:output>
+				<soap:body parts="AddJobCompetencyResponsePart" use="literal"/></wsdl:output></wsdl:operation><wsdl:operation name="AddJobTitle">
+			<soap:operation soapAction="/2010_01_01/AddJobTitle" style="document"/><wsdl:input>
+				<soap:header message="tns:SecurityHeader" part="security" use="literal"/><soap:header message="tns:SignatureHeader" part="signature" use="literal"/><soap:body parts="AddJobTitleRequestPart" use="literal"/></wsdl:input><wsdl:output>
+				<soap:body parts="AddJobTitleResponsePart" use="literal"/></wsdl:output></wsdl:operation><wsdl:operation name="AddLeaveActivity">
+			<soap:operation soapAction="/2010_06_01/AddLeaveActivity" style="document"/><wsdl:input>
+				<soap:header message="tns:SecurityHeader" part="security" use="literal"/><soap:header message="tns:SignatureHeader" part="signature" use="literal"/><soap:body parts="AddLeaveActivityRequestPart" use="literal"/></wsdl:input><wsdl:output>
+				<soap:body parts="AddLeaveActivityResponsePart" use="literal"/></wsdl:output></wsdl:operation><wsdl:operation name="AddPayGroup">
+			<soap:operation soapAction="/2010_06_01/AddPayGroup" style="document"/><wsdl:input>
+				<soap:header message="tns:SecurityHeader" part="security" use="literal"/><soap:header message="tns:SignatureHeader" part="signature" use="literal"/><soap:body parts="AddPayGroupRequestPart" use="literal"/></wsdl:input><wsdl:output>
+				<soap:body parts="AddPayGroupResponsePart" use="literal"/></wsdl:output></wsdl:operation><wsdl:operation name="AddSalaryStructure">
+			<soap:operation soapAction="/2010_01_01/AddSalaryStructure" style="document"/><wsdl:input>
+				<soap:header message="tns:SecurityHeader" part="security" use="literal"/><soap:header message="tns:SignatureHeader" part="signature" use="literal"/><soap:body parts="AddSalaryStructureRequestPart" use="literal"/></wsdl:input><wsdl:output>
+				<soap:body parts="AddSalaryStructureResponsePart" use="literal"/></wsdl:output></wsdl:operation><wsdl:operation name="AddUser">
+			<soap:operation soapAction="/2010_01_01/AddUser" style="document"/><wsdl:input>
+				<soap:header message="tns:SecurityHeader" part="security" use="literal"/><soap:header message="tns:SignatureHeader" part="signature" use="literal"/><soap:body parts="AddUserRequestPart" use="literal"/></wsdl:input><wsdl:output>
+				<soap:body parts="AddUserResponsePart" use="literal"/></wsdl:output></wsdl:operation><wsdl:operation name="ChangeCorpGroup">
+			<soap:operation soapAction="/2010_06_01/ChangeCorpGroup" style="document"/><wsdl:input>
+				<soap:header message="tns:SecurityHeader" part="security" use="literal"/><soap:header message="tns:SignatureHeader" part="signature" use="literal"/><soap:body parts="ChangeCorpGroupRequestPart" use="literal"/></wsdl:input><wsdl:output>
+				<soap:body parts="ChangeCorpGroupResponsePart" use="literal"/></wsdl:output></wsdl:operation><wsdl:operation name="ChangeEmployeeCorpGroup">
+			<soap:operation soapAction="/2010_01_01/ChangeEmployeeCorpGroup" style="document"/><wsdl:input>
+				<soap:header message="tns:SecurityHeader" part="security" use="literal"/><soap:header message="tns:SignatureHeader" part="signature" use="literal"/><soap:body parts="ChangeEmployeeCorpGroupRequestPart" use="literal"/></wsdl:input><wsdl:output>
+				<soap:body parts="ChangeEmployeeCorpGroupResponsePart" use="literal"/></wsdl:output></wsdl:operation><wsdl:operation name="ChangeEmployeeCustomField">
+			<soap:operation soapAction="/2010_01_01/ChangeEmployeeCustomField" style="document"/><wsdl:input>
+				<soap:header message="tns:SecurityHeader" part="security" use="literal"/><soap:header message="tns:SignatureHeader" part="signature" use="literal"/><soap:body parts="ChangeEmployeeCustomFieldRequestPart" use="literal"/></wsdl:input><wsdl:output>
+				<soap:body parts="ChangeEmployeeCustomFieldResponsePart" use="literal"/></wsdl:output></wsdl:operation><wsdl:operation name="ChangeEmployeeEarnings">
+			<soap:operation soapAction="/2010_01_01/ChangeEmployeeEarnings" style="document"/><wsdl:input>
+				<soap:header message="tns:SecurityHeader" part="security" use="literal"/><soap:header message="tns:SignatureHeader" part="signature" use="literal"/><soap:body parts="ChangeEmployeeEarningsRequestPart" use="literal"/></wsdl:input><wsdl:output>
+				<soap:body parts="ChangeEmployeeEarningsResponsePart" use="literal"/></wsdl:output></wsdl:operation><wsdl:operation name="ChangeEmployeeJobTitle">
+			<soap:operation soapAction="/2010_01_01/ChangeEmployeeJobTitle" style="document"/><wsdl:input>
+				<soap:header message="tns:SecurityHeader" part="security" use="literal"/><soap:header message="tns:SignatureHeader" part="signature" use="literal"/><soap:body parts="ChangeEmployeeJobTitleRequestPart" use="literal"/></wsdl:input><wsdl:output>
+				<soap:body parts="ChangeEmployeeJobTitleResponsePart" use="literal"/></wsdl:output></wsdl:operation><wsdl:operation name="ChangeEmployeePayGroup">
+			<soap:operation soapAction="/2010_01_01/ChangeEmployeePayGroup" style="document"/><wsdl:input>
+				<soap:header message="tns:SecurityHeader" part="security" use="literal"/><soap:header message="tns:SignatureHeader" part="signature" use="literal"/><soap:body parts="ChangeEmployeePayGroupRequestPart" use="literal"/></wsdl:input><wsdl:output>
+				<soap:body parts="ChangeEmployeePayGroupResponsePart" use="literal"/></wsdl:output></wsdl:operation><wsdl:operation name="ChangeEmployeePersonalInfo">
+			<soap:operation soapAction="/2010_06_01/ChangeEmployeePersonalInfo" style="document"/><wsdl:input>
+				<soap:header message="tns:SecurityHeader" part="security" use="literal"/><soap:header message="tns:SignatureHeader" part="signature" use="literal"/><soap:body parts="ChangeEmployeePersonalInfoRequestPart" use="literal"/></wsdl:input><wsdl:output>
+				<soap:body parts="ChangeEmployeePersonalInfoResponsePart" use="literal"/></wsdl:output></wsdl:operation><wsdl:operation name="ChangeEmployeeReportsTo">
+			<soap:operation soapAction="/2010_01_01/ChangeEmployeeReportsTo" style="document"/><wsdl:input>
+				<soap:header message="tns:SecurityHeader" part="security" use="literal"/><soap:header message="tns:SignatureHeader" part="signature" use="literal"/><soap:body parts="ChangeEmployeeReportsToRequestPart" use="literal"/></wsdl:input><wsdl:output>
+				<soap:body parts="ChangeEmployeeReportsToResponsePart" use="literal"/></wsdl:output></wsdl:operation><wsdl:operation name="ChangeEmployeeStatusClassification">
+			<soap:operation soapAction="/2010_01_01/ChangeEmployeeStatusClassification" style="document"/><wsdl:input>
+				<soap:header message="tns:SecurityHeader" part="security" use="literal"/><soap:header message="tns:SignatureHeader" part="signature" use="literal"/><soap:body parts="ChangeEmployeeStatusClassificationRequestPart" use="literal"/></wsdl:input><wsdl:output>
+				<soap:body parts="ChangeEmployeeStatusClassificationResponsePart" use="literal"/></wsdl:output></wsdl:operation><wsdl:operation name="ChangeEmployeeWorkInfo">
+			<soap:operation soapAction="/2010_06_01/ChangeEmployeeWorkInfo" style="document"/><wsdl:input>
+				<soap:header message="tns:SecurityHeader" part="security" use="literal"/><soap:header message="tns:SignatureHeader" part="signature" use="literal"/><soap:body parts="ChangeEmployeeWorkInfoRequestPart" use="literal"/></wsdl:input><wsdl:output>
+				<soap:body parts="ChangeEmployeeWorkInfoResponsePart" use="literal"/></wsdl:output></wsdl:operation><wsdl:operation name="ChangeJobCompetency">
+			<soap:operation soapAction="/2010_01_01/ChangeJobCompetency" style="document"/><wsdl:input>
+				<soap:header message="tns:SecurityHeader" part="security" use="literal"/><soap:header message="tns:SignatureHeader" part="signature" use="literal"/><soap:body parts="ChangeJobCompetencyRequestPart" use="literal"/></wsdl:input><wsdl:output>
+				<soap:body parts="ChangeJobCompetencyResponsePart" use="literal"/></wsdl:output></wsdl:operation><wsdl:operation name="ChangeJobTitle">
+			<soap:operation soapAction="/2010_01_01/ChangeJobTitle" style="document"/><wsdl:input>
+				<soap:header message="tns:SecurityHeader" part="security" use="literal"/><soap:header message="tns:SignatureHeader" part="signature" use="literal"/><soap:body parts="ChangeJobTitleRequestPart" use="literal"/></wsdl:input><wsdl:output>
+				<soap:body parts="ChangeJobTitleResponsePart" use="literal"/></wsdl:output></wsdl:operation><wsdl:operation name="ChangeLeaveActivity">
+			<soap:operation soapAction="/2010_06_01/ChangeLeaveActivity" style="document"/><wsdl:input>
+				<soap:header message="tns:SecurityHeader" part="security" use="literal"/><soap:header message="tns:SignatureHeader" part="signature" use="literal"/><soap:body parts="ChangeLeaveActivityRequestPart" use="literal"/></wsdl:input><wsdl:output>
+				<soap:body parts="ChangeLeaveActivityResponsePart" use="literal"/></wsdl:output></wsdl:operation><wsdl:operation name="ChangePayGroup">
+			<soap:operation soapAction="/2010_06_01/ChangePayGroup" style="document"/><wsdl:input>
+				<soap:header message="tns:SecurityHeader" part="security" use="literal"/><soap:header message="tns:SignatureHeader" part="signature" use="literal"/><soap:body parts="ChangePayGroupRequestPart" use="literal"/></wsdl:input><wsdl:output>
+				<soap:body parts="ChangePayGroupResponsePart" use="literal"/></wsdl:output></wsdl:operation><wsdl:operation name="ChangeSalaryStructure">
+			<soap:operation soapAction="/2010_01_01/ChangeSalaryStructure" style="document"/><wsdl:input>
+				<soap:header message="tns:SecurityHeader" part="security" use="literal"/><soap:header message="tns:SignatureHeader" part="signature" use="literal"/><soap:body parts="ChangeSalaryStructureRequestPart" use="literal"/></wsdl:input><wsdl:output>
+				<soap:body parts="ChangeSalaryStructureResponsePart" use="literal"/></wsdl:output></wsdl:operation><wsdl:operation name="ChangeUser">
+			<soap:operation soapAction="/2010_01_01/ChangeUser" style="document"/><wsdl:input>
+				<soap:header message="tns:SecurityHeader" part="security" use="literal"/><soap:header message="tns:SignatureHeader" part="signature" use="literal"/><soap:body parts="ChangeUserRequestPart" use="literal"/></wsdl:input><wsdl:output>
+				<soap:body parts="ChangeUserResponsePart" use="literal"/></wsdl:output></wsdl:operation><wsdl:operation name="DeleteLeaveActivity">
+			<soap:operation soapAction="/2010_01_01/DeleteLeaveActivity" style="document"/><wsdl:input>
+				<soap:header message="tns:SecurityHeader" part="security" use="literal"/><soap:header message="tns:SignatureHeader" part="signature" use="literal"/><soap:body parts="DeleteLeaveActivityRequestPart" use="literal"/></wsdl:input><wsdl:output>
+				<soap:body parts="DeleteLeaveActivityResponsePart" use="literal"/></wsdl:output></wsdl:operation><wsdl:operation name="GetCorpGroup">
+			<soap:operation soapAction="/2010_06_01/GetCorpGroup" style="document"/><wsdl:input>
+				<soap:header message="tns:SecurityHeader" part="security" use="literal"/><soap:header message="tns:SignatureHeader" part="signature" use="literal"/><soap:body parts="GetCorpGroupRequestPart" use="literal"/></wsdl:input><wsdl:output>
+				<soap:body parts="GetCorpGroupResponsePart" use="literal"/></wsdl:output></wsdl:operation><wsdl:operation name="GetCustomField">
+			<soap:operation soapAction="/2010_01_01/GetCustomField" style="document"/><wsdl:input>
+				<soap:header message="tns:SecurityHeader" part="security" use="literal"/><soap:header message="tns:SignatureHeader" part="signature" use="literal"/><soap:body parts="GetCustomFieldRequestPart" use="literal"/></wsdl:input><wsdl:output>
+				<soap:body parts="GetCustomFieldResponsePart" use="literal"/></wsdl:output></wsdl:operation><wsdl:operation name="GetDependent">
+			<soap:operation soapAction="/2010_06_01/GetDependent" style="document"/><wsdl:input>
+				<soap:header message="tns:SecurityHeader" part="security" use="literal"/><soap:header message="tns:SignatureHeader" part="signature" use="literal"/><soap:body parts="GetDependentRequestPart" use="literal"/></wsdl:input><wsdl:output>
+				<soap:body parts="GetDependentResponsePart" use="literal"/></wsdl:output></wsdl:operation><wsdl:operation name="GetEmployeeCorpGroup">
+			<soap:operation soapAction="/2010_06_01/GetEmployeeCorpGroup" style="document"/><wsdl:input>
+				<soap:header message="tns:SecurityHeader" part="security" use="literal"/><soap:header message="tns:SignatureHeader" part="signature" use="literal"/><soap:body parts="GetEmployeeCorpGroupRequestPart" use="literal"/></wsdl:input><wsdl:output>
+				<soap:body parts="GetEmployeeCorpGroupResponsePart" use="literal"/></wsdl:output></wsdl:operation><wsdl:operation name="GetEmployeeCustomField">
+			<soap:operation soapAction="/2010_06_01/GetEmployeeCustomField" style="document"/><wsdl:input>
+				<soap:header message="tns:SecurityHeader" part="security" use="literal"/><soap:header message="tns:SignatureHeader" part="signature" use="literal"/><soap:body parts="GetEmployeeCustomFieldRequestPart" use="literal"/></wsdl:input><wsdl:output>
+				<soap:body parts="GetEmployeeCustomFieldResponsePart" use="literal"/></wsdl:output></wsdl:operation><wsdl:operation name="GetEmployeeEarnings">
+			<soap:operation soapAction="/2010_06_01/GetEmployeeEarnings" style="document"/><wsdl:input>
+				<soap:header message="tns:SecurityHeader" part="security" use="literal"/><soap:header message="tns:SignatureHeader" part="signature" use="literal"/><soap:body parts="GetEmployeeEarningsRequestPart" use="literal"/></wsdl:input><wsdl:output>
+				<soap:body parts="GetEmployeeEarningsResponsePart" use="literal"/></wsdl:output></wsdl:operation><wsdl:operation name="GetEmployeeJobTitle">
+			<soap:operation soapAction="/2010_06_01/GetEmployeeJobTitle" style="document"/><wsdl:input>
+				<soap:header message="tns:SecurityHeader" part="security" use="literal"/><soap:header message="tns:SignatureHeader" part="signature" use="literal"/><soap:body parts="GetEmployeeJobTitleRequestPart" use="literal"/></wsdl:input><wsdl:output>
+				<soap:body parts="GetEmployeeJobTitleResponsePart" use="literal"/></wsdl:output></wsdl:operation><wsdl:operation name="GetEmployeePayGroup">
+			<soap:operation soapAction="/2010_06_01/GetEmployeePayGroup" style="document"/><wsdl:input>
+				<soap:header message="tns:SecurityHeader" part="security" use="literal"/><soap:header message="tns:SignatureHeader" part="signature" use="literal"/><soap:body parts="GetEmployeePayGroupRequestPart" use="literal"/></wsdl:input><wsdl:output>
+				<soap:body parts="GetEmployeePayGroupResponsePart" use="literal"/></wsdl:output></wsdl:operation><wsdl:operation name="GetEmployeePersonalInfo">
+			<soap:operation soapAction="/2010_06_01/GetEmployeePersonalInfo" style="document"/><wsdl:input>
+				<soap:header message="tns:SecurityHeader" part="security" use="literal"/><soap:header message="tns:SignatureHeader" part="signature" use="literal"/><soap:body parts="GetEmployeePersonalInfoRequestPart" use="literal"/></wsdl:input><wsdl:output>
+				<soap:body parts="GetEmployeePersonalInfoResponsePart" use="literal"/></wsdl:output></wsdl:operation><wsdl:operation name="GetEmployeeReportsTo">
+			<soap:operation soapAction="/2010_06_01/GetEmployeeReportsTo" style="document"/><wsdl:input>
+				<soap:header message="tns:SecurityHeader" part="security" use="literal"/><soap:header message="tns:SignatureHeader" part="signature" use="literal"/><soap:body parts="GetEmployeeReportsToRequestPart" use="literal"/></wsdl:input><wsdl:output>
+				<soap:body parts="GetEmployeeReportsToResponsePart" use="literal"/></wsdl:output></wsdl:operation><wsdl:operation name="GetEmployeeStatus">
+			<soap:operation soapAction="/2010_06_01/GetEmployeeStatus" style="document"/><wsdl:input>
+				<soap:header message="tns:SecurityHeader" part="security" use="literal"/><soap:header message="tns:SignatureHeader" part="signature" use="literal"/><soap:body parts="GetEmployeeStatusRequestPart" use="literal"/></wsdl:input><wsdl:output>
+				<soap:body parts="GetEmployeeStatusResponsePart" use="literal"/></wsdl:output></wsdl:operation><wsdl:operation name="GetEmployeeWorkInfo">
+			<soap:operation soapAction="/2010_06_01/GetEmployeeWorkInfo" style="document"/><wsdl:input>
+				<soap:header message="tns:SecurityHeader" part="security" use="literal"/><soap:header message="tns:SignatureHeader" part="signature" use="literal"/><soap:body parts="GetEmployeeWorkInfoRequestPart" use="literal"/></wsdl:input><wsdl:output>
+				<soap:body parts="GetEmployeeWorkInfoResponsePart" use="literal"/></wsdl:output></wsdl:operation><wsdl:operation name="GetJobCompetency">
+			<soap:operation soapAction="/2010_01_01/GetJobCompetency" style="document"/><wsdl:input>
+				<soap:header message="tns:SecurityHeader" part="security" use="literal"/><soap:header message="tns:SignatureHeader" part="signature" use="literal"/><soap:body parts="GetJobCompetencyRequestPart" use="literal"/></wsdl:input><wsdl:output>
+				<soap:body parts="GetJobCompetencyResponsePart" use="literal"/></wsdl:output></wsdl:operation><wsdl:operation name="GetJobTitle">
+			<soap:operation soapAction="/2010_01_01/GetJobTitle" style="document"/><wsdl:input>
+				<soap:header message="tns:SecurityHeader" part="security" use="literal"/><soap:header message="tns:SignatureHeader" part="signature" use="literal"/><soap:body parts="GetJobTitleRequestPart" use="literal"/></wsdl:input><wsdl:output>
+				<soap:body parts="GetJobTitleResponsePart" use="literal"/></wsdl:output></wsdl:operation><wsdl:operation name="GetLeaveActivity">
+			<soap:operation soapAction="/2010_06_01/GetLeaveActivity" style="document"/><wsdl:input>
+				<soap:header message="tns:SecurityHeader" part="security" use="literal"/><soap:header message="tns:SignatureHeader" part="signature" use="literal"/><soap:body parts="GetLeaveActivityRequestPart" use="literal"/></wsdl:input><wsdl:output>
+				<soap:body parts="GetLeaveActivityResponsePart" use="literal"/></wsdl:output></wsdl:operation><wsdl:operation name="GetLeaveBalance">
+			<soap:operation soapAction="/2010_06_01/GetLeaveBalance" style="document"/><wsdl:input>
+				<soap:header message="tns:SecurityHeader" part="security" use="literal"/><soap:header message="tns:SignatureHeader" part="signature" use="literal"/><soap:body parts="GetLeaveBalanceRequestPart" use="literal"/></wsdl:input><wsdl:output>
+				<soap:body parts="GetLeaveBalanceResponsePart" use="literal"/></wsdl:output></wsdl:operation><wsdl:operation name="GetPayGroup">
+			<soap:operation soapAction="/2010_06_01/GetPayGroup" style="document"/><wsdl:input>
+				<soap:header message="tns:SecurityHeader" part="security" use="literal"/><soap:header message="tns:SignatureHeader" part="signature" use="literal"/><soap:body parts="GetPayGroupRequestPart" use="literal"/></wsdl:input><wsdl:output>
+				<soap:body parts="GetPayGroupResponsePart" use="literal"/></wsdl:output></wsdl:operation><wsdl:operation name="GetReason">
+			<soap:operation soapAction="/2010_01_01/GetReason" style="document"/><wsdl:input>
+				<soap:header message="tns:SecurityHeader" part="security" use="literal"/><soap:header message="tns:SignatureHeader" part="signature" use="literal"/><soap:body parts="GetReasonRequestPart" use="literal"/></wsdl:input><wsdl:output>
+				<soap:body parts="GetReasonResponsePart" use="literal"/></wsdl:output></wsdl:operation><wsdl:operation name="GetSalaryStructure">
+			<soap:operation soapAction="/2010_01_01/GetSalaryStructure" style="document"/><wsdl:input>
+				<soap:header message="tns:SecurityHeader" part="security" use="literal"/><soap:header message="tns:SignatureHeader" part="signature" use="literal"/><soap:body parts="GetSalaryStructureRequestPart" use="literal"/></wsdl:input><wsdl:output>
+				<soap:body parts="GetSalaryStructureResponsePart" use="literal"/></wsdl:output></wsdl:operation><wsdl:operation name="GetUser">
+			<soap:operation soapAction="/2010_06_01/GetUser" style="document"/><wsdl:input>
+				<soap:header message="tns:SecurityHeader" part="security" use="literal"/><soap:header message="tns:SignatureHeader" part="signature" use="literal"/><soap:body parts="GetUserRequestPart" use="literal"/></wsdl:input><wsdl:output>
+				<soap:body parts="GetUserResponsePart" use="literal"/></wsdl:output></wsdl:operation><wsdl:operation name="HireEmployee">
+			<soap:operation soapAction="/2010_06_01/HireEmployee" style="document"/><wsdl:input>
+				<soap:header message="tns:SecurityHeader" part="security" use="literal"/><soap:header message="tns:SignatureHeader" part="signature" use="literal"/><soap:body parts="HireEmployeeRequestPart" use="literal"/></wsdl:input><wsdl:output>
+				<soap:body parts="HireEmployeeResponsePart" use="literal"/></wsdl:output></wsdl:operation><wsdl:operation name="PlaceOnLeaveEmployee">
+			<soap:operation soapAction="/2010_01_01/PlaceOnLeaveEmployee" style="document"/><wsdl:input>
+				<soap:header message="tns:SecurityHeader" part="security" use="literal"/><soap:header message="tns:SignatureHeader" part="signature" use="literal"/><soap:body parts="PlaceOnLeaveEmployeeRequestPart" use="literal"/></wsdl:input><wsdl:output>
+				<soap:body parts="PlaceOnLeaveEmployeeResponsePart" use="literal"/></wsdl:output></wsdl:operation><wsdl:operation name="RehireEmployee">
+			<soap:operation soapAction="/2010_01_01/RehireEmployee" style="document"/><wsdl:input>
+				<soap:header message="tns:SecurityHeader" part="security" use="literal"/><soap:header message="tns:SignatureHeader" part="signature" use="literal"/><soap:body parts="RehireEmployeeRequestPart" use="literal"/></wsdl:input><wsdl:output>
+				<soap:body parts="RehireEmployeeResponsePart" use="literal"/></wsdl:output></wsdl:operation><wsdl:operation name="RetireEmployee">
+			<soap:operation soapAction="/2010_01_01/RetireEmployee" style="document"/><wsdl:input>
+				<soap:header message="tns:SecurityHeader" part="security" use="literal"/><soap:header message="tns:SignatureHeader" part="signature" use="literal"/><soap:body parts="RetireEmployeeRequestPart" use="literal"/></wsdl:input><wsdl:output>
+				<soap:body parts="RetireEmployeeResponsePart" use="literal"/></wsdl:output></wsdl:operation><wsdl:operation name="ReturnFromLeaveEmployee">
+			<soap:operation soapAction="/2010_01_01/ReturnFromLeaveEmployee" style="document"/><wsdl:input>
+				<soap:header message="tns:SecurityHeader" part="security" use="literal"/><soap:header message="tns:SignatureHeader" part="signature" use="literal"/><soap:body parts="ReturnFromLeaveEmployeeRequestPart" use="literal"/></wsdl:input><wsdl:output>
+				<soap:body parts="ReturnFromLeaveEmployeeResponsePart" use="literal"/></wsdl:output></wsdl:operation><wsdl:operation name="SuspendUser">
+			<soap:operation soapAction="/2010_01_01/SuspendUser" style="document"/><wsdl:input>
+				<soap:header message="tns:SecurityHeader" part="security" use="literal"/><soap:header message="tns:SignatureHeader" part="signature" use="literal"/><soap:body parts="SuspendUserRequestPart" use="literal"/></wsdl:input><wsdl:output>
+				<soap:body parts="SuspendUserResponsePart" use="literal"/></wsdl:output></wsdl:operation><wsdl:operation name="TerminateCorpGroup">
+			<soap:operation soapAction="/2010_01_01/TerminateCorpGroup" style="document"/><wsdl:input>
+				<soap:header message="tns:SecurityHeader" part="security" use="literal"/><soap:header message="tns:SignatureHeader" part="signature" use="literal"/><soap:body parts="TerminateCorpGroupRequestPart" use="literal"/></wsdl:input><wsdl:output>
+				<soap:body parts="TerminateCorpGroupResponsePart" use="literal"/></wsdl:output></wsdl:operation><wsdl:operation name="TerminateEmployee">
+			<soap:operation soapAction="/2010_01_01/TerminateEmployee" style="document"/><wsdl:input>
+				<soap:header message="tns:SecurityHeader" part="security" use="literal"/><soap:header message="tns:SignatureHeader" part="signature" use="literal"/><soap:body parts="TerminateEmployeeRequestPart" use="literal"/></wsdl:input><wsdl:output>
+				<soap:body parts="TerminateEmployeeResponsePart" use="literal"/></wsdl:output></wsdl:operation><wsdl:operation name="TerminatePayGroup">
+			<soap:operation soapAction="/2010_01_01/TerminatePayGroup" style="document"/><wsdl:input>
+				<soap:header message="tns:SecurityHeader" part="security" use="literal"/><soap:header message="tns:SignatureHeader" part="signature" use="literal"/><soap:body parts="TerminatePayGroupRequestPart" use="literal"/></wsdl:input><wsdl:output>
+				<soap:body parts="TerminatePayGroupResponsePart" use="literal"/></wsdl:output></wsdl:operation></wsdl:binding><wsdl:service name="HrbService">
+		<wsdl:port binding="tns:HrbBinding" name="HrbPort">
+			<soap:address location="https://hrbws.adp.com/wsg"/></wsdl:port></wsdl:service></wsdl:definitions></main><include name="wsse.xsd" type="http://www.approuter.com/schemas/2003/1/xmlschema/"><xs:schema elementFormDefault="qualified" targetNamespace="http://schemas.xmlsoap.org/ws/2002/xx/secext" xmlns:wsse="http://schemas.xmlsoap.org/ws/2002/xx/secext" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="Security">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="wsse:UsernameToken"/></xs:sequence></xs:complexType></xs:element><xs:element name="UsernameToken">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="wsse:Username"/></xs:sequence></xs:complexType></xs:element><xs:element name="Username" type="xs:string"/></xs:schema></include><include name="xmldsig.xsd" type="http://www.approuter.com/schemas/2003/1/xmlschema/"><xs:schema elementFormDefault="qualified" targetNamespace="http://www.w3.org/2000/09/xmldsig#" xmlns:xdsig="http://www.w3.org/2000/09/xmldsig#" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="Signature">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="xdsig:SignedInfo"/><xs:element ref="xdsig:SignatureValue"/><xs:element ref="xdsig:KeyInfo"/></xs:sequence></xs:complexType></xs:element><xs:element name="SignedInfo">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="xdsig:CanonicalizationMethod"/><xs:element ref="xdsig:SignatureMethod"/><xs:element ref="xdsig:Reference"/></xs:sequence></xs:complexType></xs:element><xs:element name="CanonicalizationMethod">
+    <xs:complexType>
+      <xs:attribute name="Algorithm" type="xs:anyURI" use="required"/></xs:complexType></xs:element><xs:element name="SignatureMethod">
+    <xs:complexType>
+      <xs:attribute name="Algorithm" type="xs:anyURI" use="required"/></xs:complexType></xs:element><xs:element name="Reference">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="xdsig:Transforms"/><xs:element ref="xdsig:DigestMethod"/><xs:element ref="xdsig:DigestValue"/></xs:sequence><xs:attribute name="URI" use="required"/></xs:complexType></xs:element><xs:element name="Transforms">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="xdsig:Transform"/></xs:sequence></xs:complexType></xs:element><xs:element name="Transform">
+    <xs:complexType>
+      <xs:attribute name="Algorithm" type="xs:anyURI" use="required"/></xs:complexType></xs:element><xs:element name="DigestMethod">
+    <xs:complexType>
+      <xs:attribute name="Algorithm" type="xs:anyURI" use="required"/></xs:complexType></xs:element><xs:element name="DigestValue" type="xs:string"/><xs:element name="SignatureValue" type="xs:string"/><xs:element name="KeyInfo">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="xdsig:X509Data"/></xs:sequence></xs:complexType></xs:element><xs:element name="X509Data">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="xdsig:X509SubjectName"/><xs:element ref="xdsig:X509Certificate"/></xs:sequence></xs:complexType></xs:element><xs:element name="X509SubjectName" type="xs:string"/><xs:element name="X509Certificate" type="xs:string"/></xs:schema></include></document>
